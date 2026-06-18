@@ -1,3 +1,3 @@
-import { ModalPage } from "@/screens/modal";
+import { ModalPage } from '@/screens/modal';
 
 export default ModalPage;
