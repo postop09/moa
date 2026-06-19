@@ -3,7 +3,6 @@ description: 새 기능 또는 개선 사항을 제안합니다
 title: '[Feature] '
 labels:
   - enhancement
-  - needs-triage
 body:
   - type: markdown
     attributes:

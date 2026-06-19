@@ -3,7 +3,6 @@ description: 버그 또는 오동작을 보고합니다
 title: '[Bug] '
 labels:
   - bug
-  - needs-triage
 body:
   - type: markdown
     attributes:
