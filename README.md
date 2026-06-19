@@ -1,4 +1,4 @@
-# 모아 (MoA)
+# 모아 (Moa)
 
 Expo + React Native 기반 모바일 앱 프로젝트입니다. [Expo Router](https://docs.expo.dev/router/introduction/)로 라우팅을 처리하고, [Feature-Sliced Design (FSD)](https://feature-sliced.design/) 아키텍처로 코드를 구성합니다.
 
