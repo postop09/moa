@@ -63,7 +63,7 @@ export function ExplorePage() {
           provide files for different screen densities
         </ThemedText>
         <Image
-          source={require('@/assets/images/react-logo.png')}
+          source={require('@/shared/assets/images/react-logo.png')}
           style={{ width: 100, height: 100, alignSelf: 'center' }}
         />
         <ExternalLink href="https://reactnative.dev/docs/images">

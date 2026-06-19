@@ -4,7 +4,7 @@
     "slug": "moa",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/icon.png",
+    "icon": "./shared/assets/icons/icon.png",
     "scheme": "moa",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -14,23 +14,23 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/icons/android-icon-foreground.png",
-        "backgroundImage": "./assets/icons/android-icon-background.png",
-        "monochromeImage": "./assets/icons/android-icon-monochrome.png"
+        "foregroundImage": "./shared/assets/icons/android-icon-foreground.png",
+        "backgroundImage": "./shared/assets/icons/android-icon-background.png",
+        "monochromeImage": "./shared/assets/icons/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/icons/favicon.png"
+      "favicon": "./shared/assets/icons/favicon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash.png",
+          "image": "./shared/assets/images/splash.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
