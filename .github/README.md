@@ -31,6 +31,7 @@
 |----------|--------|------|
 | `ci.yml` | PR / push to `main` | ESLint + TypeScript 검사 |
 | `pr-review.yml` | PR opened/sync | reviewdog ESLint PR 리뷰 코멘트 |
+| `pr-auto-summary.yml` | PR opened/sync | 커밋·변경 파일·FSD 레이어 자동 삽입 |
 | `issue-management.yml` | 이슈 생성·수정 | 제목 접두사 기반 라벨 자동 부여 |
 
 ## 4. 이슈 템플릿
@@ -40,3 +41,13 @@
 - **작업 요청** — `[Task]` 접두사
 
 GitHub **Issues → New issue**에서 선택할 수 있습니다.
+
+## 5. PR 자동 요약
+
+`pr-auto-summary.yml`이 PR 본문 하단 `<!-- START auto-generated -->` 구간에 다음을 자동 갱신합니다.
+
+- 커밋 목록
+- 변경 파일 목록 (A/M/D/R)
+- FSD 레이어 변경 감지 체크리스트
+
+`Summary` 등 상단 섹션은 직접 작성하거나 Cursor Agent에게 요청하세요 (`.cursor/rules/git-conventions.mdc` 참고).

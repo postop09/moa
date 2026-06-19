@@ -38,3 +38,6 @@
 ## Notes for Reviewers
 
 <!-- 리뷰어에게 전달할 참고 사항 -->
+
+<!-- START auto-generated -->
+<!-- END auto-generated -->

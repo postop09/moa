@@ -1,0 +1,113 @@
+name: PR Auto Summary
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  update-pr-body:
+    name: Update PR Summary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const markerStart = '<!-- START auto-generated -->';
+            const markerEnd = '<!-- END auto-generated -->';
+
+            const fsdLayers = [
+              'app',
+              'screens',
+              'widgets',
+              'features',
+              'entities',
+              'shared',
+            ];
+
+            const { owner, repo } = context.repo;
+            const pr = context.payload.pull_request;
+            const prNumber = pr.number;
+
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner,
+              repo,
+              pull_number: prNumber,
+              per_page: 100,
+            });
+
+            const { data: commits } = await github.rest.pulls.listCommits({
+              owner,
+              repo,
+              pull_number: prNumber,
+              per_page: 100,
+            });
+
+            const changedFiles = files.map((file) => {
+              const status =
+                file.status === 'added'
+                  ? 'A'
+                  : file.status === 'removed'
+                    ? 'D'
+                    : file.status === 'renamed'
+                      ? 'R'
+                      : 'M';
+              return `- \`${status}\` ${file.filename}`;
+            });
+
+            const commitLines = commits.map((commit) => {
+              const sha = commit.sha.slice(0, 7);
+              const message = commit.commit.message.split('\n')[0];
+              return `- \`${sha}\` ${message}`;
+            });
+
+            const touchedLayers = fsdLayers.filter((layer) =>
+              files.some((file) => file.filename.startsWith(`${layer}/`)),
+            );
+
+            const layerChecklist = fsdLayers
+              .map((layer) => {
+                const checked = touchedLayers.includes(layer) ? 'x' : ' ';
+                return `- [${checked}] ${layer}`;
+              })
+              .join('\n');
+
+            const autoSection = [
+              markerStart,
+              '## 🤖 자동 요약',
+              '',
+              '> 이 섹션은 GitHub Actions가 PR 업데이트 시 자동으로 갱신합니다.',
+              '',
+              '### 커밋',
+              commitLines.length > 0 ? commitLines.join('\n') : '- (없음)',
+              '',
+              '### 변경 파일',
+              changedFiles.length > 0 ? changedFiles.join('\n') : '- (없음)',
+              '',
+              '### FSD 레이어 (변경 감지)',
+              layerChecklist,
+              '',
+              markerEnd,
+            ].join('\n');
+
+            let body = pr.body ?? '';
+
+            if (body.includes(markerStart) && body.includes(markerEnd)) {
+              const pattern = new RegExp(
+                `${markerStart}[\\s\\S]*?${markerEnd}`,
+                'm',
+              );
+              body = body.replace(pattern, autoSection);
+            } else {
+              body = body.trimEnd() + '\n\n' + autoSection;
+            }
+
+            await github.rest.pulls.update({
+              owner,
+              repo,
+              pull_number: prNumber,
+              body,
+            });
