@@ -7,7 +7,8 @@
 
 ## Related Issue
 
-<!-- Closes #123 -->
+<!-- START related-issue -->
+<!-- END related-issue -->
 
 ## Type of Change
 

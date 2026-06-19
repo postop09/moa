@@ -44,10 +44,16 @@ GitHub **Issues → New issue**에서 선택할 수 있습니다.
 
 ## 5. PR 자동 요약
 
-`pr-auto-summary.yml`이 PR 본문 하단 `<!-- START auto-generated -->` 구간에 다음을 자동 갱신합니다.
+`pr-auto-summary.yml`이 PR 본문을 자동 갱신합니다.
 
+**`<!-- START auto-generated -->` 구간**
 - 커밋 목록
 - 변경 파일 목록 (A/M/D/R)
 - FSD 레이어 변경 감지 체크리스트
 
-`Summary` 등 상단 섹션은 직접 작성하거나 Cursor Agent에게 요청하세요 (`.cursor/rules/git-conventions.mdc` 참고).
+**`<!-- START related-issue -->` 구간 (Related Issue)**
+- PR 커밋 메시지에서 `Closes #N`, `Refs #N` 감지
+- 브랜치명 `feat/12-home` 형태에서 이슈 번호 추출 → `Refs #12`
+- `Closes`가 `Refs`보다 우선 (같은 이슈에 둘 다 있으면 `Closes` 사용)
+
+`Summary` 등 마커 밖 섹션은 직접 작성하거나 Cursor Agent에게 요청하세요.

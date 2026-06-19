@@ -18,6 +18,8 @@ jobs:
           script: |
             const markerStart = '<!-- START auto-generated -->';
             const markerEnd = '<!-- END auto-generated -->';
+            const issueMarkerStart = '<!-- START related-issue -->';
+            const issueMarkerEnd = '<!-- END related-issue -->';
 
             const fsdLayers = [
               'app',
@@ -27,6 +29,38 @@ jobs:
               'entities',
               'shared',
             ];
+
+            const closesPattern =
+              /\b(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/gi;
+            const refsPattern =
+              /\b(?:refs?|references?|related\s+to)\s+#(\d+)/gi;
+
+            function collectIssues(text, closesSet, refsSet) {
+              for (const match of text.matchAll(closesPattern)) {
+                closesSet.add(match[1]);
+                refsSet.delete(match[1]);
+              }
+              for (const match of text.matchAll(refsPattern)) {
+                if (!closesSet.has(match[1])) {
+                  refsSet.add(match[1]);
+                }
+              }
+            }
+
+            function collectIssuesFromBranch(branch, closesSet, refsSet) {
+              const match = branch.match(/(?:^|\/)(\d+)(?:-|$)/);
+              if (match && !closesSet.has(match[1]) && !refsSet.has(match[1])) {
+                refsSet.add(match[1]);
+              }
+            }
+
+            function buildRelatedIssueSection(closesSet, refsSet) {
+              const lines = [
+                ...[...closesSet].sort((a, b) => Number(a) - Number(b)).map((n) => `Closes #${n}`),
+                ...[...refsSet].sort((a, b) => Number(a) - Number(b)).map((n) => `Refs #${n}`),
+              ];
+              return lines.length > 0 ? lines.join('\n') : '- (연결된 이슈 없음)';
+            }
 
             const { owner, repo } = context.repo;
             const pr = context.payload.pull_request;
@@ -75,6 +109,17 @@ jobs:
               })
               .join('\n');
 
+            const closesSet = new Set();
+            const refsSet = new Set();
+
+            for (const commit of commits) {
+              collectIssues(commit.commit.message, closesSet, refsSet);
+            }
+
+            collectIssuesFromBranch(pr.head.ref, closesSet, refsSet);
+
+            const relatedIssueSection = buildRelatedIssueSection(closesSet, refsSet);
+
             const autoSection = [
               markerStart,
               '## 🤖 자동 요약',
@@ -103,6 +148,17 @@ jobs:
               body = body.replace(pattern, autoSection);
             } else {
               body = body.trimEnd() + '\n\n' + autoSection;
+            }
+
+            if (body.includes(issueMarkerStart) && body.includes(issueMarkerEnd)) {
+              const issuePattern = new RegExp(
+                `${issueMarkerStart}[\\s\\S]*?${issueMarkerEnd}`,
+                'm',
+              );
+              body = body.replace(
+                issuePattern,
+                `${issueMarkerStart}\n${relatedIssueSection}\n${issueMarkerEnd}`,
+              );
             }
 
             await github.rest.pulls.update({
