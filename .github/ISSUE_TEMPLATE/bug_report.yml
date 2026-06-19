@@ -1,0 +1,68 @@
+name: 버그 리포트
+description: 버그 또는 오동작을 보고합니다
+title: '[Bug] '
+labels:
+  - bug
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        버그를 재현할 수 있는 정보를 작성해 주세요.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 버그 설명
+      description: 무엇이 잘못되었는지 간단히 설명해 주세요.
+      placeholder: 예) 홈 탭 진입 시 앱이 크래시됩니다.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 재현 방법
+      description: 버그를 재현하는 단계를 작성해 주세요.
+      placeholder: |
+        1. 앱 실행
+        2. 홈 탭 선택
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대 동작
+      description: 정상적으로 동작했을 때의 결과를 작성해 주세요.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 플랫폼
+      options:
+        - iOS
+        - Android
+        - Web
+        - All
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 앱/Expo 버전
+      placeholder: 예) Expo SDK 54
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 로그 / 스크린샷
+      description: 관련 로그, 스크린샷, 에러 메시지를 첨부해 주세요.
+    validations:
+      required: false

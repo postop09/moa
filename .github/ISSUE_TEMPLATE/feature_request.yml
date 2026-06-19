@@ -1,0 +1,53 @@
+name: 기능 요청
+description: 새 기능 또는 개선 사항을 제안합니다
+title: '[Feature] '
+labels:
+  - enhancement
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        어떤 기능이 필요한지, 왜 필요한지 작성해 주세요.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 문제 / 배경
+      description: 해결하려는 문제나 배경을 설명해 주세요.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 제안하는 해결 방법
+      description: 원하는 기능이나 UX를 설명해 주세요.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: layer
+    attributes:
+      label: FSD 레이어 (해당 시)
+      description: 변경이 예상되는 레이어를 선택해 주세요.
+      options:
+        - app
+        - screens
+        - widgets
+        - features
+        - entities
+        - shared
+        - 기타 / 미정
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 확인 사항
+      options:
+        - label: README / FSD 레이어 구조를 확인했습니다.
+          required: false
+        - label: 중복 이슈가 없는지 검색했습니다.
+          required: false
