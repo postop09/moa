@@ -5,10 +5,13 @@ When Cursor auto-generates a Git commit message for this repository:
 3. type: feat, fix, refactor, docs, chore, style, test, setting
 4. scope: FSD 레이어(app, screens, widgets, features, entities, shared) 또는 슬라이스명, 해당 레이어에서 작업을 하지 않았다면 비워두세요.
 5. subject: 명령형, 마침표 없음, 50자 이내
+6. 관련 이슈가 있으면 footer에 `Refs #이슈번호`를 추가합니다. (`Closes`는 PR에서 사용)
 
 예시:
 - feat(screens): 홈 페이지 타이틀 수정
 - setting: GitHub Actions CI 파이프라인 추가
 - fix(features): 접이식 섹션 토글 상태 초기화
+
+Refs #12
 
 영어로 작성하지 마세요.
