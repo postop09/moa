@@ -35,7 +35,7 @@ export function HomePage() {
               web: 'F12',
             })}
           </ThemedText>{' '}
-          to open developer tools.
+          to open developer tools. this is test.
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
