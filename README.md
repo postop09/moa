@@ -2,7 +2,53 @@
 
 Expo + React Native 기반 모바일 앱 프로젝트입니다. [Expo Router](https://docs.expo.dev/router/introduction/)로 라우팅을 처리하고, [Feature-Sliced Design (FSD)](https://feature-sliced.design/) 아키텍처로 코드를 구성합니다.
 
-## 시작하기
+---
+
+## GitHub 설정 가이드
+
+`.github`, `.cursorrules`, `.gitmessage` 파일을 참고하세요.
+
+### 이슈 라벨 생성
+
+**Settings → Labels**에서 다음 라벨을 추가합니다.
+
+| 라벨           | 색상      | 용도      |
+| -------------- | --------- | --------- |
+| `bug`          | `#d73a4a` | 버그      |
+| `enhancement`  | `#a2eeef` | 기능 요청 |
+| `task`         | `#0075ca` | 일반 작업 |
+| `needs-triage` | `#fbca04` | 분류 대기 |
+
+### 워크플로
+
+| 워크플로               | 트리거              | 역할                                |
+| ---------------------- | ------------------- | ----------------------------------- |
+| `ci.yml`               | PR / push to `main` | ESLint + TypeScript 검사            |
+| `pr-review.yml`        | PR opened/sync      | reviewdog ESLint PR 리뷰 코멘트     |
+| `pr-auto-summary.yml`  | PR opened/sync      | 커밋·변경 파일·FSD 레이어 자동 삽입 |
+| `issue-management.yml` | 이슈 생성·수정      | 제목 접두사 기반 라벨 자동 부여     |
+
+### 이슈 템플릿
+
+- **버그 리포트** — `[Bug]` 접두사
+- **기능 요청** — `[Feature]` 접두사
+- **작업 요청** — `[Task]` 접두사
+
+GitHub **Issues → New issue**에서 선택할 수 있습니다.
+
+### PR 자동 요약
+
+`pr-auto-summary.yml`이 PR 본문을 자동 갱신합니다.
+
+**`<!-- START auto-generated -->` 구간**
+
+- 커밋 목록
+- 변경 파일 목록 (A/M/D/R)
+- FSD 레이어 변경 감지 체크리스트
+
+---
+
+## 프로젝트 시작하기
 
 ```bash
 pnpm install
@@ -42,7 +88,7 @@ pnpm start
 | `entities` | 도메인 모델, API                           | (추가 예정)                     |
 | `shared`   | 프로젝트 전역 공용 코드                    | `ThemedText`, `useColorScheme`  |
 
-## 1. 프로젝트 구조
+## 프로젝트 구조
 
 ```
 moa/
@@ -98,7 +144,7 @@ import { ThemedText } from '@/shared/ui';
 import { ParallaxScrollView } from '@/widgets/parallax-scroll-view';
 ```
 
-## 2. FSD 아키텍처 개발 원칙
+## FSD 아키텍처 개발 원칙
 
 ### 레이어 의존성 규칙
 
@@ -149,7 +195,9 @@ export default HomePage;
 
 현재 프로젝트는 `ui/` 세그먼트 위주로 구성되어 있으며, 기능이 커지면 `model/`, `api/` 세그먼트를 추가합니다.
 
-## 3. 린트 설정
+---
+
+## 린트 설정
 
 ESLint Flat Config + Prettier 조합을 사용합니다.
 
@@ -230,6 +278,8 @@ export default defineConfig([
 pnpm lint
 pnpm lint -- --fix
 ```
+
+---
 
 ## 참고
 
