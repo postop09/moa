@@ -18,10 +18,12 @@ create table public.transactions (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users (id) on delete cascade,
   category_id uuid references public.categories (id) on delete set null,
+  name text not null,
   type text not null check (type in ('income', 'expense')),
   amount numeric(12, 2) not null check (amount > 0),
   memo text,
   transaction_date date not null default current_date,
+  is_recurring boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

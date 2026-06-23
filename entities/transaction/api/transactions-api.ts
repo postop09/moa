@@ -1,12 +1,9 @@
 import { supabase } from '@/shared/api';
 import { isSupabaseConfigured } from '@/shared/config';
 
-import {
-  getMockCategoryExpenses,
-  getMockDailyExpenses,
-  getMockMonthlySummary,
-  mockTransactions,
-} from '../lib/mock-data';
+import { mockTransactions } from '../lib/mock-data';
+import { getLocalTransactions } from '../lib/local-transactions';
+import { getAllTransactionsForMonth } from '../lib/recurring';
 import {
   calculateCategoryExpenses,
   calculateDailyExpenses,
@@ -18,10 +15,12 @@ type TransactionRow = {
   id: string;
   user_id: string;
   category_id: string | null;
+  name: string;
   type: 'income' | 'expense';
   amount: number;
   memo: string | null;
   transaction_date: string;
+  is_recurring: boolean;
   categories: { name: string } | { name: string }[] | null;
 };
 
@@ -39,11 +38,19 @@ function mapTransaction(row: TransactionRow): Transaction {
     userId: row.user_id,
     categoryId: row.category_id,
     categoryName: getCategoryName(row.categories),
+    name: row.name,
     type: row.type,
     amount: Number(row.amount),
     memo: row.memo,
     transactionDate: row.transaction_date,
+    isRecurring: row.is_recurring ?? false,
   };
+}
+
+function getDemoTransactions(referenceDate = new Date()) {
+  const allTransactions = [...getLocalTransactions(), ...mockTransactions];
+
+  return getAllTransactionsForMonth(allTransactions, referenceDate);
 }
 
 function getMonthRange(referenceDate = new Date()) {
@@ -59,62 +66,78 @@ export async function fetchMonthlyTransactions(
   referenceDate = new Date(),
 ): Promise<Transaction[]> {
   if (!isSupabaseConfigured) {
-    return mockTransactions;
+    return getDemoTransactions(referenceDate);
   }
 
   const { start, end } = getMonthRange(referenceDate);
 
-  const { data, error } = await supabase
-    .from('transactions')
-    .select(
-      `
-      id,
-      user_id,
-      category_id,
-      type,
-      amount,
-      memo,
-      transaction_date,
-      categories ( name )
-    `,
-    )
-    .gte('transaction_date', start)
-    .lte('transaction_date', end)
-    .order('transaction_date', { ascending: false });
+  const [monthlyResult, recurringResult] = await Promise.all([
+    supabase
+      .from('transactions')
+      .select(
+        `
+        id,
+        user_id,
+        category_id,
+        name,
+        type,
+        amount,
+        memo,
+        transaction_date,
+        is_recurring,
+        categories ( name )
+      `,
+      )
+      .gte('transaction_date', start)
+      .lte('transaction_date', end)
+      .order('transaction_date', { ascending: false }),
+    supabase
+      .from('transactions')
+      .select(
+        `
+        id,
+        user_id,
+        category_id,
+        name,
+        type,
+        amount,
+        memo,
+        transaction_date,
+        is_recurring,
+        categories ( name )
+      `,
+      )
+      .eq('is_recurring', true)
+      .lt('transaction_date', start),
+  ]);
 
-  if (error) {
-    throw error;
+  if (monthlyResult.error) {
+    throw monthlyResult.error;
   }
 
-  return (data ?? []).map((row) => mapTransaction(row as TransactionRow));
+  if (recurringResult.error) {
+    throw recurringResult.error;
+  }
+
+  const allRows = [
+    ...(monthlyResult.data ?? []),
+    ...(recurringResult.data ?? []),
+  ].map((row) => mapTransaction(row as TransactionRow));
+
+  return getAllTransactionsForMonth(allRows, referenceDate);
 }
 
 export async function fetchMonthlySummary(referenceDate = new Date()) {
   const transactions = await fetchMonthlyTransactions(referenceDate);
-
-  if (!isSupabaseConfigured) {
-    return getMockMonthlySummary();
-  }
-
   return calculateMonthlySummary(transactions);
 }
 
 export async function fetchDailyExpenses(referenceDate = new Date()) {
   const transactions = await fetchMonthlyTransactions(referenceDate);
-
-  if (!isSupabaseConfigured) {
-    return getMockDailyExpenses();
-  }
-
   return calculateDailyExpenses(transactions);
 }
 
 export async function fetchCategoryExpenses(referenceDate = new Date()) {
   const transactions = await fetchMonthlyTransactions(referenceDate);
-
-  if (!isSupabaseConfigured) {
-    return getMockCategoryExpenses();
-  }
-
   return calculateCategoryExpenses(transactions);
 }

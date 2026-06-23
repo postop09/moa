@@ -15,10 +15,22 @@ export type Transaction = {
   userId: string;
   categoryId: string | null;
   categoryName?: string;
+  name: string;
   type: TransactionType;
   amount: number;
   memo: string | null;
   transactionDate: string;
+  isRecurring: boolean;
+};
+
+export type CreateTransactionInput = {
+  name: string;
+  amount: number;
+  categoryId: string;
+  type: TransactionType;
+  transactionDate: string;
+  memo: string | null;
+  isRecurring: boolean;
 };
 
 export type MonthlySummary = {
