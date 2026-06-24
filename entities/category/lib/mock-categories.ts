@@ -9,6 +9,7 @@ export const mockCategories: Category[] = [
     icon: 'wallet',
     color: '#2563EB',
     sortOrder: 1,
+    budget: null,
   },
   {
     id: 'inc-2',
@@ -18,6 +19,7 @@ export const mockCategories: Category[] = [
     icon: 'trending-up',
     color: '#2563EB',
     sortOrder: 2,
+    budget: null,
   },
   {
     id: 'exp-1',
@@ -27,6 +29,7 @@ export const mockCategories: Category[] = [
     icon: 'restaurant',
     color: '#EF4444',
     sortOrder: 1,
+    budget: 400000,
   },
   {
     id: 'exp-2',
@@ -36,6 +39,7 @@ export const mockCategories: Category[] = [
     icon: 'directions-car',
     color: '#EF4444',
     sortOrder: 2,
+    budget: null,
   },
   {
     id: 'exp-3',
@@ -45,6 +49,7 @@ export const mockCategories: Category[] = [
     icon: 'shopping-bag',
     color: '#EF4444',
     sortOrder: 3,
+    budget: null,
   },
   {
     id: 'exp-4',
@@ -54,6 +59,7 @@ export const mockCategories: Category[] = [
     icon: 'home',
     color: '#EF4444',
     sortOrder: 4,
+    budget: 550000,
   },
   {
     id: 'exp-5',
@@ -63,5 +69,6 @@ export const mockCategories: Category[] = [
     icon: 'more-horiz',
     color: '#EF4444',
     sortOrder: 5,
+    budget: null,
   },
 ];

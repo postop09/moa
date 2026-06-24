@@ -1,3 +1,4 @@
+export { BudgetManagementPage } from './budget-management';
 export { AddTransactionPage } from './add-transaction';
 export { CalendarPage } from './calendar';
 export { ExplorePage } from './explore';

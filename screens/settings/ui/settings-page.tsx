@@ -40,6 +40,19 @@ export function SettingsPage() {
         </ThemedView>
 
         <ThemedView style={styles.section}>
+          <ThemedText type="subtitle">관리</ThemedText>
+          <Pressable
+            onPress={() => router.push('/budget-management')}
+            style={[styles.menuButton, { borderColor: colors.border }]}
+          >
+            <ThemedText style={styles.menuButtonText}>예산 관리</ThemedText>
+            <ThemedText style={[styles.menuChevron, { color: colors.icon }]}>
+              ›
+            </ThemedText>
+          </Pressable>
+        </ThemedView>
+
+        <ThemedView style={styles.section}>
           <ThemedText type="subtitle">연결 상태</ThemedText>
           <ThemedText style={styles.description}>
             Supabase:{' '}
@@ -78,6 +91,23 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 15,
     opacity: 0.7,
+    lineHeight: 22,
+  },
+  menuButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
+  },
+  menuButtonText: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  menuChevron: {
+    fontSize: 22,
     lineHeight: 22,
   },
   signOutButton: {

@@ -3,3 +3,4 @@ export { Collapsible } from './collapsible';
 export { AddTransactionForm } from './add-transaction';
 export { AddTransactionTabButton } from './add-transaction-tab';
 export { GoogleSignInButton } from './google-sign-in';
+export { BudgetEditorModal, BudgetListItem } from './budget-management';

@@ -10,6 +10,7 @@ create table public.categories (
   icon text,
   color text,
   sort_order int not null default 0,
+  budget numeric(12, 2),
   created_at timestamptz not null default now()
 );
 

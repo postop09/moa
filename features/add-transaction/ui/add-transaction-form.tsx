@@ -19,7 +19,10 @@ import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { FormField, ThemedText } from '@/shared/ui';
 
-import { formatAmountInput, parseAmountInput } from '../lib/amount';
+import {
+  formatAmountInput,
+  parseAmountInput,
+} from '@/shared/lib/format-amount';
 import { toISODate } from '../lib/date';
 import { CategorySelector } from './category-selector';
 import { DateField } from './date-field';
