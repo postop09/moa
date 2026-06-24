@@ -8,6 +8,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import 'react-native-reanimated';
 
+import { useProfile } from '@/entities/profile';
 import { SessionProvider, useSession } from '@/entities/session';
 import { AppProviders, useColorScheme } from '@/shared/lib';
 import { ThemedView } from '@/shared/ui';
@@ -18,7 +19,12 @@ export const unstable_settings = {
 
 function RootNavigator() {
   const colorScheme = useColorScheme();
-  const { session, isLoading } = useSession();
+  const { session, isLoading: isSessionLoading } = useSession();
+  const { data: profile, isLoading: isProfileLoading } = useProfile();
+
+  const isLoading = isSessionLoading || (!!session && isProfileLoading);
+  const hasProfile = !!profile;
+  const needsProfileSetup = !!session && !hasProfile && !isProfileLoading;
 
   if (isLoading) {
     return (
@@ -31,13 +37,17 @@ function RootNavigator() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Protected guard={!!session}>
+        <Stack.Protected guard={!!session && hasProfile}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="budget-management" />
           <Stack.Screen
             name="modal"
             options={{ presentation: 'modal', title: 'Modal' }}
           />
+        </Stack.Protected>
+
+        <Stack.Protected guard={needsProfileSetup}>
+          <Stack.Screen name="setup-profile" />
         </Stack.Protected>
 
         <Stack.Protected guard={!session}>

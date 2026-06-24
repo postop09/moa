@@ -1,21 +1,27 @@
--- Moa 가계부 스키마
--- Supabase SQL Editor에서 실행하세요.
+-- profiles, household, household_member 스키마로 전환
 
--- 프로필
+drop trigger if exists on_auth_user_created on auth.users;
+drop function if exists public.seed_default_categories();
+drop function if exists public.set_updated_at() cascade;
+
+drop table if exists public.transactions cascade;
+drop table if exists public.categories cascade;
+drop table if exists public.household_member cascade;
+drop table if exists public.household cascade;
+drop table if exists public.profiles cascade;
+
 create table public.profiles (
   id uuid primary key references auth.users (id) on delete cascade,
   email text not null,
   nickname text not null
 );
 
--- 가구
 create table public.household (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   owner_id uuid not null references public.profiles (id) on delete cascade
 );
 
--- 가구 구성원
 create table public.household_member (
   id uuid primary key default gen_random_uuid(),
   household_id uuid not null references public.household (id) on delete cascade,
@@ -29,12 +35,10 @@ create index household_member_user_id_idx
 create index household_owner_id_idx
   on public.household (owner_id);
 
--- RLS
 alter table public.profiles enable row level security;
 alter table public.household enable row level security;
 alter table public.household_member enable row level security;
 
--- profiles: 본인 프로필만 조회·수정
 create policy "profiles_select_own"
   on public.profiles for select
   using (auth.uid() = id);
@@ -47,7 +51,6 @@ create policy "profiles_update_own"
   on public.profiles for update
   using (auth.uid() = id);
 
--- household: 소유자 또는 구성원만 조회
 create policy "household_select_member"
   on public.household for select
   using (
@@ -72,7 +75,6 @@ create policy "household_delete_owner"
   on public.household for delete
   using (auth.uid() = owner_id);
 
--- household_member: 같은 가구 구성원만 조회
 create policy "household_member_select"
   on public.household_member for select
   using (
@@ -107,3 +109,24 @@ create policy "household_member_delete_owner"
     )
     or auth.uid() = household_member.user_id
   );
+
+create or replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.profiles (id, email, nickname)
+  values (
+    new.id,
+    coalesce(new.email, ''),
+    coalesce(
+      new.raw_user_meta_data ->> 'full_name',
+      new.raw_user_meta_data ->> 'name',
+      split_part(coalesce(new.email, 'user'), '@', 1)
+    )
+  );
+  return new;
+end;
+$$ language plpgsql security definer;
+
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute function public.handle_new_user();

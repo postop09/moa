@@ -2,6 +2,8 @@ import { useRouter } from 'expo-router';
 import { Alert, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useMyHouseholds } from '@/entities/household';
+import { useProfile } from '@/entities/profile';
 import { signOut, useSession } from '@/entities/session';
 import { Colors, isSupabaseConfigured } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
@@ -12,6 +14,13 @@ export function SettingsPage() {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const { session } = useSession();
+  const { data: profile } = useProfile();
+  const { data: households } = useMyHouseholds();
+
+  const householdLabel =
+    households && households.length > 0
+      ? households.map((household) => household.name).join(', ')
+      : '가구 없음';
 
   const handleSignOut = async () => {
     try {
@@ -35,8 +44,16 @@ export function SettingsPage() {
         <ThemedView style={styles.section}>
           <ThemedText type="subtitle">계정</ThemedText>
           <ThemedText style={styles.description}>
-            {session?.user.email ?? '로그인됨'}
+            {profile?.nickname ?? session?.user.email ?? '로그인됨'}
           </ThemedText>
+          {profile?.email ? (
+            <ThemedText style={styles.description}>{profile.email}</ThemedText>
+          ) : null}
+        </ThemedView>
+
+        <ThemedView style={styles.section}>
+          <ThemedText type="subtitle">가구</ThemedText>
+          <ThemedText style={styles.description}>{householdLabel}</ThemedText>
         </ThemedView>
 
         <ThemedView style={styles.section}>
@@ -56,7 +73,12 @@ export function SettingsPage() {
           <ThemedText type="subtitle">연결 상태</ThemedText>
           <ThemedText style={styles.description}>
             Supabase:{' '}
-            {isSupabaseConfigured ? '연결됨' : '미연결 (목업 데이터 사용 중)'}
+            {isSupabaseConfigured
+              ? '연결됨 (프로필·가구)'
+              : '미연결 (프로필·가구 목업)'}
+          </ThemedText>
+          <ThemedText style={styles.description}>
+            거래·카테고리: 목업 데이터
           </ThemedText>
         </ThemedView>
 
