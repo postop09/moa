@@ -1,12 +1,12 @@
 // https://docs.expo.dev/guides/using-eslint/
-const { defineConfig } = require('eslint/config');
-const expoConfig = require('eslint-config-expo/flat');
-const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
-const tseslint = require('typescript-eslint');
+import expoConfig from 'eslint-config-expo/flat';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import { defineConfig } from 'eslint/config';
+import { configs } from 'typescript-eslint';
 
 module.exports = defineConfig([
   expoConfig,
-  ...tseslint.configs.recommended,
+  ...configs.recommended,
   eslintPluginPrettierRecommended,
   {
     ignores: ['dist/*'],

@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useCreateProfile } from '@/entities/profile';
 import { signOut, useSession } from '@/entities/session';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
@@ -20,8 +19,7 @@ export function SetupProfilePage() {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const { session } = useSession();
-  const { mutate, isPending } = useCreateProfile();
-
+  const isPending = false;
   const [nickname, setNickname] = useState('');
   const [error, setError] = useState('');
 
@@ -40,7 +38,7 @@ export function SetupProfilePage() {
 
     setError('');
 
-    mutate({ nickname: trimmed });
+    // mutate({ nickname: trimmed });
   };
 
   const handleSignOut = async () => {

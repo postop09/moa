@@ -18,3 +18,7 @@ app → screens → widgets → features → entities → shared
 ```
 
 `pages`는 `screens/`로 사용합니다.
+
+## entities 설계
+
+- 상세: [`.cursor/rules/entities-design.mdc`](./.cursor/rules/entities-design.mdc)

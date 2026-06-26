@@ -1,15 +1,16 @@
-import { supabase } from '@/shared';
+import { supabase } from '@/shared/api';
+import type { GetProfileRes } from '../model/getProfileRes';
 
-export const getProfile = async (userId: string) => {
+export const getProfile = async (
+  userId: string,
+): Promise<GetProfileRes | null> => {
   const { data, error } = await supabase
     .from('profiles')
-    .select('*')
+    .select('id, email, nickname')
     .eq('id', userId)
     .maybeSingle();
-  console.log('data', data);
 
   if (error) {
-    console.error(error);
     throw error;
   }
 
