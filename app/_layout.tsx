@@ -8,10 +8,11 @@ import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import 'react-native-reanimated';
 
-import { useProfile } from '@/entities/profile';
+import { getProfile } from '@/entities';
 import { SessionProvider, useSession } from '@/entities/session';
 import { AppProviders, useColorScheme } from '@/shared/lib';
 import { ThemedView } from '@/shared/ui';
+import { useQuery } from '@tanstack/react-query';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -20,7 +21,13 @@ export const unstable_settings = {
 function RootNavigator() {
   const colorScheme = useColorScheme();
   const { session, isLoading: isSessionLoading } = useSession();
-  const { data: profile, isLoading: isProfileLoading } = useProfile();
+  const { data: profile, isLoading: isProfileLoading } = useQuery({
+    queryKey: ['profile', session?.user.id],
+    queryFn: () => getProfile(session?.user.id ?? ''),
+    enabled: !!session?.user.id,
+  });
+
+  console.log('profile: ', profile);
 
   const isLoading = isSessionLoading || (!!session && isProfileLoading);
   const hasProfile = !!profile;

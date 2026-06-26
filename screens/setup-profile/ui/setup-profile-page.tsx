@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { createProfile } from '@/entities/profile/api/createProfile';
 import { signOut, useSession } from '@/entities/session';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
@@ -23,7 +24,7 @@ export function SetupProfilePage() {
   const [nickname, setNickname] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const trimmed = nickname.trim();
 
     if (!trimmed) {
@@ -38,7 +39,11 @@ export function SetupProfilePage() {
 
     setError('');
 
-    // mutate({ nickname: trimmed });
+    await createProfile({
+      id: session?.user.id || '',
+      email: session?.user.email || '',
+      nickname: trimmed,
+    });
   };
 
   const handleSignOut = async () => {

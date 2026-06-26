@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 
-import { signInWithGoogle } from '@/entities/session';
+import { getGoogleLoginUrl } from '@/entities/profile/api/getGoogleLoginUrl';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
@@ -21,7 +21,7 @@ export function GoogleSignInButton() {
   const handlePress = async () => {
     try {
       setIsLoading(true);
-      await signInWithGoogle();
+      await getGoogleLoginUrl();
     } catch (error) {
       const message =
         error instanceof Error ? error.message : '다시 시도해주세요.';
