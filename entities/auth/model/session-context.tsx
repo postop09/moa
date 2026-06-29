@@ -29,7 +29,9 @@ export function SessionProvider({ children }: SessionProviderProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+    supabase.auth.getSession().then(({ data }) => {
+      const currentSession = data.session;
+      console.log('getSession Data: ', data);
       setSession(currentSession);
       setIsLoading(false);
     });
@@ -40,6 +42,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
       setSession(nextSession);
       setIsLoading(false);
     });
+    console.log('subscription: ', subscription);
 
     return () => {
       subscription.unsubscribe();

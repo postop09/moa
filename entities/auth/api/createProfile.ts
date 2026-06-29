@@ -1,14 +1,12 @@
 import { supabase } from '@/shared/api';
-import type { GetProfileRes } from '../model/getProfileRes';
+import { Profile } from '../model/profile';
 
-export const getProfile = async (
-  userId: string,
-): Promise<GetProfileRes | null> => {
+export const createProfile = async (payload: Profile): Promise<Profile> => {
   const { data, error } = await supabase
     .from('profiles')
+    .insert(payload)
     .select('id, email, nickname')
-    .eq('id', userId)
-    .maybeSingle();
+    .single();
 
   if (error) {
     throw error;

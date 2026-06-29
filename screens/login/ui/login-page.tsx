@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   title: {
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: '800',
   },
   subtitle: {

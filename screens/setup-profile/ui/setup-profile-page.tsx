@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { createProfile } from '@/entities/profile/api/createProfile';
-import { signOut, useSession } from '@/entities/session';
+import { signOut, useSession } from '@/entities/auth';
+import { createProfile } from '@/entities/auth/api/createProfile';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { FormField, ThemedText, ThemedView } from '@/shared/ui';
@@ -39,11 +39,13 @@ export function SetupProfilePage() {
 
     setError('');
 
-    await createProfile({
+    const data = await createProfile({
       id: session?.user.id || '',
       email: session?.user.email || '',
       nickname: trimmed,
     });
+
+    console.log('createProfile Data: ', data);
   };
 
   const handleSignOut = async () => {

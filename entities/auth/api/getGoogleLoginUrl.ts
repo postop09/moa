@@ -1,11 +1,10 @@
 import { supabase } from '@/shared/api';
 import * as WebBrowser from 'expo-web-browser';
 import { REDIRECT_URL } from '../config/redirectURL';
-import { getSession } from './getSession';
 
 WebBrowser.maybeCompleteAuthSession();
 
-export const getGoogleLoginUrl = async () => {
+export const getGoogleLoginUrl = async (): Promise<string> => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
@@ -15,6 +14,10 @@ export const getGoogleLoginUrl = async () => {
 
   if (error) {
     throw error;
+  }
+
+  if (!data.url) {
+    throw new Error('Google 로그인 URL을 가져오지 못했습니다.');
   }
 
   const result = await WebBrowser.openAuthSessionAsync(data.url, REDIRECT_URL);
@@ -27,7 +30,5 @@ export const getGoogleLoginUrl = async () => {
     throw new Error('로그인에 실패했습니다.');
   }
 
-  const session = await getSession(result.url);
-  console.log('session: ', session);
   return result.url;
 };

@@ -9,7 +9,7 @@ import { ActivityIndicator, StyleSheet } from 'react-native';
 import 'react-native-reanimated';
 
 import { getProfile } from '@/entities';
-import { SessionProvider, useSession } from '@/entities/session';
+import { SessionProvider, useSession } from '@/entities/auth';
 import { AppProviders, useColorScheme } from '@/shared/lib';
 import { ThemedView } from '@/shared/ui';
 import { useQuery } from '@tanstack/react-query';

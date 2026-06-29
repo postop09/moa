@@ -3,8 +3,8 @@ import { Alert, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { getProfile } from '@/entities';
+import { signOut, useSession } from '@/entities/auth';
 import { useMyHouseholds } from '@/entities/household';
-import { signOut, useSession } from '@/entities/session';
 import { Colors, isSupabaseConfigured } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
