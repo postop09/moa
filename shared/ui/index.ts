@@ -1,6 +1,5 @@
-export { FormField } from './form-field';
-export { ThemedText, type ThemedTextProps } from './themed-text';
-export { ThemedView, type ThemedViewProps } from './themed-view';
-export { IconSymbol } from './icon-symbol';
-export { ExternalLink } from './external-link';
-export { HelloWave } from './hello-wave';
+export { ExternalLink } from './ExternalLink';
+export { FormField } from './FormField';
+export { IconSymbol } from './IconSymbol';
+export { ThemedText, type ThemedTextProps } from './ThemedText';
+export { ThemedView, type ThemedViewProps } from './ThemedView';

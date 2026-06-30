@@ -1,4 +1,4 @@
-import type { Transaction } from '../model/types';
+import type { Transaction } from '../model/transaction';
 
 const localTransactions: Transaction[] = [];
 

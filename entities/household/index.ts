@@ -8,4 +8,4 @@ export {
   fetchMyHouseholds,
   updateHousehold,
 } from './api/households-api';
-export { useMyHouseholds } from './api/use-households';
+export { useMyHouseholds } from './model/useMyHouseholds';

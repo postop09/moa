@@ -1,4 +1,4 @@
-import type { Category } from '../model/types';
+import type { Category } from '../model/category';
 import { mockCategories } from './mock-categories';
 
 let localCategories: Category[] = [...mockCategories];

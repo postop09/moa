@@ -1,9 +1,7 @@
-import type {
-  CategoryExpense,
-  DailyExpense,
-  MonthlySummary,
-  Transaction,
-} from '../model/types';
+import type { CategoryExpense } from '../model/categoryExpense';
+import type { DailyExpense } from '../model/dailyExpense';
+import type { MonthlySummary } from '../model/monthlySummary';
+import type { Transaction } from '../model/transaction';
 
 const today = new Date();
 
