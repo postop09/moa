@@ -1,0 +1,55 @@
+---
+description: screens 레이어 설계 원칙 — 도메인 단위 슬라이스, 슬라이스 내부 세그먼트 분리
+globs: screens/**/*
+alwaysApply: false
+---
+
+# screens 설계 원칙
+
+FSD `screens` 레이어는 **도메인 단위 슬라이스**로 구성한다. 각 슬라이스는 목적에 따라 세그먼트를 구성한다.
+
+```
+entities/
+  {slice}/
+    ui/       # UI 컴포넌트
+    api/      # 백엔드 통신 및 데이터 로직(선택)
+    lib/      # 순수 헬퍼, mock, 로컬 저장소
+    model/    # 타입, 스토어, 비즈니스 로직
+    config/   # 상수·설정
+    index.ts  # 완성된 페이지
+```
+
+## ui
+
+- 해당 슬라이스 전용 UI 컴포넌트.
+- 가장 작은 기능 단위로 컴포넌트 구현.
+
+## api
+
+- `entities`에 선언된 api 를 활용하는 해당 슬라이스 전용 api.
+
+## model
+
+- 스키마, 인터페이스, 스토어, 비즈니스 로직 (Redux/Zustand의 액션, 리듀서, 셀렉터 등).
+- Hook 파일명은 camelCase 를 사용(`useSignInWithGoogle.ts`)
+
+## lib
+
+- mock 데이터, mapper, 로컬 캐시, 비즈니스 없는 유틸.
+
+## config
+
+- 슬라이스 전용 env 키, 테이블명, 쿼리 키, 상수 등.
+
+## index.ts (public API)
+
+- ui 세그먼트의 모든 컴포넌트를 조립한 최종 파일.
+- 슬라이스 외부에는 `index.ts` export만 사용한다.
+- 내부 경로(`screens/login/ui/GoogleSignInButton`) 직접 import 지양.
+
+## 체크리스트
+
+1. `shared` 슬라이스에서 공통적으로 사용할 수 있는 요소가 있는지 우선 확인.
+2. 해당 슬라이스 전용.
+3. `index.ts`에 ui 조립, 완성된 페이지 export.
+4. 다른 슬라이스에 재사용되는 요소는 `shared`의 해당 세그먼트로 이동.

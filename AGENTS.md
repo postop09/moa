@@ -9,7 +9,6 @@ Expo SDK 54 + FSD 프로젝트입니다.
 
 - **한국어**로 작성 (`type(scope): subject` 형식)
 - SCM ✨ 생성: 루트 [`.cursorrules`](./.cursorrules) 참조
-- 상세: [`.cursor/rules/git-conventions.mdc`](./.cursor/rules/git-conventions.mdc)
 
 ## FSD 레이어
 
@@ -22,3 +21,7 @@ app → screens → widgets → features → entities → shared
 ## entities 설계
 
 - 상세: [`.cursor/rules/entities-design.mdc`](./.cursor/rules/entities-design.mdc)
+
+## screens 설계
+
+- 상세: [`.cursor/rules/screens-design.mdc`](./.cursor/rules/screens-design.mdc)
