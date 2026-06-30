@@ -82,7 +82,7 @@ pnpm start
 | 레이어     | 역할                                       | 예시                            |
 | ---------- | ------------------------------------------ | ------------------------------- |
 | `app`      | URL ↔ 화면 연결, 레이아웃·네비게이션 설정  | `(tabs)/index.tsx` → `HomePage` |
-| `screens`  | 페이지 단위 UI 조합                        | `HomePage`, `ExplorePage`       |
+| `screens`  | 페이지 단위 UI 및 기능 집합                | `HomePage`, `ExplorePage`       |
 | `widgets`  | 대규모의 독립적인 기능 또는 UI             | `ParallaxScrollView`            |
 | `features` | 재사용 가능한 비즈니스 핵심 액션·기능·로직 | `Collapsible`, `HapticTab`      |
 | `entities` | 도메인 모델, API                           | (추가 예정)                     |

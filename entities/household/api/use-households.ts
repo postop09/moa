@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useSession } from '@/entities/session';
+import { useSession } from '@/entities/auth';
 
 import { fetchMyHouseholds } from './households-api';
 

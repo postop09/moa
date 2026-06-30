@@ -2,20 +2,24 @@ import { useRouter } from 'expo-router';
 import { Alert, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { getProfile, signOut, useSession } from '@/entities/auth';
 import { useMyHouseholds } from '@/entities/household';
-import { useProfile } from '@/entities/profile';
-import { signOut, useSession } from '@/entities/session';
 import { Colors, isSupabaseConfigured } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
+import { useQuery } from '@tanstack/react-query';
 
 export function SettingsPage() {
   const router = useRouter();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const { session } = useSession();
-  const { data: profile } = useProfile();
   const { data: households } = useMyHouseholds();
+  const { data: profile } = useQuery({
+    queryKey: ['profile', session?.user.id],
+    queryFn: () => getProfile(session?.user.id ?? ''),
+    enabled: !!session?.user.id,
+  });
 
   const householdLabel =
     households && households.length > 0
