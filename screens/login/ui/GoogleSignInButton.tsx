@@ -1,10 +1,5 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
