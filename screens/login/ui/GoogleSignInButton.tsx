@@ -1,7 +1,6 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
 import {
   ActivityIndicator,
-  Alert,
   Pressable,
   StyleSheet,
   View,
@@ -11,24 +10,12 @@ import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
 
-import { signInWithGoogle } from '@/entities';
-import { useMutation } from '@tanstack/react-query';
+import { useSignInWithGoogle } from '../model/useSignInWithGoogle';
 
 export function GoogleSignInButton() {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: signInWithGoogle,
-    onError: (error) => {
-      const message =
-        error instanceof Error ? error.message : '다시 시도해주세요.';
-
-      if (message !== '로그인이 취소되었습니다.') {
-        Alert.alert('로그인 실패', message);
-      }
-    },
-  });
+  const { mutate, isPending } = useSignInWithGoogle();
 
   return (
     <Pressable

@@ -47,6 +47,20 @@ entities/
 - 슬라이스 외부에는 `index.ts` export만 사용한다.
 - 내부 경로(`screens/login/ui/GoogleSignInButton`) 직접 import 지양.
 
+```typescript
+// ✅ index.ts: 모든 컴포넌트를 조립한 최종 파일
+export function LoginPage() {
+  return (
+    <ThemedView style={styles.container}>
+      <SafeAreaView style={styles.safeArea}>
+        <LoginHero />
+        <LoginActions />
+      </SafeAreaView>
+    </ThemedView>
+  );
+}
+```
+
 ## 체크리스트
 
 1. `shared` 슬라이스에서 공통적으로 사용할 수 있는 요소가 있는지 우선 확인.
