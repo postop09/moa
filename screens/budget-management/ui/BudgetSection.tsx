@@ -1,4 +1,4 @@
-import type { Category, CategoryType } from '@/entities/category';
+import type { Category } from '@/entities/category';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
