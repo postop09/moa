@@ -1,11 +1,9 @@
 import { StyleSheet } from 'react-native';
-
 import { useMyHouseholds } from '@/entities/household';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
-export function HouseholdSection() {
+export const HouseholdSection = () => {
   const { data: households } = useMyHouseholds();
-
   const householdLabel =
     households && households.length > 0
       ? households.map((household) => household.name).join(', ')
@@ -17,7 +15,7 @@ export function HouseholdSection() {
       <ThemedText style={styles.description}>{householdLabel}</ThemedText>
     </ThemedView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   section: {

@@ -1,15 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { ThemedText, ThemedView } from '@/shared/ui';
-
 import { AccountSection } from './ui/AccountSection';
 import { ConnectionSection } from './ui/ConnectionSection';
 import { HouseholdSection } from './ui/HouseholdSection';
 import { ManagementSection } from './ui/ManagementSection';
 import { SignOutButton } from './ui/SignOutButton';
 
-export function SettingsPage() {
+export const SettingsPage = () => {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -25,7 +23,7 @@ export function SettingsPage() {
       </SafeAreaView>
     </ThemedView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

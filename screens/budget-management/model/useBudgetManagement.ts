@@ -13,7 +13,7 @@ type EditorState =
   | { mode: 'create'; defaultType: CategoryType }
   | { mode: 'edit'; category: Category };
 
-export function useBudgetManagement() {
+export const useBudgetManagement = () => {
   const { data: categories = [], isLoading, isRefetching } = useCategories();
   const { mutateAsync: createCategory, isPending: isCreating } =
     useCreateCategory();
@@ -92,4 +92,4 @@ export function useBudgetManagement() {
     handleSubmit,
     handleDelete,
   };
-}
+};

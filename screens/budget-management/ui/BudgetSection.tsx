@@ -3,9 +3,7 @@ import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
 import { Pressable, StyleSheet, View } from 'react-native';
-
 import { BudgetListItem } from './BudgetListItem';
-
 type BudgetSectionProps = {
   title: string;
   categories: Category[];
@@ -15,8 +13,7 @@ type BudgetSectionProps = {
   deletingId: string | null;
   isDeleting: boolean;
 };
-
-export function BudgetSection({
+export const BudgetSection = ({
   title,
   categories,
   onAdd,
@@ -24,10 +21,9 @@ export function BudgetSection({
   onDelete,
   deletingId,
   isDeleting,
-}: BudgetSectionProps) {
+}: BudgetSectionProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-
   return (
     <View style={styles.section}>
       <View style={styles.sectionHeader}>
@@ -54,8 +50,7 @@ export function BudgetSection({
       )}
     </View>
   );
-}
-
+};
 const styles = StyleSheet.create({
   section: {
     gap: 10,

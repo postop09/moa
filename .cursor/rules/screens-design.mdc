@@ -41,7 +41,7 @@ import { useSignInWithGoogle } from '../model/useSignInWithGoogle';
 // ✅ model/useSignInWithGoogle.ts
 import { signInWithGoogle } from '@/entities/auth';
 
-export function useSignInWithGoogle() {
+export const useSignInWithGoogle = () => {
   return useMutation({ mutationFn: signInWithGoogle, ... });
 }
 ```
@@ -67,7 +67,7 @@ export function useSignInWithGoogle() {
 
 ```tsx
 // ✅ screens/login/index.tsx
-export function LoginPage() {
+export const LoginPage = () => {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
@@ -76,7 +76,7 @@ export function LoginPage() {
       </SafeAreaView>
     </ThemedView>
   );
-}
+};
 ```
 
 ## features vs screens

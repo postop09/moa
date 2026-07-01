@@ -7,7 +7,6 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import 'react-native-reanimated';
-
 import {
   getProfile,
   getSession,
@@ -18,12 +17,10 @@ import { AppProviders, useColorScheme } from '@/shared/lib';
 import { ThemedView } from '@/shared/ui';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
-
 export const unstable_settings = {
   anchor: '(tabs)',
 };
-
-function RootNavigator() {
+const RootNavigator = () => {
   const colorScheme = useColorScheme();
   const { session, isLoading: isSessionLoading } = useSessionStore();
   const { data: profile, isLoading: isProfileLoading } = useQuery({
@@ -31,13 +28,10 @@ function RootNavigator() {
     queryFn: () => getProfile(session?.user.id ?? ''),
     enabled: !!session?.user.id,
   });
-
   console.log('profile: ', profile);
-
   const isLoading = isSessionLoading || (!!session && isProfileLoading);
   const hasProfile = !!profile;
   const needsProfileSetup = !!session && !hasProfile && !isProfileLoading;
-
   if (isLoading) {
     return (
       <ThemedView style={styles.loading}>
@@ -45,7 +39,6 @@ function RootNavigator() {
       </ThemedView>
     );
   }
-
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
@@ -71,37 +64,31 @@ function RootNavigator() {
       <StatusBar style="auto" />
     </ThemeProvider>
   );
-}
-
-export default function RootLayout() {
+};
+const RootLayout = () => {
   const { setSession, setIsLoading } = useSessionStore();
-
   const sessionInit = async () => {
     const { session } = await getSession();
     setSession(session);
     setIsLoading(false);
-
     const subscription = getSessionChange((event, session) => {
       setSession(session);
       setIsLoading(false);
     });
-
     return () => {
       subscription.unsubscribe();
     };
   };
-
   useEffect(() => {
     sessionInit();
   }, []);
-
   return (
     <AppProviders>
       <RootNavigator />
     </AppProviders>
   );
-}
-
+};
+export default RootLayout;
 const styles = StyleSheet.create({
   loading: {
     flex: 1,

@@ -1,16 +1,14 @@
 import { useRouter } from 'expo-router';
 import { Alert, Pressable, StyleSheet } from 'react-native';
-
 import { signOut } from '@/entities/auth';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
 
-export function SignOutButton() {
+export const SignOutButton = () => {
   const router = useRouter();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-
   const handleSignOut = async () => {
     try {
       await signOut();
@@ -33,7 +31,7 @@ export function SignOutButton() {
       </ThemedText>
     </Pressable>
   );
-}
+};
 
 const styles = StyleSheet.create({
   signOutButton: {

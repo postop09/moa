@@ -1,9 +1,7 @@
 import { useMonthlySummary } from '@/entities/transaction';
 import { MonthlySummary } from '@/widgets/monthly-summary';
-
-export function SummarySection() {
+export const SummarySection = () => {
   const { data: summary, isLoading } = useMonthlySummary();
-
   return (
     <MonthlySummary
       income={summary?.income ?? 0}
@@ -11,4 +9,4 @@ export function SummarySection() {
       isLoading={isLoading}
     />
   );
-}
+};

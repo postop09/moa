@@ -1,9 +1,7 @@
 import { Link } from 'expo-router';
 import { StyleSheet } from 'react-native';
-
 import { ThemedText, ThemedView } from '@/shared/ui';
-
-export function ModalPage() {
+export const ModalPage = () => {
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title">This is a modal</ThemedText>
@@ -12,8 +10,7 @@ export function ModalPage() {
       </Link>
     </ThemedView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,29 +1,25 @@
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
-
 import type { Category } from '@/entities/category';
 import { formatCurrency } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
-
 type BudgetListItemProps = {
   category: Category;
   onEdit: (category: Category) => void;
   onDelete: (category: Category) => void;
   isDeleting?: boolean;
 };
-
-export function BudgetListItem({
+export const BudgetListItem = ({
   category,
   onEdit,
   onDelete,
   isDeleting,
-}: BudgetListItemProps) {
+}: BudgetListItemProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const typeColor =
     category.type === 'expense' ? colors.expense : colors.income;
-
   const handleDelete = () => {
     Alert.alert('예산 삭제', `'${category.name}' 항목을 삭제할까요?`, [
       { text: '취소', style: 'cancel' },
@@ -34,7 +30,6 @@ export function BudgetListItem({
       },
     ]);
   };
-
   return (
     <ThemedView
       style={[styles.container, { borderColor: colors.border }]}
@@ -77,8 +72,7 @@ export function BudgetListItem({
       </View>
     </ThemedView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,

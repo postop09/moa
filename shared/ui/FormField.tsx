@@ -1,19 +1,20 @@
 import { StyleSheet, TextInput, type TextInputProps, View } from 'react-native';
-
 import { Colors } from '@/shared/config';
 import { useColorScheme, useThemeColor } from '@/shared/lib';
 import { ThemedText } from './ThemedText';
-
 type FormFieldProps = TextInputProps & {
   label: string;
   error?: string;
 };
-
-export function FormField({ label, error, style, ...props }: FormFieldProps) {
+export const FormField = ({
+  label,
+  error,
+  style,
+  ...props
+}: FormFieldProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const textColor = useThemeColor({}, 'text');
-
   return (
     <View style={styles.container}>
       <ThemedText style={styles.label}>{label}</ThemedText>
@@ -37,8 +38,7 @@ export function FormField({ label, error, style, ...props }: FormFieldProps) {
       ) : null}
     </View>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     gap: 8,

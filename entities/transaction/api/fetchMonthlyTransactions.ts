@@ -1,8 +1,7 @@
 import { getDemoTransactions } from '../lib/getDemoTransactions';
 import type { Transaction } from '../model/transaction';
-
-export async function fetchMonthlyTransactions(
+export const fetchMonthlyTransactions = async (
   referenceDate = new Date(),
-): Promise<Transaction[]> {
+): Promise<Transaction[]> => {
   return getDemoTransactions(referenceDate);
-}
+};

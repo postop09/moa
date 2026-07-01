@@ -4,15 +4,12 @@ import { PlatformPressable } from '@react-navigation/elements';
 import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-
-export function AddTransactionTabButton(props: BottomTabBarButtonProps) {
+export const AddTransactionTabButton = (props: BottomTabBarButtonProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const [pressed, setPressed] = useState(false);
-
   return (
     <View style={styles.wrapper}>
       <PlatformPressable
@@ -38,8 +35,7 @@ export function AddTransactionTabButton(props: BottomTabBarButtonProps) {
       </PlatformPressable>
     </View>
   );
-}
-
+};
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,

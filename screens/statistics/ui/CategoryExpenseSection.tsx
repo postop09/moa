@@ -1,29 +1,21 @@
 import { View, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
-
-import {
-  formatCurrency,
-  useCategoryExpenses,
-} from '@/entities/transaction';
+import { formatCurrency, useCategoryExpenses } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
-
-export function CategoryExpenseSection() {
+export const CategoryExpenseSection = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const { data: categoryExpenses, isLoading } = useCategoryExpenses();
-
   const pieData =
     categoryExpenses?.map((item) => ({
       value: item.value,
       color: item.color,
       text: item.name,
     })) ?? [];
-
   const totalExpense =
     categoryExpenses?.reduce((sum, c) => sum + c.value, 0) ?? 0;
-
   return (
     <ThemedView
       style={[styles.card, { borderColor: colors.border }]}
@@ -72,8 +64,7 @@ export function CategoryExpenseSection() {
       )}
     </ThemedView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   card: {
     borderRadius: 16,

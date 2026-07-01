@@ -1,5 +1,4 @@
 import { ActivityIndicator, StyleSheet } from 'react-native';
-
 import { formatCurrency } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
@@ -10,11 +9,10 @@ type BalanceCardProps = {
   isLoading?: boolean;
 };
 
-export function BalanceCard({ balance, isLoading }: BalanceCardProps) {
+export const BalanceCard = ({ balance, isLoading }: BalanceCardProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const isNegative = balance < 0;
-
   return (
     <ThemedView
       style={[styles.card, { backgroundColor: colors.accent }]}
@@ -48,8 +46,7 @@ export function BalanceCard({ balance, isLoading }: BalanceCardProps) {
       )}
     </ThemedView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   card: {
     borderRadius: 20,

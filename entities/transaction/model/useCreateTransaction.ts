@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createTransaction } from '../api/createTransaction';
 import type { CreateTransactionReq } from './createTransactionReq';
 
-export function useCreateTransaction() {
+export const useCreateTransaction = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -15,4 +15,4 @@ export function useCreateTransaction() {
       queryClient.invalidateQueries({ queryKey: ['category-expenses'] });
     },
   });
-}
+};

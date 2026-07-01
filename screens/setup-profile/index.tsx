@@ -1,19 +1,12 @@
-import {
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { ThemedView } from '@/shared/ui';
-
 import { useSetupProfile } from './model/useSetupProfile';
 import { HeroSection } from './ui/HeroSection';
 import { ProfileActionsSection } from './ui/ProfileActionsSection';
 import { ProfileFormSection } from './ui/ProfileFormSection';
 
-export function SetupProfilePage() {
+export const SetupProfilePage = () => {
   const {
     nickname,
     setNickname,
@@ -52,7 +45,7 @@ export function SetupProfilePage() {
       </SafeAreaView>
     </ThemedView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

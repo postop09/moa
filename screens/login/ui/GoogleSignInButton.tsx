@@ -1,13 +1,11 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
-
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
-
 import { useSignInWithGoogle } from '../model/useSignInWithGoogle';
 
-export function GoogleSignInButton() {
+export const GoogleSignInButton = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const { mutate, isPending } = useSignInWithGoogle();
@@ -35,7 +33,7 @@ export function GoogleSignInButton() {
       )}
     </Pressable>
   );
-}
+};
 
 const styles = StyleSheet.create({
   button: {

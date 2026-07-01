@@ -4,12 +4,10 @@ import {
   WebBrowserPresentationStyle,
 } from 'expo-web-browser';
 import { type ComponentProps } from 'react';
-
 type Props = Omit<ComponentProps<typeof Link>, 'href'> & {
   href: Href & string;
 };
-
-export function ExternalLink({ href, ...rest }: Props) {
+export const ExternalLink = ({ href, ...rest }: Props) => {
   return (
     <Link
       target="_blank"
@@ -27,4 +25,4 @@ export function ExternalLink({ href, ...rest }: Props) {
       }}
     />
   );
-}
+};

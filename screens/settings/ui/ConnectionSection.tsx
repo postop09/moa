@@ -1,9 +1,8 @@
 import { StyleSheet } from 'react-native';
-
 import { isSupabaseConfigured } from '@/shared/config';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
-export function ConnectionSection() {
+export const ConnectionSection = () => {
   return (
     <ThemedView style={styles.section}>
       <ThemedText type="subtitle">연결 상태</ThemedText>
@@ -18,7 +17,7 @@ export function ConnectionSection() {
       </ThemedText>
     </ThemedView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   section: {

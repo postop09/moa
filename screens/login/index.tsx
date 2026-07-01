@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeroSection } from './ui/HeroSection';
 import { LoginSection } from './ui/LoginSection';
 
-export function LoginPage() {
+export const LoginPage = () => {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
@@ -13,7 +13,7 @@ export function LoginPage() {
       </SafeAreaView>
     </ThemedView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

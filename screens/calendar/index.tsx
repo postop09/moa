@@ -1,11 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { ThemedText, ThemedView } from '@/shared/ui';
-
 import { PlaceholderSection } from './ui/PlaceholderSection';
-
-export function CalendarPage() {
+export const CalendarPage = () => {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -16,8 +13,7 @@ export function CalendarPage() {
       </SafeAreaView>
     </ThemedView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

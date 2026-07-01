@@ -1,17 +1,13 @@
 import { StyleSheet, View } from 'react-native';
-
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
-
-function getMonthLabel(date = new Date()) {
+const getMonthLabel = (date = new Date()) => {
   return `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
-}
-
-export function HeaderSection() {
+};
+export const HeaderSection = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-
   return (
     <View style={styles.header}>
       <ThemedText type="title" style={styles.title}>
@@ -22,8 +18,7 @@ export function HeaderSection() {
       </ThemedText>
     </View>
   );
-}
-
+};
 const styles = StyleSheet.create({
   header: {
     gap: 4,

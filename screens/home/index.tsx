@@ -1,12 +1,9 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { ThemedView } from '@/shared/ui';
-
 import { DashboardSection } from './ui/DashboardSection';
 import { HeaderSection } from './ui/HeaderSection';
-
-export function HomePage() {
+export const HomePage = () => {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -20,8 +17,7 @@ export function HomePage() {
       </SafeAreaView>
     </ThemedView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

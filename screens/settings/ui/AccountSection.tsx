@@ -1,11 +1,9 @@
 import { StyleSheet } from 'react-native';
-
 import { useSessionStore } from '@/entities/auth';
 import { ThemedText, ThemedView } from '@/shared/ui';
-
 import { useSettingsProfile } from '../model/useSettingsProfile';
 
-export function AccountSection() {
+export const AccountSection = () => {
   const { session } = useSessionStore();
   const { data: profile } = useSettingsProfile();
 
@@ -20,7 +18,7 @@ export function AccountSection() {
       ) : null}
     </ThemedView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   section: {

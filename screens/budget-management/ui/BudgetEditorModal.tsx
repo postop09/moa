@@ -6,16 +6,14 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-
 import type { Category, CategoryType } from '@/entities/category';
 import {
   formatAmountInput,
   parseAmountInput,
+  useColorScheme,
 } from '@/shared/lib';
 import { Colors } from '@/shared/config';
-import { useColorScheme } from '@/shared/lib';
 import { FormField, ThemedText } from '@/shared/ui';
-
 type BudgetEditorModalProps = {
   visible: boolean;
   category?: Category | null;
@@ -28,29 +26,25 @@ type BudgetEditorModalProps = {
     budget: number | null;
   }) => void;
 };
-
-export function BudgetEditorModal({
+export const BudgetEditorModal = ({
   visible,
   category,
   defaultType = 'expense',
   isSubmitting,
   onClose,
   onSubmit,
-}: BudgetEditorModalProps) {
+}: BudgetEditorModalProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const isEditing = !!category;
-
   const [name, setName] = useState('');
   const [budget, setBudget] = useState('');
   const [type, setType] = useState<CategoryType>(defaultType);
   const [error, setError] = useState('');
-
   useEffect(() => {
     if (!visible) {
       return;
     }
-
     setName(category?.name ?? '');
     setBudget(
       category?.budget ? formatAmountInput(String(category.budget)) : '',
@@ -58,22 +52,18 @@ export function BudgetEditorModal({
     setType(category?.type ?? defaultType);
     setError('');
   }, [visible, category, defaultType]);
-
   const handleSubmit = () => {
     if (!name.trim()) {
       setError('이름을 입력해주세요.');
       return;
     }
-
     const parsedBudget = parseAmountInput(budget);
-
     onSubmit({
       name: name.trim(),
       type,
       budget: parsedBudget > 0 ? parsedBudget : null,
     });
   };
-
   return (
     <Modal
       visible={visible}
@@ -114,7 +104,6 @@ export function BudgetEditorModal({
                 const isSelected = type === option;
                 const accent =
                   option === 'expense' ? colors.expense : colors.income;
-
                 return (
                   <Pressable
                     key={option}
@@ -170,8 +159,7 @@ export function BudgetEditorModal({
       </Pressable>
     </Modal>
   );
-}
-
+};
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,

@@ -1,34 +1,28 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
-
 import type { DailyExpense } from '@/entities/transaction';
 import { formatCompactCurrency } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
-
 type ExpenseChartProps = {
   data: DailyExpense[];
   isLoading?: boolean;
   title?: string;
 };
-
-export function ExpenseChart({
+export const ExpenseChart = ({
   data,
   isLoading,
   title = '주간 지출',
-}: ExpenseChartProps) {
+}: ExpenseChartProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-
   const chartData = data.map((item) => ({
     value: item.value,
     label: item.label,
     frontColor: colors.expense,
   }));
-
   const maxValue = Math.max(...data.map((d) => d.value), 1);
-
   return (
     <ThemedView
       style={[styles.card, { borderColor: colors.border }]}
@@ -81,8 +75,7 @@ export function ExpenseChart({
       )}
     </ThemedView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   card: {
     borderRadius: 16,

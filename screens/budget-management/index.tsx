@@ -8,20 +8,16 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
-
 import { useBudgetManagement } from './model/useBudgetManagement';
 import { BudgetEditorModal } from './ui/BudgetEditorModal';
 import { BudgetSection } from './ui/BudgetSection';
-
-export function BudgetManagementPage() {
+export const BudgetManagementPage = () => {
   const router = useRouter();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-
   const {
     grouped,
     isLoading,
@@ -37,7 +33,6 @@ export function BudgetManagementPage() {
     handleSubmit,
     handleDelete,
   } = useBudgetManagement();
-
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -106,8 +101,7 @@ export function BudgetManagementPage() {
       />
     </ThemedView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

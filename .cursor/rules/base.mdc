@@ -9,6 +9,38 @@ alwaysApply: true
 - 모든 파일 및 폴더명은 **camelCase** (`createProfile.ts`, `/addTransaction`)
 - ui 컴포넌트 파일명은 **PascalCase** (`HeroSection.tsx`).
 
+## 함수·컴포넌트 작성 규칙
+
+- Hook, 컴포넌트, 유틸 함수 등 **모든 함수**는 **화살표 함수**로 선언합니다.
+
+```ts
+// ✅ Good
+export const useCreateProfile = () => {
+  // ...
+};
+
+export const LoginPage = () => {
+  // ...
+};
+
+export const createProfile = async (payload: CreateProfileReq) => {
+  // ...
+};
+
+// default export
+const RootLayout = () => {
+  // ...
+};
+
+export default RootLayout;
+
+// ❌ Bad
+export function useCreateProfile() {}
+export function LoginPage() {}
+export async function createProfile() {}
+export default function RootLayout() {}
+```
+
 ## FSD 원칙
 
 ### 레이어 의존성 규칙

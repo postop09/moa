@@ -1,15 +1,12 @@
 import { fetchCategories } from '@/entities/category';
-
 import { addLocalTransaction } from '../lib/local-transactions';
 import type { Transaction } from '../model/transaction';
 import type { CreateTransactionReq } from '../model/createTransactionReq';
-
-export async function createTransaction(
+export const createTransaction = async (
   payload: CreateTransactionReq,
-): Promise<Transaction> {
+): Promise<Transaction> => {
   const categories = await fetchCategories(payload.type);
   const category = categories.find((item) => item.id === payload.categoryId);
-
   const transaction: Transaction = {
     id: `local-${Date.now()}`,
     userId: 'demo',
@@ -22,7 +19,6 @@ export async function createTransaction(
     transactionDate: payload.transactionDate,
     isRecurring: payload.isRecurring,
   };
-
   addLocalTransaction(transaction);
   return transaction;
-}
+};

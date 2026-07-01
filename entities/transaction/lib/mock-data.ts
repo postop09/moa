@@ -2,15 +2,12 @@ import type { CategoryExpense } from '../model/categoryExpense';
 import type { DailyExpense } from '../model/dailyExpense';
 import type { MonthlySummary } from '../model/monthlySummary';
 import type { Transaction } from '../model/transaction';
-
 const today = new Date();
-
-function daysAgo(days: number): string {
+const daysAgo = (days: number): string => {
   const date = new Date(today);
   date.setDate(date.getDate() - days);
   return date.toISOString().slice(0, 10);
-}
-
+};
 export const mockTransactions: Transaction[] = [
   {
     id: '1',
@@ -133,51 +130,41 @@ export const mockTransactions: Transaction[] = [
     transactionDate: daysAgo(6),
   },
 ];
-
-export function getMockMonthlySummary(): MonthlySummary {
+export const getMockMonthlySummary = (): MonthlySummary => {
   const income = mockTransactions
     .filter((t) => t.type === 'income')
     .reduce((sum, t) => sum + t.amount, 0);
-
   const expense = mockTransactions
     .filter((t) => t.type === 'expense')
     .reduce((sum, t) => sum + t.amount, 0);
-
   return {
     income,
     expense,
     balance: income - expense,
   };
-}
-
-export function getMockDailyExpenses(): DailyExpense[] {
+};
+export const getMockDailyExpenses = (): DailyExpense[] => {
   const dayLabels = ['일', '월', '화', '수', '목', '금', '토'];
-
   return Array.from({ length: 7 }, (_, index) => {
     const days = 6 - index;
     const date = new Date(today);
     date.setDate(date.getDate() - days);
     const dateKey = date.toISOString().slice(0, 10);
     const label = dayLabels[date.getDay()];
-
     const value = mockTransactions
       .filter((t) => t.type === 'expense' && t.transactionDate === dateKey)
       .reduce((sum, t) => sum + t.amount, 0);
-
     return { label, value };
   });
-}
-
-export function getMockCategoryExpenses(): CategoryExpense[] {
+};
+export const getMockCategoryExpenses = (): CategoryExpense[] => {
   const categoryMap = new Map<string, number>();
-
   mockTransactions
     .filter((t) => t.type === 'expense')
     .forEach((t) => {
       const name = t.categoryName ?? '기타';
       categoryMap.set(name, (categoryMap.get(name) ?? 0) + t.amount);
     });
-
   const colors = [
     '#EF4444',
     '#F97316',
@@ -186,10 +173,9 @@ export function getMockCategoryExpenses(): CategoryExpense[] {
     '#06B6D4',
     '#64748B',
   ];
-
   return Array.from(categoryMap.entries()).map(([name, value], index) => ({
     name,
     value,
     color: colors[index % colors.length],
   }));
-}
+};

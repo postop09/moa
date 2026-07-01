@@ -1,17 +1,14 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-
 import { formatCurrency } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
-
 type MonthlySummaryProps = {
   income: number;
   expense: number;
   isLoading?: boolean;
 };
-
-function SummaryItem({
+const SummaryItem = ({
   label,
   amount,
   color,
@@ -21,10 +18,9 @@ function SummaryItem({
   amount: number;
   color: string;
   isLoading?: boolean;
-}) {
+}) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-
   return (
     <ThemedView
       style={[styles.item, { borderColor: colors.border }]}
@@ -42,16 +38,14 @@ function SummaryItem({
       )}
     </ThemedView>
   );
-}
-
-export function MonthlySummary({
+};
+export const MonthlySummary = ({
   income,
   expense,
   isLoading,
-}: MonthlySummaryProps) {
+}: MonthlySummaryProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-
   return (
     <View style={styles.row}>
       <SummaryItem
@@ -68,8 +62,7 @@ export function MonthlySummary({
       />
     </View>
   );
-}
-
+};
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',

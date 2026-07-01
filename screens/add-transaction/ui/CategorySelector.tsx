@@ -5,28 +5,24 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-
 import type { Category } from '@/entities/category';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
-
 type CategorySelectorProps = {
   categories: Category[];
   value: string;
   onChange: (categoryId: string) => void;
   isLoading?: boolean;
 };
-
-export function CategorySelector({
+export const CategorySelector = ({
   categories,
   value,
   onChange,
   isLoading,
-}: CategorySelectorProps) {
+}: CategorySelectorProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-
   return (
     <View style={styles.container}>
       <ThemedText style={styles.label}>카테고리</ThemedText>
@@ -40,7 +36,6 @@ export function CategorySelector({
         >
           {categories.map((category) => {
             const isSelected = category.id === value;
-
             return (
               <Pressable
                 key={category.id}
@@ -72,8 +67,7 @@ export function CategorySelector({
       )}
     </View>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     gap: 8,

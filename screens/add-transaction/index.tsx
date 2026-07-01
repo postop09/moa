@@ -1,11 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { ThemedText, ThemedView } from '@/shared/ui';
-
 import { AddTransactionForm } from './ui/AddTransactionForm';
-
-export function AddTransactionPage() {
+export const AddTransactionPage = () => {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -16,8 +13,7 @@ export function AddTransactionPage() {
       </SafeAreaView>
     </ThemedView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

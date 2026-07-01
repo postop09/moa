@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import { signInWithGoogle } from '../api/signInWithGoogle';
 
-export function useSignInWithGoogle() {
+export const useSignInWithGoogle = () => {
   return useMutation({
     mutationFn: signInWithGoogle,
     onError: (error) => {
@@ -15,4 +15,4 @@ export function useSignInWithGoogle() {
       }
     },
   });
-}
+};

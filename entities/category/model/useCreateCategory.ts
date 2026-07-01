@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCategory } from '../api/createCategory';
 import type { CreateCategoryReq } from './createCategoryReq';
 
-export function useCreateCategory() {
+export const useCreateCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -12,4 +12,4 @@ export function useCreateCategory() {
       queryClient.invalidateQueries({ queryKey: ['categories'] });
     },
   });
-}
+};

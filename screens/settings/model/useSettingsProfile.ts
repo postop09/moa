@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getProfile, useSessionStore } from '@/entities/auth';
 
-export function useSettingsProfile() {
+export const useSettingsProfile = () => {
   const { session } = useSessionStore();
 
   return useQuery({
@@ -10,4 +10,4 @@ export function useSettingsProfile() {
     queryFn: () => getProfile(session?.user.id ?? ''),
     enabled: !!session?.user.id,
   });
-}
+};

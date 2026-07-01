@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { signOutFromSetup, useCreateProfile } from '../model/useCreateProfile';
 
-export function useSetupProfile() {
+export const useSetupProfile = () => {
   const [nickname, setNickname] = useState('');
   const [error, setError] = useState('');
   const { mutate, isPending } = useCreateProfile();
@@ -33,4 +33,4 @@ export function useSetupProfile() {
     handleSubmit,
     handleSignOut: signOutFromSetup,
   };
-}
+};

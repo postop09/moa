@@ -1,27 +1,25 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-
 import type { TransactionType } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
-
 type TransactionTypeSelectorProps = {
   value: TransactionType;
   onChange: (value: TransactionType) => void;
 };
-
-const OPTIONS: { label: string; value: TransactionType }[] = [
+const OPTIONS: {
+  label: string;
+  value: TransactionType;
+}[] = [
   { label: '지출', value: 'expense' },
   { label: '수입', value: 'income' },
 ];
-
-export function TransactionTypeSelector({
+export const TransactionTypeSelector = ({
   value,
   onChange,
-}: TransactionTypeSelectorProps) {
+}: TransactionTypeSelectorProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-
   return (
     <View style={styles.container}>
       <ThemedText style={styles.label}>유형</ThemedText>
@@ -30,7 +28,6 @@ export function TransactionTypeSelector({
           const isSelected = value === option.value;
           const accentColor =
             option.value === 'expense' ? colors.expense : colors.income;
-
           return (
             <Pressable
               key={option.value}
@@ -57,8 +54,7 @@ export function TransactionTypeSelector({
       </View>
     </View>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     gap: 8,

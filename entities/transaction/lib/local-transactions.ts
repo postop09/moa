@@ -1,11 +1,8 @@
 import type { Transaction } from '../model/transaction';
-
 const localTransactions: Transaction[] = [];
-
-export function addLocalTransaction(transaction: Transaction) {
+export const addLocalTransaction = (transaction: Transaction) => {
   localTransactions.unshift(transaction);
-}
-
-export function getLocalTransactions() {
+};
+export const getLocalTransactions = () => {
   return [...localTransactions];
-}
+};

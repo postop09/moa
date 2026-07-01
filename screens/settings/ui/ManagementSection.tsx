@@ -1,11 +1,10 @@
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet } from 'react-native';
-
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
-export function ManagementSection() {
+export const ManagementSection = () => {
   const router = useRouter();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
@@ -24,7 +23,7 @@ export function ManagementSection() {
       </Pressable>
     </ThemedView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   section: {

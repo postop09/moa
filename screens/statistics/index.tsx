@@ -1,13 +1,10 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { ThemedText, ThemedView } from '@/shared/ui';
-
 import { CategoryExpenseSection } from './ui/CategoryExpenseSection';
 import { SummarySection } from './ui/SummarySection';
 import { TrendSection } from './ui/TrendSection';
-
-export function StatisticsPage() {
+export const StatisticsPage = () => {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -25,8 +22,7 @@ export function StatisticsPage() {
       </SafeAreaView>
     </ThemedView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

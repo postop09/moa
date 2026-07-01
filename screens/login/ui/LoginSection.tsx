@@ -1,12 +1,10 @@
 import { StyleSheet, View } from 'react-native';
-
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
-
 import { GoogleSignInButton } from './GoogleSignInButton';
 
-export function LoginSection() {
+export const LoginSection = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
 
@@ -18,7 +16,7 @@ export function LoginSection() {
       </ThemedText>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   actions: {

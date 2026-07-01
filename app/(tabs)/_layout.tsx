@@ -1,17 +1,14 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
-
 import { AddTransactionTabButton } from '@/features/add-transaction-tab';
 import { HapticTab } from '@/features/haptic-tab';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { IconSymbol } from '@/shared/ui';
-
-export default function TabLayout() {
+const TabLayout = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme ?? 'light'];
-
   return (
     <Tabs
       screenOptions={{
@@ -81,8 +78,8 @@ export default function TabLayout() {
       />
     </Tabs>
   );
-}
-
+};
+export default TabLayout;
 const styles = StyleSheet.create({
   tabLabel: {
     fontSize: 11,

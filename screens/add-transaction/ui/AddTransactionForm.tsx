@@ -9,30 +9,28 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-
 import { useCategories } from '@/entities/category';
 import {
   type TransactionType,
   useCreateTransaction,
 } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
-import { useColorScheme } from '@/shared/lib';
+import {
+  useColorScheme,
+  formatAmountInput,
+  parseAmountInput,
+} from '@/shared/lib';
 import { FormField, ThemedText } from '@/shared/ui';
-
-import { formatAmountInput, parseAmountInput } from '@/shared/lib';
 import { toISODate } from '../lib/date';
 import { CategorySelector } from './CategorySelector';
 import { DateField } from './DateField';
 import { RecurringToggle } from './RecurringToggle';
 import { TransactionTypeSelector } from './TransactionTypeSelector';
-
 const INITIAL_DATE = new Date();
-
-export function AddTransactionForm() {
+export const AddTransactionForm = () => {
   const router = useRouter();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
   const [type, setType] = useState<TransactionType>('expense');
@@ -41,25 +39,20 @@ export function AddTransactionForm() {
   const [memo, setMemo] = useState('');
   const [isRecurring, setIsRecurring] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-
   const { data: categories = [], isLoading: categoriesLoading } =
     useCategories(type);
   const { mutate, isPending } = useCreateTransaction();
-
   useEffect(() => {
     if (!categories.length) {
       return;
     }
-
     const hasSelectedCategory = categories.some(
       (category: { id: string }) => category.id === categoryId,
     );
-
     if (!hasSelectedCategory) {
       setCategoryId(categories[0].id);
     }
   }, [categories, categoryId, type]);
-
   const resetForm = () => {
     setName('');
     setAmount('');
@@ -70,32 +63,25 @@ export function AddTransactionForm() {
     setIsRecurring(false);
     setErrors({});
   };
-
   const validate = () => {
     const nextErrors: Record<string, string> = {};
     const parsedAmount = parseAmountInput(amount);
-
     if (!name.trim()) {
       nextErrors.name = '이름을 입력해주세요.';
     }
-
     if (!parsedAmount) {
       nextErrors.amount = '금액을 입력해주세요.';
     }
-
     if (!categoryId) {
       nextErrors.categoryId = '카테고리를 선택해주세요.';
     }
-
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
   };
-
   const handleSubmit = () => {
     if (!validate()) {
       return;
     }
-
     mutate(
       {
         name: name.trim(),
@@ -120,7 +106,6 @@ export function AddTransactionForm() {
       },
     );
   };
-
   return (
     <KeyboardAvoidingView
       style={styles.flex}
@@ -200,8 +185,7 @@ export function AddTransactionForm() {
       </ScrollView>
     </KeyboardAvoidingView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   flex: {
     flex: 1,

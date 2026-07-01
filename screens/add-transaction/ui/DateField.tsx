@@ -3,33 +3,26 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 import { useState } from 'react';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
-
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
-
 import { formatDisplayDate } from '../lib/date';
-
 type DateFieldProps = {
   value: Date;
   onChange: (date: Date) => void;
 };
-
-export function DateField({ value, onChange }: DateFieldProps) {
+export const DateField = ({ value, onChange }: DateFieldProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const [showPicker, setShowPicker] = useState(false);
-
   const handleChange = (_event: DateTimePickerEvent, selectedDate?: Date) => {
     if (Platform.OS === 'android') {
       setShowPicker(false);
     }
-
     if (selectedDate) {
       onChange(selectedDate);
     }
   };
-
   return (
     <View style={styles.container}>
       <ThemedText style={styles.label}>날짜</ThemedText>
@@ -63,8 +56,7 @@ export function DateField({ value, onChange }: DateFieldProps) {
       ) : null}
     </View>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     gap: 8,

@@ -5,10 +5,9 @@ import {
 import { getDefaultColor, normalizeBudget } from '../lib/categoryDefaults';
 import type { Category } from '../model/category';
 import type { CreateCategoryReq } from '../model/createCategoryReq';
-
-export async function createCategory(
+export const createCategory = async (
   payload: CreateCategoryReq,
-): Promise<Category> {
+): Promise<Category> => {
   const budget = normalizeBudget(payload.budget);
   const category: Category = {
     id: `local-cat-${Date.now()}`,
@@ -20,7 +19,6 @@ export async function createCategory(
     sortOrder: getNextLocalSortOrder(payload.type),
     budget,
   };
-
   addLocalCategory(category);
   return category;
-}
+};

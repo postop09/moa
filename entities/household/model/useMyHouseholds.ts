@@ -4,7 +4,7 @@ import { useSessionStore } from '@/entities/auth';
 
 import { fetchMyHouseholds } from '../api/households-api';
 
-export function useMyHouseholds() {
+export const useMyHouseholds = () => {
   const { session } = useSessionStore();
   const userId = session?.user.id;
 
@@ -13,4 +13,4 @@ export function useMyHouseholds() {
     queryFn: () => fetchMyHouseholds(userId!),
     enabled: !!userId,
   });
-}
+};

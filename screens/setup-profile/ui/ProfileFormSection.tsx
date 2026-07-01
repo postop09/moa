@@ -1,6 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-
-import { useSession } from '@/entities/auth';
+import { useSessionStore } from '@/entities/auth';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { FormField, ThemedText } from '@/shared/ui';
@@ -13,16 +12,16 @@ type ProfileFormSectionProps = {
   onClearError: () => void;
 };
 
-export function ProfileFormSection({
+export const ProfileFormSection = ({
   nickname,
   error,
   isPending,
   onChangeNickname,
   onClearError,
-}: ProfileFormSectionProps) {
+}: ProfileFormSectionProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-  const { session } = useSession();
+  const { session } = useSessionStore();
 
   return (
     <View style={styles.form}>
@@ -47,7 +46,7 @@ export function ProfileFormSection({
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   form: {

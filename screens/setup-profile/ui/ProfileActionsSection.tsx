@@ -1,10 +1,4 @@
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  View,
-} from 'react-native';
-
+import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
@@ -15,11 +9,11 @@ type ProfileActionsSectionProps = {
   onSignOut: () => void;
 };
 
-export function ProfileActionsSection({
+export const ProfileActionsSection = ({
   isPending,
   onSubmit,
   onSignOut,
-}: ProfileActionsSectionProps) {
+}: ProfileActionsSectionProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
 
@@ -54,7 +48,7 @@ export function ProfileActionsSection({
       </Pressable>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   actions: {

@@ -1,10 +1,9 @@
 import { StyleSheet } from 'react-native';
-
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
 
-export function HeroSection() {
+export const HeroSection = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
 
@@ -18,7 +17,7 @@ export function HeroSection() {
       </ThemedText>
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   title: {
