@@ -1,10 +1,11 @@
-import { StyleSheet, View } from 'react-native';
 import { useSessionStore } from '@/entities/auth';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { FormField, ThemedText } from '@/shared/ui';
+import { StyleSheet, View } from 'react-native';
+import { NICKNAME_MAX_LENGTH } from '../config/nickname';
 
-type ProfileFormSectionProps = {
+type Props = {
   nickname: string;
   error: string;
   isPending: boolean;
@@ -18,7 +19,7 @@ export const ProfileFormSection = ({
   isPending,
   onChangeNickname,
   onClearError,
-}: ProfileFormSectionProps) => {
+}: Props) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const { session } = useSessionStore();
@@ -40,7 +41,7 @@ export const ProfileFormSection = ({
         placeholder="닉네임을 입력하세요"
         autoCapitalize="none"
         autoCorrect={false}
-        maxLength={20}
+        maxLength={NICKNAME_MAX_LENGTH}
         error={error}
         editable={!isPending}
       />

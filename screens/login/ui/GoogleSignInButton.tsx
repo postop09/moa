@@ -3,7 +3,7 @@ import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
-import { useSignInWithGoogle } from '../model/useSignInWithGoogle';
+import { useSignInWithGoogle } from '../model';
 
 export const GoogleSignInButton = () => {
   const colorScheme = useColorScheme() ?? 'light';

@@ -12,8 +12,10 @@ alwaysApply: true
 ## 함수·컴포넌트 작성 규칙
 
 - Hook, 컴포넌트, 유틸 함수 등 **모든 함수**는 **화살표 함수**로 선언합니다.
+- 컴포넌트의 Props 타입 이름은 `Props` 를 기본으로 합니다.
 
 ```ts
+// 화살표 함수 사용
 // ✅ Good
 export const useCreateProfile = () => {
   // ...
@@ -39,6 +41,27 @@ export function useCreateProfile() {}
 export function LoginPage() {}
 export async function createProfile() {}
 export default function RootLayout() {}
+```
+
+```ts
+// Props 타입 선언
+// ✅ Good
+type Props = {
+ // ...
+}
+
+export const ProfileActionSection = () => {
+  // ...
+};
+
+// ❌ Bad
+type ProfileActionSectionProps = {
+  // ...
+}
+
+export const ProfileActionSection = () => {
+  // ...
+};
 ```
 
 ## FSD 원칙

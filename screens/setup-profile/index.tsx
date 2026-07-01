@@ -1,21 +1,17 @@
+import { useSetupProfile } from './model';
+import {
+  ChangeAccountButton,
+  HeroSection,
+  ProfileFormSection,
+  StartButton,
+} from './ui';
+import { ThemedView } from '@/shared/ui';
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ThemedView } from '@/shared/ui';
-import { useSetupProfile } from './model/useSetupProfile';
-import { HeroSection } from './ui/HeroSection';
-import { ProfileActionsSection } from './ui/ProfileActionsSection';
-import { ProfileFormSection } from './ui/ProfileFormSection';
 
 export const SetupProfilePage = () => {
-  const {
-    nickname,
-    setNickname,
-    error,
-    setError,
-    isPending,
-    handleSubmit,
-    handleSignOut,
-  } = useSetupProfile();
+  const { nickname, setNickname, error, setError, isPending, handleSubmit } =
+    useSetupProfile();
 
   return (
     <ThemedView style={styles.container}>
@@ -24,9 +20,7 @@ export const SetupProfilePage = () => {
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
           style={styles.content}
         >
-          <View style={styles.hero}>
-            <HeroSection />
-          </View>
+          <HeroSection />
 
           <ProfileFormSection
             nickname={nickname}
@@ -36,11 +30,10 @@ export const SetupProfilePage = () => {
             onClearError={() => setError('')}
           />
 
-          <ProfileActionsSection
-            isPending={isPending}
-            onSubmit={handleSubmit}
-            onSignOut={handleSignOut}
-          />
+          <View style={styles.actions}>
+            <StartButton onSubmit={handleSubmit} isPending={isPending} />
+            <ChangeAccountButton disabled={isPending} />
+          </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </ThemedView>
@@ -60,7 +53,8 @@ const styles = StyleSheet.create({
     paddingVertical: 32,
     justifyContent: 'space-between',
   },
-  hero: {
-    gap: 12,
+  actions: {
+    gap: 14,
+    paddingBottom: 12,
   },
 });

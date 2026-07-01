@@ -1,8 +1,7 @@
 import { ThemedView } from '@/shared/ui';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { HeroSection } from './ui/HeroSection';
-import { LoginSection } from './ui/LoginSection';
+import { HeroSection, LoginSection } from './ui';
 
 export const LoginPage = () => {
   return (

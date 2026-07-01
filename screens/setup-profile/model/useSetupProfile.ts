@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { signOutFromSetup, useCreateProfile } from '../model/useCreateProfile';
+import { NICKNAME_MAX_LENGTH } from '../config/nickname';
+import { useCreateProfile } from '../model/useCreateProfile';
 
 export const useSetupProfile = () => {
   const [nickname, setNickname] = useState('');
@@ -15,8 +16,8 @@ export const useSetupProfile = () => {
       return;
     }
 
-    if (trimmed.length > 20) {
-      setError('닉네임은 20자 이하로 입력해주세요.');
+    if (trimmed.length > NICKNAME_MAX_LENGTH) {
+      setError(`닉네임은 ${NICKNAME_MAX_LENGTH}자 이하로 입력해주세요.`);
       return;
     }
 
@@ -31,6 +32,5 @@ export const useSetupProfile = () => {
     setError,
     isPending,
     handleSubmit,
-    handleSignOut: signOutFromSetup,
   };
 };
