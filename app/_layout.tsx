@@ -8,10 +8,16 @@ import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import 'react-native-reanimated';
 
-import { getProfile, SessionProvider, useSession } from '@/entities/auth';
+import {
+  getProfile,
+  getSession,
+  getSessionChange,
+  useSessionStore,
+} from '@/entities/auth';
 import { AppProviders, useColorScheme } from '@/shared/lib';
 import { ThemedView } from '@/shared/ui';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -19,7 +25,7 @@ export const unstable_settings = {
 
 function RootNavigator() {
   const colorScheme = useColorScheme();
-  const { session, isLoading: isSessionLoading } = useSession();
+  const { session, isLoading: isSessionLoading } = useSessionStore();
   const { data: profile, isLoading: isProfileLoading } = useQuery({
     queryKey: ['profile', session?.user.id],
     queryFn: () => getProfile(session?.user.id ?? ''),
@@ -68,11 +74,30 @@ function RootNavigator() {
 }
 
 export default function RootLayout() {
+  const { setSession, setIsLoading } = useSessionStore();
+
+  const sessionInit = async () => {
+    const { session } = await getSession();
+    setSession(session);
+    setIsLoading(false);
+
+    const subscription = getSessionChange((event, session) => {
+      setSession(session);
+      setIsLoading(false);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  };
+
+  useEffect(() => {
+    sessionInit();
+  }, []);
+
   return (
     <AppProviders>
-      <SessionProvider>
-        <RootNavigator />
-      </SessionProvider>
+      <RootNavigator />
     </AppProviders>
   );
 }

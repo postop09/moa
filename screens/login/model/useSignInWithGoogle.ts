@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
-import { signInWithGoogle } from '@/entities/auth';
+import { signInWithGoogle } from '../api/signInWithGoogle';
 
 export function useSignInWithGoogle() {
   return useMutation({

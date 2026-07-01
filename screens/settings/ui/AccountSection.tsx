@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-import { useSession } from '@/entities/auth';
+import { useSessionStore } from '@/entities/auth';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
 import { useSettingsProfile } from '../model/useSettingsProfile';
 
 export function AccountSection() {
-  const { session } = useSession();
+  const { session } = useSessionStore();
   const { data: profile } = useSettingsProfile();
 
   return (

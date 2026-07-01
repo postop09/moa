@@ -1,5 +1,4 @@
-import { createSession } from '../api/createSession';
-import { getGoogleLoginUrl } from '../api/getGoogleLoginUrl';
+import { createSession, getGoogleLoginUrl } from '@/entities/auth';
 
 export const signInWithGoogle = async () => {
   const callbackUrl = await getGoogleLoginUrl();
