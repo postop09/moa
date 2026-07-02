@@ -19,13 +19,7 @@ export const unstable_settings = {
 
 const RootNavigator = () => {
   const colorScheme = useColorScheme();
-  const {
-    session,
-    isLoading: isSessionLoading,
-    profile,
-    setProfile,
-  } = useAuthStore();
-  const isLoading = isSessionLoading;
+  const { session, isLoading, profile, setProfile } = useAuthStore();
   const hasProfile = !!profile;
   const needsProfileSetup = !!session && !hasProfile;
   const { data } = useGetProfile(session?.user.id ?? '');
