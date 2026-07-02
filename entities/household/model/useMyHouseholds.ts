@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useSessionStore } from '@/entities/auth';
+import { useAuthStore } from '@/entities/auth';
 
 import { fetchMyHouseholds } from '../api/households-api';
 
 export const useMyHouseholds = () => {
-  const { session } = useSessionStore();
+  const { session } = useAuthStore();
   const userId = session?.user.id;
 
   return useQuery({

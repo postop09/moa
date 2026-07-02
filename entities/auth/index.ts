@@ -9,4 +9,4 @@ export { getGoogleLoginUrl } from './api/getGoogleLoginUrl';
 export type { CreateProfileReq } from './model/createProfileReq';
 export type { Profile } from './model/profile';
 
-export { useSessionStore } from './model/sessionStore';
+export { useAuthStore } from './model/authStore';

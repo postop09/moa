@@ -1,4 +1,4 @@
-import { useSessionStore } from '@/entities/auth';
+import { useAuthStore } from '@/entities/auth';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { FormField, ThemedText } from '@/shared/ui';
@@ -22,7 +22,7 @@ export const ProfileFormSection = ({
 }: Props) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-  const { session } = useSessionStore();
+  const { session } = useAuthStore();
 
   return (
     <View style={styles.form}>

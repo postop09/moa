@@ -7,31 +7,35 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import 'react-native-reanimated';
-import {
-  getProfile,
-  getSession,
-  getSessionChange,
-  useSessionStore,
-} from '@/entities/auth';
+import { getSession, getSessionChange, useAuthStore } from '@/entities/auth';
 import { AppProviders, useColorScheme } from '@/shared/lib';
 import { ThemedView } from '@/shared/ui';
-import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { useGetProfile } from '@/shared/model';
+
 export const unstable_settings = {
   anchor: '(tabs)',
 };
+
 const RootNavigator = () => {
   const colorScheme = useColorScheme();
-  const { session, isLoading: isSessionLoading } = useSessionStore();
-  const { data: profile, isLoading: isProfileLoading } = useQuery({
-    queryKey: ['profile', session?.user.id],
-    queryFn: () => getProfile(session?.user.id ?? ''),
-    enabled: !!session?.user.id,
-  });
-  console.log('profile: ', profile);
-  const isLoading = isSessionLoading || (!!session && isProfileLoading);
+  const {
+    session,
+    isLoading: isSessionLoading,
+    profile,
+    setProfile,
+  } = useAuthStore();
+  const isLoading = isSessionLoading;
   const hasProfile = !!profile;
-  const needsProfileSetup = !!session && !hasProfile && !isProfileLoading;
+  const needsProfileSetup = !!session && !hasProfile;
+  const { data } = useGetProfile(session?.user.id ?? '');
+
+  useEffect(() => {
+    if (profile) return;
+    if (!data) return;
+    setProfile(data);
+  }, [data]);
+
   if (isLoading) {
     return (
       <ThemedView style={styles.loading}>
@@ -39,6 +43,7 @@ const RootNavigator = () => {
       </ThemedView>
     );
   }
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
@@ -65,13 +70,16 @@ const RootNavigator = () => {
     </ThemeProvider>
   );
 };
+
 const RootLayout = () => {
-  const { setSession, setIsLoading } = useSessionStore();
+  const { setSession, setIsLoading } = useAuthStore();
+
   const sessionInit = async () => {
     const { session } = await getSession();
     setSession(session);
     setIsLoading(false);
     const subscription = getSessionChange((event, session) => {
+      console.log('session event: ', event);
       setSession(session);
       setIsLoading(false);
     });
@@ -79,16 +87,20 @@ const RootLayout = () => {
       subscription.unsubscribe();
     };
   };
+
   useEffect(() => {
     sessionInit();
   }, []);
+
   return (
     <AppProviders>
       <RootNavigator />
     </AppProviders>
   );
 };
+
 export default RootLayout;
+
 const styles = StyleSheet.create({
   loading: {
     flex: 1,

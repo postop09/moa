@@ -1,9 +1,9 @@
-import { createProfile, useSessionStore } from '@/entities/auth';
+import { createProfile, useAuthStore } from '@/entities/auth';
 import { useMutation } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
 export const useCreateProfile = () => {
-  const { session } = useSessionStore();
+  const { session, setProfile } = useAuthStore();
 
   return useMutation({
     mutationFn: (nickname: string) =>
@@ -12,6 +12,9 @@ export const useCreateProfile = () => {
         email: session?.user.email ?? '',
         nickname,
       }),
+    onSuccess: (data) => {
+      setProfile(data);
+    },
     onError: (error) => {
       Alert.alert(
         '프로필 생성 실패',

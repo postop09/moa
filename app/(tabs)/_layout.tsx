@@ -70,12 +70,6 @@ const TabLayout = () => {
           ),
         }}
       />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          href: null,
-        }}
-      />
     </Tabs>
   );
 };

@@ -1,11 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { useSessionStore } from '@/entities/auth';
+import { useAuthStore } from '@/entities/auth';
 import { ThemedText, ThemedView } from '@/shared/ui';
-import { useSettingsProfile } from '../model/useSettingsProfile';
 
 export const AccountSection = () => {
-  const { session } = useSessionStore();
-  const { data: profile } = useSettingsProfile();
+  const { session, profile } = useAuthStore();
 
   return (
     <ThemedView style={styles.section}>
