@@ -1,4 +1,5 @@
-import { createProfile, useAuthStore } from '@/entities/auth';
+import { createProfile } from '@/entities/auth';
+import { useAuthStore } from '@/shared/model';
 import { useMutation } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 

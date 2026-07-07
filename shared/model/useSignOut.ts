@@ -1,4 +1,5 @@
-import { signOut, useAuthStore } from '@/entities/auth';
+import { signOut } from '@/entities/auth';
+import { useAuthStore } from './authStore';
 import { useMutation } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 

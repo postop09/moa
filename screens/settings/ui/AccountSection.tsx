@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { useAuthStore } from '@/entities/auth';
+import { useAuthStore } from '@/shared/model';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
 export const AccountSection = () => {

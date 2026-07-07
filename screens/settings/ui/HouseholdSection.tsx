@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { useMyHouseholds } from '@/entities/household';
 import { ThemedText, ThemedView } from '@/shared/ui';
+import { useGetHouseholds, useAuthStore } from '@/shared/model';
 
 export const HouseholdSection = () => {
-  const { data: households } = useMyHouseholds();
+  const { session } = useAuthStore();
+  const { data: households } = useGetHouseholds(session?.user.id ?? '');
   const householdLabel =
     households && households.length > 0
       ? households.map((household) => household.name).join(', ')
@@ -11,7 +12,7 @@ export const HouseholdSection = () => {
 
   return (
     <ThemedView style={styles.section}>
-      <ThemedText type="subtitle">가구</ThemedText>
+      <ThemedText type="subtitle">가계부</ThemedText>
       <ThemedText style={styles.description}>{householdLabel}</ThemedText>
     </ThemedView>
   );

@@ -7,11 +7,11 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import 'react-native-reanimated';
-import { getSession, getSessionChange, useAuthStore } from '@/entities/auth';
+import { getSession, getSessionChange } from '@/entities/auth';
 import { AppProviders, useColorScheme } from '@/shared/lib';
 import { ThemedView } from '@/shared/ui';
 import { useEffect } from 'react';
-import { useGetProfile, useGetHousehold } from '@/shared/model';
+import { useGetProfile, useGetHouseholds, useAuthStore } from '@/shared/model';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -20,15 +20,16 @@ export const unstable_settings = {
 const RootNavigator = () => {
   const colorScheme = useColorScheme();
   const { session, isLoading, profile, setProfile } = useAuthStore();
-  const { data } = useGetProfile(session?.user.id ?? '');
-  const { data: households } = useGetHousehold(session?.user.id ?? '');
+  const userId = session?.user.id ?? '';
+  const { data } = useGetProfile(userId);
+  const { data: households } = useGetHouseholds(userId);
   const hasProfile = !!profile;
   const hasHousehold = !!households;
   const needsProfileSetup = !!session && !hasProfile;
   const needsHouseholdSetup = !!session && !households;
 
   useEffect(() => {
-    console.log('userId', session?.user.id);
+    console.log('userId', userId);
     console.log('households', households);
   }, [households]);
 

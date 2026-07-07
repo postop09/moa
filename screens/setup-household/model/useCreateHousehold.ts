@@ -1,22 +1,23 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { useAuthStore } from '@/entities/auth';
-
-import { createHousehold } from '../api/createHousehold';
-import type { CreateHouseholdReq } from './createHouseholdReq';
+import { useAuthStore } from '@/shared/model';
+import { createHousehold, CreateHouseholdReq } from '@/entities/household';
+import { Alert } from 'react-native';
 
 type CreateHouseholdPayload = Pick<CreateHouseholdReq, 'name'>;
 
 export const useCreateHousehold = () => {
   const queryClient = useQueryClient();
   const { session } = useAuthStore();
-  const userId = session?.user.id;
 
   return useMutation({
     mutationFn: (payload: CreateHouseholdPayload) =>
-      createHousehold({ ...payload, userId: userId! }),
+      createHousehold({ ...payload, userId: session?.user.id || '' }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['households'] });
+    },
+    onError: (error) => {
+      Alert.alert('Error', error.message);
     },
   });
 };

@@ -3,11 +3,12 @@ import { Platform, StyleSheet, KeyboardAvoidingView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeroSection, HouseholdFormSection, StartButton } from './ui';
 import { useState } from 'react';
+import { useCreateHousehold } from './model';
 
 export const SetupHouseholdPage = () => {
   const [householdName, setHouseholdName] = useState('');
   const [error, setError] = useState('');
-  const isPending = false;
+  const { mutate, isPending } = useCreateHousehold();
 
   return (
     <ThemedView style={styles.container}>
@@ -28,9 +29,7 @@ export const SetupHouseholdPage = () => {
 
           <View style={styles.actions}>
             <StartButton
-              onSubmit={() => {
-                console.log(householdName);
-              }}
+              onSubmit={() => mutate({ name: householdName })}
               isPending={isPending}
             />
           </View>

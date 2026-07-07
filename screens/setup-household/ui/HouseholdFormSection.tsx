@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/entities/auth';
+import { useAuthStore } from '@/shared/model';
 import { HOUSEHOLD_NAME_MAX_LENGTH } from '../config';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';

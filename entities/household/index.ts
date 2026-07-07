@@ -5,5 +5,4 @@ export { getHouseholds } from './api/getHouseholds';
 export type { CreateHouseholdReq } from './model/createHouseholdReq';
 export type { Household } from './model/household';
 
-export { useCreateHousehold } from './model/useCreateHousehold';
 export { useDeleteHousehold } from './model/useDeleteHousehold';

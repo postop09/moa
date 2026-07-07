@@ -2,9 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getHouseholds } from '@/entities/household';
 
-export const useGetHousehold = (userId: string) => {
+export const useGetHouseholds = (userId: string) => {
   return useQuery({
-    queryKey: ['household', userId],
+    queryKey: ['households', userId],
     queryFn: () => getHouseholds(userId),
     enabled: !!userId,
   });

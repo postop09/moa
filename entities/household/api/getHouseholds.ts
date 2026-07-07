@@ -1,10 +1,12 @@
 import { supabase } from '@/shared/api';
-import type { Household } from '../model/household';
+import type { GetHouseholdsRes } from '../model/getHouseholdsRes';
 
-export const getHouseholds = async (userId: string): Promise<Household[]> => {
+export const getHouseholds = async (
+  userId: string,
+): Promise<GetHouseholdsRes> => {
   const { data, error } = await supabase
-    .from('household')
-    .select('id, name, ownerId')
+    .from('households')
+    .select('id, name')
     .eq('ownerId', userId)
     .order('name', { ascending: true });
 
