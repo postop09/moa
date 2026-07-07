@@ -29,11 +29,6 @@ const RootNavigator = () => {
   const needsHouseholdSetup = !!session && !households;
 
   useEffect(() => {
-    console.log('userId', userId);
-    console.log('households', households);
-  }, [households]);
-
-  useEffect(() => {
     if (profile) return;
     if (!data) return;
     setProfile(data);
@@ -64,6 +59,7 @@ const RootNavigator = () => {
 
         <Stack.Protected guard={!!session && hasProfile && hasHousehold}>
           <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="setup-household" />
           <Stack.Screen name="budget-management" />
           <Stack.Screen
             name="modal"
