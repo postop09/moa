@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedView } from '@/shared/ui';
 import { DashboardSection } from './ui/DashboardSection';
 import { HeaderSection } from './ui/HeaderSection';
+
 export const HomePage = () => {
   return (
     <ThemedView style={styles.container}>

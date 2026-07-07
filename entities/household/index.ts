@@ -1,11 +1,9 @@
-export type {
-  CreateHouseholdInput,
-  Household,
-  UpdateHouseholdInput,
-} from './model/types';
-export {
-  createHousehold,
-  fetchMyHouseholds,
-  updateHousehold,
-} from './api/households-api';
-export { useMyHouseholds } from './model/useMyHouseholds';
+export { createHousehold } from './api/createHousehold';
+export { deleteHousehold } from './api/deleteHousehold';
+export { getHouseholds } from './api/getHouseholds';
+
+export type { CreateHouseholdReq } from './model/createHouseholdReq';
+export type { Household } from './model/household';
+
+export { useCreateHousehold } from './model/useCreateHousehold';
+export { useDeleteHousehold } from './model/useDeleteHousehold';

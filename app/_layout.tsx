@@ -11,7 +11,7 @@ import { getSession, getSessionChange, useAuthStore } from '@/entities/auth';
 import { AppProviders, useColorScheme } from '@/shared/lib';
 import { ThemedView } from '@/shared/ui';
 import { useEffect } from 'react';
-import { useGetProfile } from '@/shared/model';
+import { useGetProfile, useGetHousehold } from '@/shared/model';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -20,9 +20,17 @@ export const unstable_settings = {
 const RootNavigator = () => {
   const colorScheme = useColorScheme();
   const { session, isLoading, profile, setProfile } = useAuthStore();
-  const hasProfile = !!profile;
-  const needsProfileSetup = !!session && !hasProfile;
   const { data } = useGetProfile(session?.user.id ?? '');
+  const { data: households } = useGetHousehold(session?.user.id ?? '');
+  const hasProfile = !!profile;
+  const hasHousehold = !!households;
+  const needsProfileSetup = !!session && !hasProfile;
+  const needsHouseholdSetup = !!session && !households;
+
+  useEffect(() => {
+    console.log('userId', session?.user.id);
+    console.log('households', households);
+  }, [households]);
 
   useEffect(() => {
     if (profile) return;
@@ -41,7 +49,19 @@ const RootNavigator = () => {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Protected guard={!!session && hasProfile}>
+        <Stack.Protected guard={!session}>
+          <Stack.Screen name="(auth)" />
+        </Stack.Protected>
+
+        <Stack.Protected guard={needsProfileSetup}>
+          <Stack.Screen name="setup-profile" />
+        </Stack.Protected>
+
+        <Stack.Protected guard={needsHouseholdSetup}>
+          <Stack.Screen name="setup-household" />
+        </Stack.Protected>
+
+        <Stack.Protected guard={!!session && hasProfile && hasHousehold}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="budget-management" />
           <Stack.Screen
@@ -49,15 +69,6 @@ const RootNavigator = () => {
             options={{ presentation: 'modal', title: 'Modal' }}
           />
         </Stack.Protected>
-
-        <Stack.Protected guard={needsProfileSetup}>
-          <Stack.Screen name="setup-profile" />
-        </Stack.Protected>
-
-        <Stack.Protected guard={!session}>
-          <Stack.Screen name="(auth)" />
-        </Stack.Protected>
-
         <Stack.Screen name="auth/callback" options={{ headerShown: false }} />
       </Stack>
       <StatusBar style="auto" />
