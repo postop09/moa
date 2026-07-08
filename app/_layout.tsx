@@ -25,7 +25,7 @@ const RootNavigator = () => {
   const { data: households } = useGetHouseholds(userId);
   const hasProfile = !!profile;
   const hasHousehold = !!households;
-  const needsProfileSetup = !!session && !hasProfile;
+  const needsProfileSetup = !!session && !profile;
   const needsHouseholdSetup = !!session && !households;
 
   useEffect(() => {
@@ -59,7 +59,6 @@ const RootNavigator = () => {
 
         <Stack.Protected guard={!!session && hasProfile && hasHousehold}>
           <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="setup-household" />
           <Stack.Screen name="budget-management" />
           <Stack.Screen
             name="modal"
