@@ -1,8 +1,8 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedView } from '@/shared/ui';
-import { DashboardSection } from './ui/DashboardSection';
 import { HeaderSection } from './ui/HeaderSection';
+import { BalanceCard } from '@/widgets/balance-card';
 
 export const HomePage = () => {
   return (
@@ -13,7 +13,7 @@ export const HomePage = () => {
           showsVerticalScrollIndicator={false}
         >
           <HeaderSection />
-          <DashboardSection />
+          <BalanceCard />
         </ScrollView>
       </SafeAreaView>
     </ThemedView>

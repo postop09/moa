@@ -5,6 +5,7 @@ import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
 
 import { HouseholdList } from './HouseholdList';
+import { QuickActionMenu } from './QuickActionMenu';
 
 const getMonthLabel = (date = new Date()) => {
   return `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
@@ -16,7 +17,10 @@ export const HeaderSection = () => {
 
   return (
     <View style={styles.header}>
-      <HouseholdList />
+      <View style={styles.topRow}>
+        <HouseholdList />
+        <QuickActionMenu />
+      </View>
       <ThemedText style={[styles.month, { color: colors.icon }]}>
         {getMonthLabel()}
       </ThemedText>
@@ -27,6 +31,11 @@ export const HeaderSection = () => {
 const styles = StyleSheet.create({
   header: {
     gap: 4,
+  },
+  topRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   month: {
     fontSize: 15,

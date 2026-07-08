@@ -1,34 +1,45 @@
-import { ActivityIndicator, StyleSheet } from 'react-native';
-import { formatCurrency } from '@/entities/transaction';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { formatCurrency, useMonthlySummary } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
+import { AmountView } from './AmountView';
 
-type BalanceCardProps = {
-  balance: number;
-  isLoading?: boolean;
-};
-
-export const BalanceCard = ({ balance, isLoading }: BalanceCardProps) => {
+export const BalanceCard = () => {
+  const { data, isLoading } = useMonthlySummary();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-  const isNegative = balance < 0;
+  const balance = data?.balance ?? 0;
+  const income = data?.income ?? 0;
+  const expense = data?.expense ?? 0;
+
   return (
     <ThemedView
-      style={[styles.card, { backgroundColor: colors.accent }]}
-      lightColor={colors.accent}
-      darkColor={colors.accent}
+      style={[
+        styles.card,
+        {
+          backgroundColor: colors.card,
+          borderColor: colors.border,
+          borderWidth: 1,
+        },
+      ]}
+      lightColor={colors.card}
+      darkColor={colors.card}
     >
-      <ThemedText style={styles.label} lightColor="#E0F2FE" darkColor="#E0F2FE">
+      <ThemedText
+        style={styles.label}
+        lightColor={colors.text}
+        darkColor={colors.text}
+      >
         이번 달 잔액
       </ThemedText>
       {isLoading ? (
         <ActivityIndicator color="#fff" style={styles.loader} />
       ) : (
         <ThemedText
-          style={styles.amount}
-          lightColor="#fff"
-          darkColor="#fff"
+          style={styles.balance}
+          lightColor={colors.text}
+          darkColor={colors.text}
           numberOfLines={1}
           adjustsFontSizeToFit
         >
@@ -36,17 +47,15 @@ export const BalanceCard = ({ balance, isLoading }: BalanceCardProps) => {
         </ThemedText>
       )}
       {!isLoading && (
-        <ThemedText
-          style={styles.hint}
-          lightColor="#BAE6FD"
-          darkColor="#BAE6FD"
-        >
-          {isNegative ? '지출이 수입을 초과했어요' : '수입 - 지출'}
-        </ThemedText>
+        <View style={styles.hint}>
+          <AmountView amount={income} color={colors.income} />
+          <AmountView amount={expense} color={colors.expense} />
+        </View>
       )}
     </ThemedView>
   );
 };
+
 const styles = StyleSheet.create({
   card: {
     borderRadius: 20,
@@ -57,16 +66,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
   },
-  amount: {
-    fontSize: 36,
-    fontWeight: '700',
-    lineHeight: 44,
-  },
   hint: {
-    fontSize: 13,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   loader: {
     alignSelf: 'flex-start',
     marginVertical: 12,
+  },
+  balance: {
+    fontSize: 36,
+    fontWeight: '700',
+    lineHeight: 44,
   },
 });

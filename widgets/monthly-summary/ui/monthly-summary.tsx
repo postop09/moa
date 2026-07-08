@@ -3,11 +3,13 @@ import { formatCurrency } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
+
 type MonthlySummaryProps = {
   income: number;
   expense: number;
   isLoading?: boolean;
 };
+
 const SummaryItem = ({
   label,
   amount,
@@ -21,6 +23,7 @@ const SummaryItem = ({
 }) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
+
   return (
     <ThemedView
       style={[styles.item, { borderColor: colors.border }]}
@@ -39,6 +42,7 @@ const SummaryItem = ({
     </ThemedView>
   );
 };
+
 export const MonthlySummary = ({
   income,
   expense,
@@ -46,6 +50,7 @@ export const MonthlySummary = ({
 }: MonthlySummaryProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
+
   return (
     <View style={styles.row}>
       <SummaryItem
@@ -63,6 +68,7 @@ export const MonthlySummary = ({
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
