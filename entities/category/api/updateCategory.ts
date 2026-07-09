@@ -1,29 +1,24 @@
-import {
-  getLocalCategories,
-  updateLocalCategory,
-} from '../lib/local-categories';
-import { getDefaultColor, normalizeBudget } from '../lib/categoryDefaults';
+import { normalizeBudget } from '../lib/categoryDefaults';
 import type { Category } from '../model/category';
 import type { UpdateCategoryReq } from '../model/updateCategoryReq';
+import { supabase } from '@/shared/api';
 
 export const updateCategory = async (
   payload: UpdateCategoryReq,
 ): Promise<Category> => {
-  const budget = normalizeBudget(payload.budget);
-  updateLocalCategory(payload.id, {
-    name: payload.name.trim(),
-    type: payload.type,
-    color: getDefaultColor(payload.type),
-    budget,
-  });
+  const { data, error } = await supabase
+    .from('categories')
+    .update({
+      ...payload,
+      budget: normalizeBudget(payload.budget),
+    })
+    .eq('id', payload.id)
+    .select()
+    .single();
 
-  const updated = getLocalCategories().find(
-    (category) => category.id === payload.id,
-  );
-
-  if (!updated) {
-    throw new Error('예산 항목을 찾을 수 없습니다.');
+  if (error) {
+    throw error;
   }
 
-  return updated;
+  return data;
 };

@@ -29,7 +29,7 @@ export const useBudgetManagement = () => {
   const [editorState, setEditorState] = useState<EditorState>({
     mode: 'closed',
   });
-  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const grouped = useMemo(() => {
     return {

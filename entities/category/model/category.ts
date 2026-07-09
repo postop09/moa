@@ -1,7 +1,7 @@
 import { TransactionType } from '@/shared/model';
 
 export type Category = {
-  id: string;
+  id: number;
   householdId: string;
   name: string;
   type: TransactionType;

@@ -11,7 +11,7 @@ type BudgetSectionProps = {
   onAdd: () => void;
   onEdit: (category: Category) => void;
   onDelete: (category: Category) => void;
-  deletingId: string | null;
+  deletingId: number | null;
   isDeleting: boolean;
 };
 
