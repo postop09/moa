@@ -6,7 +6,8 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import type { Category, CategoryType } from '@/entities/category';
+import type { Category, CreateCategoryReq } from '@/entities/category';
+import { useHouseholdStore, type TransactionType } from '@/shared/model';
 import {
   formatAmountInput,
   parseAmountInput,
@@ -18,14 +19,10 @@ import { FormField, ThemedText } from '@/shared/ui';
 type BudgetEditorModalProps = {
   visible: boolean;
   category?: Category | null;
-  defaultType?: CategoryType;
+  defaultType?: TransactionType;
   isSubmitting?: boolean;
   onClose: () => void;
-  onSubmit: (payload: {
-    name: string;
-    type: CategoryType;
-    budget: number | null;
-  }) => void;
+  onSubmit: (payload: CreateCategoryReq) => void;
 };
 
 export const CategoryEditModal = ({
@@ -41,8 +38,9 @@ export const CategoryEditModal = ({
   const isEditing = !!category;
   const [name, setName] = useState('');
   const [budget, setBudget] = useState('');
-  const [type, setType] = useState<CategoryType>(defaultType);
+  const [type, setType] = useState<TransactionType>(defaultType);
   const [error, setError] = useState('');
+  const { selectedHouseholdId } = useHouseholdStore();
 
   useEffect(() => {
     if (!visible) {
@@ -63,7 +61,8 @@ export const CategoryEditModal = ({
     }
     const parsedBudget = parseAmountInput(budget);
     onSubmit({
-      name: name.trim(),
+      householdId: selectedHouseholdId ?? '',
+      name: name,
       type,
       budget: parsedBudget > 0 ? parsedBudget : null,
     });

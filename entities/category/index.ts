@@ -1,6 +1,6 @@
+export { getCategories } from './api/getCategories';
 export { createCategory } from './api/createCategory';
 export { deleteCategory } from './api/deleteCategory';
-export { fetchCategories } from './api/fetchCategories';
 export { updateCategory } from './api/updateCategory';
 
 export type { Category } from './model/category';

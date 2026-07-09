@@ -1,7 +1,8 @@
-import type { CategoryType } from './TransactionType';
+import type { TransactionType } from './TransactionType';
 
 export type CreateCategoryReq = {
+  householdId: string;
   name: string;
-  type: CategoryType;
+  type: TransactionType;
   budget?: number | null;
 };

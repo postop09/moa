@@ -1,6 +1,6 @@
-import type { Category } from '@/entities/category';
-import { TransactionType } from '@/shared/model';
-import { useCategories } from './useCategories';
+import type { Category, CreateCategoryReq } from '@/entities/category';
+import { TransactionType, useHouseholdStore } from '@/shared/model';
+import { useGetCategories } from './useGetCategories';
 import { useCreateCategory } from './useCreateCategory';
 import { useDeleteCategory } from './useDeleteCategory';
 import { useUpdateCategory } from './useUpdateCategory';
@@ -13,7 +13,12 @@ type EditorState =
   | { mode: 'edit'; category: Category };
 
 export const useBudgetManagement = () => {
-  const { data: categories = [], isLoading, isRefetching } = useCategories();
+  const { selectedHouseholdId } = useHouseholdStore();
+  const {
+    data: categories = [],
+    isLoading,
+    isRefetching,
+  } = useGetCategories(selectedHouseholdId ?? '');
   const { mutateAsync: createCategory, isPending: isCreating } =
     useCreateCategory();
   const { mutateAsync: updateCategory, isPending: isUpdating } =
@@ -33,11 +38,7 @@ export const useBudgetManagement = () => {
     };
   }, [categories]);
 
-  const handleSubmit = async (payload: {
-    name: string;
-    type: TransactionType;
-    budget: number | null;
-  }) => {
+  const handleSubmit = async (payload: CreateCategoryReq) => {
     try {
       if (editorState.mode === 'create') {
         await createCategory(payload);
@@ -50,6 +51,7 @@ export const useBudgetManagement = () => {
 
       setEditorState({ mode: 'closed' });
     } catch (error) {
+      console.error(error);
       Alert.alert(
         '저장 실패',
         error instanceof Error ? error.message : '다시 시도해주세요.',

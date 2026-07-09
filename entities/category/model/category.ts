@@ -1,12 +1,10 @@
-import type { CategoryType } from './TransactionType';
+import { TransactionType } from '@/shared/model';
 
 export type Category = {
   id: string;
-  userId: string;
+  householdId: string;
   name: string;
-  type: CategoryType;
-  icon: string | null;
-  color: string | null;
-  sortOrder: number;
-  budget: number | null;
+  type: TransactionType;
+  budget?: number;
+  createdAt: string;
 };
