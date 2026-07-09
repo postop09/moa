@@ -14,6 +14,7 @@ import {
 } from '@/shared/lib';
 import { Colors } from '@/shared/config';
 import { FormField, ThemedText } from '@/shared/ui';
+
 type BudgetEditorModalProps = {
   visible: boolean;
   category?: Category | null;
@@ -26,6 +27,7 @@ type BudgetEditorModalProps = {
     budget: number | null;
   }) => void;
 };
+
 export const BudgetEditorModal = ({
   visible,
   category,
@@ -41,6 +43,7 @@ export const BudgetEditorModal = ({
   const [budget, setBudget] = useState('');
   const [type, setType] = useState<CategoryType>(defaultType);
   const [error, setError] = useState('');
+
   useEffect(() => {
     if (!visible) {
       return;
@@ -52,6 +55,7 @@ export const BudgetEditorModal = ({
     setType(category?.type ?? defaultType);
     setError('');
   }, [visible, category, defaultType]);
+
   const handleSubmit = () => {
     if (!name.trim()) {
       setError('이름을 입력해주세요.');
@@ -64,6 +68,7 @@ export const BudgetEditorModal = ({
       budget: parsedBudget > 0 ? parsedBudget : null,
     });
   };
+
   return (
     <Modal
       visible={visible}
@@ -77,26 +82,8 @@ export const BudgetEditorModal = ({
           onPress={(event) => event.stopPropagation()}
         >
           <ThemedText type="subtitle" style={styles.title}>
-            {isEditing ? '예산 수정' : '예산 추가'}
+            {isEditing ? '카테고리 수정' : '카테고리 추가'}
           </ThemedText>
-
-          <FormField
-            label="이름"
-            value={name}
-            onChangeText={setName}
-            placeholder="예: 식비"
-            error={error}
-            autoFocus
-          />
-
-          <FormField
-            label="예산 (선택)"
-            value={budget}
-            onChangeText={(value) => setBudget(formatAmountInput(value))}
-            placeholder="0"
-            keyboardType="number-pad"
-          />
-
           <View style={styles.typeRow}>
             <ThemedText style={styles.typeLabel}>유형</ThemedText>
             <View style={styles.typeButtons}>
@@ -125,6 +112,23 @@ export const BudgetEditorModal = ({
                 );
               })}
             </View>
+
+            <FormField
+              label="이름"
+              value={name}
+              onChangeText={setName}
+              placeholder="예) 교통비"
+              error={error}
+              autoFocus
+            />
+
+            <FormField
+              label="예산 (선택)"
+              value={budget}
+              onChangeText={(value) => setBudget(formatAmountInput(value))}
+              placeholder="0"
+              keyboardType="number-pad"
+            />
           </View>
 
           <View style={styles.actions}>
@@ -160,6 +164,7 @@ export const BudgetEditorModal = ({
     </Modal>
   );
 };
+
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,

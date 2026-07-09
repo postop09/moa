@@ -41,7 +41,7 @@ export const BudgetManagementPage = () => {
             <MaterialIcons name="arrow-back" size={24} color={colors.text} />
           </Pressable>
           <ThemedText type="title" style={styles.title}>
-            예산 관리
+            카테고리 관리
           </ThemedText>
           <Pressable
             onPress={() =>

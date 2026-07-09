@@ -4,6 +4,7 @@ import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { BudgetListItem } from './BudgetListItem';
+
 type BudgetSectionProps = {
   title: string;
   categories: Category[];
@@ -13,6 +14,7 @@ type BudgetSectionProps = {
   deletingId: string | null;
   isDeleting: boolean;
 };
+
 export const BudgetSection = ({
   title,
   categories,
@@ -24,6 +26,7 @@ export const BudgetSection = ({
 }: BudgetSectionProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
+
   return (
     <View style={styles.section}>
       <View style={styles.sectionHeader}>
@@ -36,7 +39,9 @@ export const BudgetSection = ({
       </View>
 
       {categories.length === 0 ? (
-        <ThemedText style={styles.empty}>등록된 예산이 없습니다.</ThemedText>
+        <ThemedText style={styles.empty}>
+          등록된 카테고리가 없습니다.
+        </ThemedText>
       ) : (
         categories.map((category) => (
           <BudgetListItem
@@ -51,6 +56,7 @@ export const BudgetSection = ({
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   section: {
     gap: 10,
