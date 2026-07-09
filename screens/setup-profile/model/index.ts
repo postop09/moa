@@ -1,1 +1,0 @@
-export { useSetupProfile } from './useSetupProfile';

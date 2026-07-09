@@ -1,9 +1,11 @@
 import { ThemedView } from '@/shared/ui';
 import { Platform, StyleSheet, KeyboardAvoidingView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { HeroSection, HouseholdFormSection, StartButton } from './ui';
+import { HeroSection } from './ui/HeroSection';
+import { HouseholdFormSection } from './ui/HouseholdFormSection';
+import { StartButton } from './ui/StartButton';
 import { useState } from 'react';
-import { useCreateHousehold } from './model';
+import { useCreateHousehold } from './model/useCreateHousehold';
 
 export const SetupHouseholdPage = () => {
   const [householdName, setHouseholdName] = useState('');

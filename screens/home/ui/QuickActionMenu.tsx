@@ -15,7 +15,7 @@ export const QuickActionMenu = () => {
 
   const handleAddCategory = () => {
     setIsOpen(false);
-    router.push('/budget-management');
+    router.push('/category-management');
   };
 
   const handleAddMember = () => {

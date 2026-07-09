@@ -12,7 +12,7 @@ import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
 
-import { useHouseholdSelector } from '../model';
+import { useHouseholdSelector } from '../model/useHouseholdSelector';
 
 export const HouseholdList = () => {
   const colorScheme = useColorScheme() ?? 'light';

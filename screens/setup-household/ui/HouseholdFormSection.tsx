@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/shared/model';
-import { HOUSEHOLD_NAME_MAX_LENGTH } from '../config';
+import { HOUSEHOLD_NAME_MAX_LENGTH } from '../config/householdName';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { FormField, ThemedText } from '@/shared/ui';

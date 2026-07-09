@@ -1,10 +1,8 @@
-import { useSetupProfile } from './model';
-import {
-  ChangeAccountButton,
-  HeroSection,
-  ProfileFormSection,
-  StartButton,
-} from './ui';
+import { useSetupProfile } from './model/useSetupProfile';
+import { ProfileFormSection } from './ui/ProfileFormSection';
+import { HeroSection } from './ui/HeroSection';
+import { ChangeAccountButton } from './ui/ChangeAccountButton';
+import { StartButton } from './ui/StartButton';
 import { ThemedView } from '@/shared/ui';
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
