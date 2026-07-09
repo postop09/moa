@@ -12,9 +12,10 @@ import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
 import { useBudgetManagement } from './model/useBudgetManagement';
-import { BudgetEditorModal } from './ui/BudgetEditorModal';
-import { BudgetSection } from './ui/BudgetSection';
-export const BudgetManagementPage = () => {
+import { CategoryEditModal } from './ui/CategoryEdit.modal';
+import { CategoryList } from './ui/CategoryList';
+
+export const CategoryManagementPage = () => {
   const router = useRouter();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
@@ -33,6 +34,7 @@ export const BudgetManagementPage = () => {
     handleSubmit,
     handleDelete,
   } = useBudgetManagement();
+
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -60,7 +62,7 @@ export const BudgetManagementPage = () => {
             contentContainerStyle={styles.content}
             showsVerticalScrollIndicator={false}
           >
-            <BudgetSection
+            <CategoryList
               title="지출"
               categories={grouped.expense}
               onAdd={() =>
@@ -71,8 +73,7 @@ export const BudgetManagementPage = () => {
               deletingId={deletingId}
               isDeleting={isDeleting}
             />
-
-            <BudgetSection
+            <CategoryList
               title="수입"
               categories={grouped.income}
               onAdd={() =>
@@ -91,7 +92,7 @@ export const BudgetManagementPage = () => {
         ) : null}
       </SafeAreaView>
 
-      <BudgetEditorModal
+      <CategoryEditModal
         visible={editorState.mode !== 'closed'}
         category={editorCategory}
         defaultType={editorDefaultType}
@@ -102,6 +103,7 @@ export const BudgetManagementPage = () => {
     </ThemedView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

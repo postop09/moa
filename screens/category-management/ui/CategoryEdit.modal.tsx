@@ -28,7 +28,7 @@ type BudgetEditorModalProps = {
   }) => void;
 };
 
-export const BudgetEditorModal = ({
+export const CategoryEditModal = ({
   visible,
   category,
   defaultType = 'expense',

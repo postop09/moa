@@ -3,7 +3,7 @@ import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { BudgetListItem } from './BudgetListItem';
+import { CategoryCard } from './CategoryCard';
 
 type BudgetSectionProps = {
   title: string;
@@ -15,7 +15,7 @@ type BudgetSectionProps = {
   isDeleting: boolean;
 };
 
-export const BudgetSection = ({
+export const CategoryList = ({
   title,
   categories,
   onAdd,
@@ -44,7 +44,7 @@ export const BudgetSection = ({
         </ThemedText>
       ) : (
         categories.map((category) => (
-          <BudgetListItem
+          <CategoryCard
             key={category.id}
             category={category}
             onEdit={onEdit}

@@ -13,7 +13,7 @@ type BudgetListItemProps = {
   isDeleting?: boolean;
 };
 
-export const BudgetListItem = ({
+export const CategoryCard = ({
   category,
   onEdit,
   onDelete,

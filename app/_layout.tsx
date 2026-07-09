@@ -59,7 +59,7 @@ const RootNavigator = () => {
 
         <Stack.Protected guard={!!session && hasProfile && hasHousehold}>
           <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="budget-management" />
+          <Stack.Screen name="category-management" />
           <Stack.Screen
             name="modal"
             options={{ presentation: 'modal', title: 'Modal' }}
