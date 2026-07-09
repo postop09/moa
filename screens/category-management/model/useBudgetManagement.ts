@@ -1,16 +1,15 @@
-import type { Category, CategoryType } from '@/entities/category';
-import {
-  useCategories,
-  useCreateCategory,
-  useDeleteCategory,
-  useUpdateCategory,
-} from '@/entities/category';
+import type { Category } from '@/entities/category';
+import { TransactionType } from '@/shared/model';
+import { useCategories } from './useCategories';
+import { useCreateCategory } from './useCreateCategory';
+import { useDeleteCategory } from './useDeleteCategory';
+import { useUpdateCategory } from './useUpdateCategory';
 import { useMemo, useState } from 'react';
 import { Alert } from 'react-native';
 
 type EditorState =
   | { mode: 'closed' }
-  | { mode: 'create'; defaultType: CategoryType }
+  | { mode: 'create'; defaultType: TransactionType }
   | { mode: 'edit'; category: Category };
 
 export const useBudgetManagement = () => {
@@ -36,7 +35,7 @@ export const useBudgetManagement = () => {
 
   const handleSubmit = async (payload: {
     name: string;
-    type: CategoryType;
+    type: TransactionType;
     budget: number | null;
   }) => {
     try {

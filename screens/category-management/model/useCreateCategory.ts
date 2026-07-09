@@ -1,13 +1,11 @@
+import { createCategory, CreateCategoryReq } from '@/entities/category';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { updateCategory } from '../api/updateCategory';
-import type { UpdateCategoryReq } from './updateCategoryReq';
-
-export const useUpdateCategory = () => {
+export const useCreateCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload: UpdateCategoryReq) => updateCategory(payload),
+    mutationFn: (payload: CreateCategoryReq) => createCategory(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['categories'] });
     },

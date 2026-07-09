@@ -5,6 +5,7 @@ import {
 import { getDefaultColor, normalizeBudget } from '../lib/categoryDefaults';
 import type { Category } from '../model/category';
 import type { UpdateCategoryReq } from '../model/updateCategoryReq';
+
 export const updateCategory = async (
   payload: UpdateCategoryReq,
 ): Promise<Category> => {
@@ -15,11 +16,14 @@ export const updateCategory = async (
     color: getDefaultColor(payload.type),
     budget,
   });
+
   const updated = getLocalCategories().find(
     (category) => category.id === payload.id,
   );
+
   if (!updated) {
     throw new Error('예산 항목을 찾을 수 없습니다.');
   }
+
   return updated;
 };

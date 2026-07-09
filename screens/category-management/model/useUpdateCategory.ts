@@ -1,12 +1,11 @@
+import { updateCategory, UpdateCategoryReq } from '@/entities/category';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { deleteCategory } from '../api/deleteCategory';
-
-export const useDeleteCategory = () => {
+export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => deleteCategory(id),
+    mutationFn: (payload: UpdateCategoryReq) => updateCategory(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['categories'] });
     },

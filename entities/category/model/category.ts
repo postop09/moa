@@ -1,4 +1,4 @@
-import type { CategoryType } from './categoryType';
+import type { CategoryType } from './TransactionType';
 
 export type Category = {
   id: string;
