@@ -4,4 +4,3 @@ export {
   fetchHouseholdMembers,
   removeHouseholdMember,
 } from './api/household-members-api';
-export { useHouseholdMembers } from './model/useHouseholdMembers';

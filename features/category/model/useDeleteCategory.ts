@@ -1,6 +1,9 @@
-import { Alert } from 'react-native';
-import { deleteCategory } from '@/entities/category';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Alert } from 'react-native';
+
+import { deleteCategory } from '@/entities/category';
+
+import { categoryQueryKeys } from '../config/queryKeys';
 
 export const useDeleteCategory = () => {
   const queryClient = useQueryClient();
@@ -8,7 +11,7 @@ export const useDeleteCategory = () => {
   const mutation = useMutation({
     mutationFn: (id: number) => deleteCategory(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      queryClient.invalidateQueries({ queryKey: categoryQueryKeys.all });
     },
     onError: (error) => {
       Alert.alert(

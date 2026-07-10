@@ -1,5 +1,5 @@
 import { Colors } from '@/shared/config';
-import { useSignOut } from '@/shared/model';
+import { useSignOut } from '@/features/auth';
 import { ThemedText } from '@/shared/ui';
 import { Pressable, StyleSheet, useColorScheme } from 'react-native';
 

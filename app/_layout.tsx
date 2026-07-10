@@ -11,7 +11,9 @@ import { getSession, getSessionChange } from '@/entities/auth';
 import { AppProviders, useColorScheme } from '@/shared/lib';
 import { ThemedView } from '@/shared/ui';
 import { useEffect } from 'react';
-import { useGetProfile, useGetHouseholds, useAuthStore } from '@/shared/model';
+import { useGetProfile } from '@/features/auth';
+import { useGetHouseholds } from '@/features/household';
+import { useAuthStore } from '@/shared/model';
 
 export const unstable_settings = {
   anchor: '(tabs)',

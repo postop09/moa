@@ -1,6 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
-import { formatCurrency, useCategoryExpenses } from '@/entities/transaction';
+import { formatCurrency } from '@/entities/transaction';
+import { useCategoryExpenses } from '@/features/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { useHouseholdStore } from '@/shared/model';

@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { deleteHousehold } from '../api/deleteHousehold';
+import { deleteHousehold } from '@/entities/household';
+
+import { householdQueryKeys } from '../config/queryKeys';
 
 export const useDeleteHousehold = () => {
   const queryClient = useQueryClient();
@@ -8,7 +10,7 @@ export const useDeleteHousehold = () => {
   return useMutation({
     mutationFn: (id: string) => deleteHousehold(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['households'] });
+      queryClient.invalidateQueries({ queryKey: householdQueryKeys.all });
     },
   });
 };

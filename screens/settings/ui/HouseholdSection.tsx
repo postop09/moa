@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { ThemedText, ThemedView } from '@/shared/ui';
-import { useGetHouseholds, useAuthStore } from '@/shared/model';
+import { useGetHouseholds } from '@/features/household';
+import { useAuthStore } from '@/shared/model';
 
 export const HouseholdSection = () => {
   const { session } = useAuthStore();

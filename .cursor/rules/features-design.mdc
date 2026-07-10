@@ -44,7 +44,6 @@ export const useCreateTransaction = () => {
 
 ### features에 두는 경우
 
-- 하나의 도메인에 종속되지 않고, 프로젝트 전반에 사용될 때
 - `entities` api를 감싼 `useQuery` / `useMutation` 훅
 - queryKey 정의, `invalidateQueries` 등 **캐시 전략**
 - mutation의 `onSuccess` / `onError` 등 **클라이언트 부수 효과** (Alert, 라우팅 등)

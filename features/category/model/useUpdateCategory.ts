@@ -1,7 +1,10 @@
-import { updateCategory, UpdateCategoryReq } from '@/entities/category';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Alert } from 'react-native';
 import { useState } from 'react';
+import { Alert } from 'react-native';
+
+import { updateCategory, type UpdateCategoryReq } from '@/entities/category';
+
+import { categoryQueryKeys } from '../config/queryKeys';
 
 export const useUpdateCategory = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -10,7 +13,7 @@ export const useUpdateCategory = () => {
   const mutation = useMutation({
     mutationFn: (payload: UpdateCategoryReq) => updateCategory(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      queryClient.invalidateQueries({ queryKey: categoryQueryKeys.all });
       setIsEditOpen(false);
     },
     onError: (error) => {

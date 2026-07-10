@@ -1,25 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
-import { deleteTransaction } from '../api/deleteTransaction';
-import { getTransaction } from '../api/getTransaction';
-import { getTransactions } from '../api/getTransactions';
-import { updateTransaction } from '../api/updateTransaction';
-import type { GetTransactionsReq } from './getTransactionsReq';
-import type { UpdateTransactionReq } from './updateTransactionReq';
 import { Alert } from 'react-native';
 
-const invalidateTransactionQueries = (
-  queryClient: ReturnType<typeof useQueryClient>,
-) => {
-  queryClient.invalidateQueries({ queryKey: ['transactions'] });
-  queryClient.invalidateQueries({ queryKey: ['monthly-summary'] });
-  queryClient.invalidateQueries({ queryKey: ['daily-expenses'] });
-  queryClient.invalidateQueries({ queryKey: ['category-expenses'] });
-};
+import {
+  deleteTransaction,
+  getTransaction,
+  getTransactions,
+  updateTransaction,
+  type GetTransactionsReq,
+  type UpdateTransactionReq,
+} from '@/entities/transaction';
+
+import { transactionQueryKeys } from '../config/queryKeys';
+import { invalidateTransactionQueries } from '../lib/invalidateTransactionQueries';
 
 export const useGetTransactions = (payload: GetTransactionsReq) => {
   return useQuery({
-    queryKey: ['transactions', payload],
+    queryKey: transactionQueryKeys.list(payload),
     queryFn: () => getTransactions(payload),
     enabled: !!payload.householdId,
   });
@@ -27,7 +23,7 @@ export const useGetTransactions = (payload: GetTransactionsReq) => {
 
 export const useGetTransaction = (id?: string) => {
   return useQuery({
-    queryKey: ['transaction', id],
+    queryKey: transactionQueryKeys.detail(id),
     queryFn: () => getTransaction(id!),
     enabled: !!id,
   });

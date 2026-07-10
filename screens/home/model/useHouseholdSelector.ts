@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
-import {
-  useAuthStore,
-  useGetHouseholds,
-  useHouseholdStore,
-} from '@/shared/model';
+import { useGetHouseholds } from '@/features/household';
+import { useAuthStore, useHouseholdStore } from '@/shared/model';
 
 export const useHouseholdSelector = () => {
   const { session } = useAuthStore();

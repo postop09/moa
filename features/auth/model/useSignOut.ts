@@ -1,8 +1,8 @@
-import { signOut } from '@/entities/auth';
-import { useAuthStore } from './authStore';
 import { useMutation } from '@tanstack/react-query';
 import { Alert } from 'react-native';
-import { useHouseholdStore } from './householdStore';
+
+import { signOut } from '@/entities/auth';
+import { useAuthStore, useHouseholdStore } from '@/shared/model';
 
 export const useSignOut = () => {
   const { clear } = useAuthStore();

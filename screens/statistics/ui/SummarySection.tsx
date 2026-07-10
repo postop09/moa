@@ -1,4 +1,4 @@
-import { useMonthlySummary } from '@/entities/transaction';
+import { useMonthlySummary } from '@/features/transaction';
 import { useHouseholdStore } from '@/shared/model';
 import { MonthlySummary } from '@/widgets/monthly-summary';
 

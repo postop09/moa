@@ -1,8 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-import { createTransaction } from '../api/createTransaction';
-import type { CreateTransactionReq } from './createTransactionReq';
 import { Alert } from 'react-native';
+
+import {
+  createTransaction,
+  type CreateTransactionReq,
+} from '@/entities/transaction';
+
+import { invalidateTransactionQueries } from '../lib/invalidateTransactionQueries';
 
 export const useCreateTransaction = () => {
   const queryClient = useQueryClient();
@@ -10,10 +14,7 @@ export const useCreateTransaction = () => {
   return useMutation({
     mutationFn: (payload: CreateTransactionReq) => createTransaction(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['transactions'] });
-      queryClient.invalidateQueries({ queryKey: ['monthly-summary'] });
-      queryClient.invalidateQueries({ queryKey: ['daily-expenses'] });
-      queryClient.invalidateQueries({ queryKey: ['category-expenses'] });
+      invalidateTransactionQueries(queryClient);
     },
     onError: (error) => {
       console.log(error);

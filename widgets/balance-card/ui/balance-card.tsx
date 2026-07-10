@@ -1,5 +1,6 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { formatCurrency, useMonthlySummary } from '@/entities/transaction';
+import { formatCurrency } from '@/entities/transaction';
+import { useMonthlySummary } from '@/features/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { useHouseholdStore } from '@/shared/model';

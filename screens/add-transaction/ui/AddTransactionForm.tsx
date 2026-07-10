@@ -8,10 +8,9 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import {
-  type TransactionType,
-  useCreateTransaction,
-} from '@/entities/transaction';
+import { type TransactionType } from '@/entities/transaction';
+import { useCreateTransaction } from '@/features/transaction';
+import { useGetCategories } from '@/features/category';
 import { Colors } from '@/shared/config';
 import {
   useColorScheme,
@@ -23,7 +22,6 @@ import { CategorySelector } from './CategorySelector';
 import { DateField } from './DateField';
 import { RecurringToggle } from './RecurringToggle';
 import { TransactionTypeSelector } from './TransactionTypeSelector';
-import { useGetCategories } from '@/screens/category-management/model/useGetCategories';
 import { useAuthStore, useHouseholdStore } from '@/shared/model';
 
 const INITIAL_DATE = new Date();

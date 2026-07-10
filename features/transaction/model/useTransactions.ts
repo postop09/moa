@@ -1,20 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchCategoryExpenses } from '../api/fetchCategoryExpenses';
-import { fetchDailyExpenses } from '../api/fetchDailyExpenses';
-import { fetchMonthlySummary } from '../api/fetchMonthlySummary';
-import { fetchMonthlyTransactions } from '../api/fetchMonthlyTransactions';
+import {
+  fetchCategoryExpenses,
+  fetchDailyExpenses,
+  fetchMonthlySummary,
+  fetchMonthlyTransactions,
+} from '@/entities/transaction';
 
-const getMonthKey = (date = new Date()) => {
-  return `${date.getFullYear()}-${date.getMonth() + 1}`;
-};
+import { transactionQueryKeys } from '../config/queryKeys';
 
 export const useMonthlyTransactions = (
   householdId: string,
   date = new Date(),
 ) => {
   return useQuery({
-    queryKey: ['transactions', householdId, getMonthKey(date)],
+    queryKey: transactionQueryKeys.monthly(householdId, date),
     queryFn: () =>
       fetchMonthlyTransactions({ householdId, referenceDate: date }),
     enabled: !!householdId,
@@ -23,7 +23,7 @@ export const useMonthlyTransactions = (
 
 export const useMonthlySummary = (householdId: string, date = new Date()) => {
   return useQuery({
-    queryKey: ['monthly-summary', householdId, getMonthKey(date)],
+    queryKey: transactionQueryKeys.monthlySummary(householdId, date),
     queryFn: () => fetchMonthlySummary({ householdId, referenceDate: date }),
     enabled: !!householdId,
   });
@@ -31,7 +31,7 @@ export const useMonthlySummary = (householdId: string, date = new Date()) => {
 
 export const useDailyExpenses = (householdId: string, date = new Date()) => {
   return useQuery({
-    queryKey: ['daily-expenses', householdId, getMonthKey(date)],
+    queryKey: transactionQueryKeys.dailyExpenses(householdId, date),
     queryFn: () => fetchDailyExpenses({ householdId, referenceDate: date }),
     enabled: !!householdId,
   });
@@ -39,7 +39,7 @@ export const useDailyExpenses = (householdId: string, date = new Date()) => {
 
 export const useCategoryExpenses = (householdId: string, date = new Date()) => {
   return useQuery({
-    queryKey: ['category-expenses', householdId, getMonthKey(date)],
+    queryKey: transactionQueryKeys.categoryExpenses(householdId, date),
     queryFn: () => fetchCategoryExpenses({ householdId, referenceDate: date }),
     enabled: !!householdId,
   });

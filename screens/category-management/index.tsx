@@ -12,10 +12,9 @@ import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { useHouseholdStore } from '@/shared/model';
 import { ThemedText, ThemedView } from '@/shared/ui';
-import { useGetCategories } from './model/useGetCategories';
+import { useCreateCategory, useGetCategories } from '@/features/category';
 import { CategoryEditModal } from './ui/CategoryEdit.modal';
 import { CategoryList } from './ui/CategoryList';
-import { useCreateCategory } from './model/useCreateCategory';
 
 export const CategoryManagementPage = () => {
   const router = useRouter();

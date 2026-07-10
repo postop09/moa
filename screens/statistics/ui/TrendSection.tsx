@@ -1,4 +1,4 @@
-import { useDailyExpenses } from '@/entities/transaction';
+import { useDailyExpenses } from '@/features/transaction';
 import { useHouseholdStore } from '@/shared/model';
 import { ExpenseChart } from '@/widgets/expense-chart';
 

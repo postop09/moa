@@ -2,7 +2,7 @@ import { Pressable, StyleSheet } from 'react-native';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
-import { useSignOut } from '@/shared/model';
+import { useSignOut } from '@/features/auth';
 
 export const SignOutButton = () => {
   const colorScheme = useColorScheme() ?? 'light';
