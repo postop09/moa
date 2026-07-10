@@ -19,6 +19,7 @@ export const HomePage = () => {
     </ThemedView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
