@@ -12,7 +12,8 @@ import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { useHouseholdStore } from '@/shared/model';
 import { ThemedText, ThemedView } from '@/shared/ui';
-import { useCreateCategory, useGetCategories } from '@/features/category';
+import { useGetCategories } from '@/features/category';
+import { useCreateCategory } from './model/useCreateCategory';
 import { CategoryEditModal } from './ui/CategoryEdit.modal';
 import { CategoryList } from './ui/CategoryList';
 

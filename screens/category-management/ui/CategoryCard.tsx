@@ -5,7 +5,8 @@ import { formatCurrency } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
-import { useDeleteCategory, useUpdateCategory } from '@/features/category';
+import { useDeleteCategory } from '../model/useDeleteCategory';
+import { useUpdateCategory } from '../model/useUpdateCategory';
 import { CategoryEditModal } from './CategoryEdit.modal';
 
 type Props = {
