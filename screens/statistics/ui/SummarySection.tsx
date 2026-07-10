@@ -1,7 +1,12 @@
 import { useMonthlySummary } from '@/entities/transaction';
+import { useHouseholdStore } from '@/shared/model';
 import { MonthlySummary } from '@/widgets/monthly-summary';
+
 export const SummarySection = () => {
-  const { data: summary, isLoading } = useMonthlySummary();
+  const { selectedHouseholdId } = useHouseholdStore();
+  const { data: summary, isLoading } = useMonthlySummary(
+    selectedHouseholdId ?? '',
+  );
   return (
     <MonthlySummary
       income={summary?.income ?? 0}

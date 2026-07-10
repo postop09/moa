@@ -3,11 +3,15 @@ import { PieChart } from 'react-native-gifted-charts';
 import { formatCurrency, useCategoryExpenses } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
+import { useHouseholdStore } from '@/shared/model';
 import { ThemedText, ThemedView } from '@/shared/ui';
 export const CategoryExpenseSection = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-  const { data: categoryExpenses, isLoading } = useCategoryExpenses();
+  const { selectedHouseholdId } = useHouseholdStore();
+  const { data: categoryExpenses, isLoading } = useCategoryExpenses(
+    selectedHouseholdId ?? '',
+  );
   const pieData =
     categoryExpenses?.map((item) => ({
       value: item.value,

@@ -1,7 +1,12 @@
 import { useDailyExpenses } from '@/entities/transaction';
+import { useHouseholdStore } from '@/shared/model';
 import { ExpenseChart } from '@/widgets/expense-chart';
+
 export const TrendSection = () => {
-  const { data: dailyExpenses, isLoading } = useDailyExpenses();
+  const { selectedHouseholdId } = useHouseholdStore();
+  const { data: dailyExpenses, isLoading } = useDailyExpenses(
+    selectedHouseholdId ?? '',
+  );
   return (
     <ExpenseChart
       data={dailyExpenses ?? []}

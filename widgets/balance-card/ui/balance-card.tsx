@@ -2,11 +2,13 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { formatCurrency, useMonthlySummary } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
+import { useHouseholdStore } from '@/shared/model';
 import { ThemedText, ThemedView } from '@/shared/ui';
 import { AmountView } from './AmountView';
 
 export const BalanceCard = () => {
-  const { data, isLoading } = useMonthlySummary();
+  const { selectedHouseholdId } = useHouseholdStore();
+  const { data, isLoading } = useMonthlySummary(selectedHouseholdId ?? '');
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const balance = data?.balance ?? 0;

@@ -1,16 +1,12 @@
 import type { TransactionType } from './transactionType';
 
-export type Transaction = {
+export type UpdateTransactionReq = {
   id: string;
-  householdId: string;
-  createdBy: string;
   categoryId?: number;
   name?: string;
   type?: TransactionType;
   amount?: number;
   memo?: string;
   transactionDt?: Date;
-  createdDt: Date;
-  updatedDt: Date;
   isRecurring?: boolean;
 };
