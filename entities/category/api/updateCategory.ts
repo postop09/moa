@@ -1,4 +1,4 @@
-import { normalizeBudget } from '../lib/categoryDefaults';
+import { normalizeBudget } from '../lib/normalizeBudget';
 import type { Category } from '../model/category';
 import type { UpdateCategoryReq } from '../model/updateCategoryReq';
 import { supabase } from '@/shared/api';
@@ -13,7 +13,7 @@ export const updateCategory = async (
       budget: normalizeBudget(payload.budget),
     })
     .eq('id', payload.id)
-    .select()
+    .select('*')
     .single();
 
   if (error) {

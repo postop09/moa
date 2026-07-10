@@ -6,8 +6,8 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import type { Category, CreateCategoryReq } from '@/entities/category';
-import { useHouseholdStore, type TransactionType } from '@/shared/model';
+import type { Category } from '@/entities/category';
+import type { TransactionType } from '@/shared/model';
 import {
   formatAmountInput,
   parseAmountInput,
@@ -16,31 +16,35 @@ import {
 import { Colors } from '@/shared/config';
 import { FormField, ThemedText } from '@/shared/ui';
 
-type BudgetEditorModalProps = {
+type SubmitPayload = {
+  id?: number;
+  name: string;
+  budget?: number;
+  type: TransactionType;
+};
+
+type Props = {
   visible: boolean;
   category?: Category | null;
-  defaultType?: TransactionType;
-  isSubmitting?: boolean;
+  isLoading?: boolean;
   onClose: () => void;
-  onSubmit: (payload: CreateCategoryReq) => void;
+  onSubmit: (payload: SubmitPayload) => void;
 };
 
 export const CategoryEditModal = ({
   visible,
   category,
-  defaultType = 'expense',
-  isSubmitting,
+  isLoading,
   onClose,
   onSubmit,
-}: BudgetEditorModalProps) => {
+}: Props) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const isEditing = !!category;
   const [name, setName] = useState('');
   const [budget, setBudget] = useState('');
-  const [type, setType] = useState<TransactionType>(defaultType);
+  const [type, setType] = useState<TransactionType>('expense');
   const [error, setError] = useState('');
-  const { selectedHouseholdId } = useHouseholdStore();
 
   useEffect(() => {
     if (!visible) {
@@ -50,22 +54,23 @@ export const CategoryEditModal = ({
     setBudget(
       category?.budget ? formatAmountInput(String(category.budget)) : '',
     );
-    setType(category?.type ?? defaultType);
+    setType(category?.type ?? 'expense');
     setError('');
-  }, [visible, category, defaultType]);
+  }, [visible, category]);
 
   const handleSubmit = () => {
-    if (!name.trim()) {
+    if (!name) {
       setError('이름을 입력해주세요.');
       return;
     }
-    const parsedBudget = parseAmountInput(budget);
-    onSubmit({
-      householdId: selectedHouseholdId ?? '',
+
+    const submitPayload: SubmitPayload = {
+      id: category?.id,
       name: name,
-      type,
-      budget: parsedBudget > 0 ? parsedBudget : null,
-    });
+      budget: budget ? parseAmountInput(budget) : undefined,
+      type: type,
+    };
+    onSubmit(submitPayload);
   };
 
   return (
@@ -111,7 +116,6 @@ export const CategoryEditModal = ({
                 );
               })}
             </View>
-
             <FormField
               label="이름"
               value={name}
@@ -120,7 +124,6 @@ export const CategoryEditModal = ({
               error={error}
               autoFocus
             />
-
             <FormField
               label="예산 (선택)"
               value={budget}
@@ -129,7 +132,6 @@ export const CategoryEditModal = ({
               keyboardType="number-pad"
             />
           </View>
-
           <View style={styles.actions}>
             <Pressable
               onPress={onClose}
@@ -139,17 +141,17 @@ export const CategoryEditModal = ({
             </Pressable>
             <Pressable
               onPress={handleSubmit}
-              disabled={isSubmitting}
+              disabled={isLoading}
               style={[
                 styles.button,
                 styles.primaryButton,
                 {
                   backgroundColor: colors.tint,
-                  opacity: isSubmitting ? 0.7 : 1,
+                  opacity: isLoading ? 0.7 : 1,
                 },
               ]}
             >
-              {isSubmitting ? (
+              {isLoading ? (
                 <ActivityIndicator color="#fff" />
               ) : (
                 <ThemedText style={styles.primaryText}>

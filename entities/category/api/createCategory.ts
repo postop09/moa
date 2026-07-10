@@ -1,4 +1,4 @@
-import { normalizeBudget } from '../lib/categoryDefaults';
+import { normalizeBudget } from '../lib/normalizeBudget';
 import type { CreateCategoryReq } from '../model/createCategoryReq';
 import { supabase } from '@/shared/api';
 

@@ -1,88 +1,98 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import type { Category } from '@/entities/category';
 import { formatCurrency } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
+import { useDeleteCategory } from '../model/useDeleteCategory';
+import { useUpdateCategory } from '../model/useUpdateCategory';
+import { CategoryEditModal } from './CategoryEdit.modal';
 
-type BudgetListItemProps = {
+type Props = {
   category: Category;
-  onEdit: (category: Category) => void;
-  onDelete: (category: Category) => void;
-  isDeleting?: boolean;
 };
 
-export const CategoryCard = ({
-  category,
-  onEdit,
-  onDelete,
-  isDeleting,
-}: BudgetListItemProps) => {
+export const CategoryCard = ({ category }: Props) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const typeColor =
     category.type === 'expense' ? colors.expense : colors.income;
-
-  const handleDelete = () => {
-    Alert.alert('예산 삭제', `'${category.name}' 항목을 삭제할까요?`, [
-      { text: '취소', style: 'cancel' },
-      {
-        text: '삭제하기',
-        style: 'destructive',
-        onPress: () => onDelete(category),
-      },
-    ]);
-  };
+  const { handleDelete, isPending: isDeleting } = useDeleteCategory();
+  const {
+    mutate: handleUpdate,
+    isPending: isUpdating,
+    isEditOpen,
+    setIsEditOpen,
+  } = useUpdateCategory();
 
   return (
-    <ThemedView
-      style={[styles.container, { borderColor: colors.border }]}
-      lightColor={colors.card}
-      darkColor={colors.card}
-    >
-      <View style={styles.header}>
-        <View style={[styles.typeBadge, { backgroundColor: typeColor }]}></View>
-        <ThemedText style={styles.name}>{category.name}</ThemedText>
-        <View style={styles.actions}>
-          <Pressable
-            onPress={() => onEdit(category)}
-            accessibilityLabel="수정하기"
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.actionButton,
-              { borderColor: colors.border },
-              pressed && { opacity: 0.7 },
-            ]}
-          >
-            <MaterialIcons name="edit" size={20} color={colors.text} />
-          </Pressable>
-          <Pressable
-            onPress={handleDelete}
-            disabled={isDeleting}
-            accessibilityLabel="삭제하기"
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.actionButton,
-              {
-                borderColor: colors.expense,
-                opacity: isDeleting ? 0.6 : pressed ? 0.7 : 1,
-              },
-            ]}
-          >
-            <MaterialIcons
-              name="delete-outline"
-              size={20}
-              color={colors.expense}
-            />
-          </Pressable>
+    <>
+      <ThemedView
+        style={[styles.container, { borderColor: colors.border }]}
+        lightColor={colors.card}
+        darkColor={colors.card}
+      >
+        <View style={styles.header}>
+          <View
+            style={[styles.typeBadge, { backgroundColor: typeColor }]}
+          ></View>
+          <ThemedText style={styles.name}>{category.name}</ThemedText>
+          <View style={styles.actions}>
+            <Pressable
+              onPress={() => setIsEditOpen(true)}
+              accessibilityLabel="수정하기"
+              hitSlop={8}
+              style={({ pressed }) => [
+                styles.actionButton,
+                { borderColor: colors.border },
+                pressed && { opacity: 0.7 },
+              ]}
+            >
+              <MaterialIcons name="edit" size={20} color={colors.text} />
+            </Pressable>
+            <Pressable
+              onPress={() => handleDelete(category.id, category.name)}
+              disabled={isDeleting}
+              accessibilityLabel="삭제하기"
+              hitSlop={8}
+              style={({ pressed }) => [
+                styles.actionButton,
+                {
+                  borderColor: colors.expense,
+                  opacity: isDeleting ? 0.6 : pressed ? 0.7 : 1,
+                },
+              ]}
+            >
+              <MaterialIcons
+                name="delete-outline"
+                size={20}
+                color={colors.expense}
+              />
+            </Pressable>
+          </View>
         </View>
-      </View>
-      <ThemedText style={[styles.budget, { color: colors.icon }]}>
-        예산{' '}
-        {category.budget !== null ? formatCurrency(category.budget) : '미설정'}
-      </ThemedText>
-    </ThemedView>
+        <ThemedText style={[styles.budget, { color: colors.icon }]}>
+          예산 {category.budget ? formatCurrency(category.budget) : '미설정'}
+        </ThemedText>
+      </ThemedView>
+
+      <CategoryEditModal
+        visible={isEditOpen}
+        category={category}
+        isLoading={isUpdating}
+        onClose={() => setIsEditOpen(false)}
+        onSubmit={(payload) =>
+          payload.id &&
+          handleUpdate({
+            id: payload.id,
+            name: payload.name,
+            type: payload.type,
+            budget: payload.budget,
+          })
+        }
+      />
+    </>
   );
 };
 

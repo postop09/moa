@@ -10,30 +10,27 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
+import { useHouseholdStore } from '@/shared/model';
 import { ThemedText, ThemedView } from '@/shared/ui';
-import { useBudgetManagement } from './model/useBudgetManagement';
+import { useGetCategories } from './model/useGetCategories';
 import { CategoryEditModal } from './ui/CategoryEdit.modal';
 import { CategoryList } from './ui/CategoryList';
+import { useCreateCategory } from './model/useCreateCategory';
 
 export const CategoryManagementPage = () => {
   const router = useRouter();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
+  const { selectedHouseholdId } = useHouseholdStore();
+  const { categories, isLoading, isRefetching } = useGetCategories(
+    selectedHouseholdId ?? '',
+  );
   const {
-    grouped,
-    isLoading,
-    isRefetching,
-    isCreating,
-    isUpdating,
-    isDeleting,
-    deletingId,
-    editorState,
-    editorCategory,
-    editorDefaultType,
-    setEditorState,
-    handleSubmit,
-    handleDelete,
-  } = useBudgetManagement();
+    mutate: createCategory,
+    isPending: isCreating,
+    isEditOpen,
+    setIsEditOpen,
+  } = useCreateCategory();
 
   return (
     <ThemedView style={styles.container}>
@@ -46,9 +43,7 @@ export const CategoryManagementPage = () => {
             카테고리 관리
           </ThemedText>
           <Pressable
-            onPress={() =>
-              setEditorState({ mode: 'create', defaultType: 'expense' })
-            }
+            onPress={() => setIsEditOpen(true)}
             style={styles.addButton}
           >
             <MaterialIcons name="add" size={24} color={colors.tint} />
@@ -62,28 +57,8 @@ export const CategoryManagementPage = () => {
             contentContainerStyle={styles.content}
             showsVerticalScrollIndicator={false}
           >
-            <CategoryList
-              title="지출"
-              categories={grouped.expense}
-              onAdd={() =>
-                setEditorState({ mode: 'create', defaultType: 'expense' })
-              }
-              onEdit={(category) => setEditorState({ mode: 'edit', category })}
-              onDelete={handleDelete}
-              deletingId={deletingId}
-              isDeleting={isDeleting}
-            />
-            <CategoryList
-              title="수입"
-              categories={grouped.income}
-              onAdd={() =>
-                setEditorState({ mode: 'create', defaultType: 'income' })
-              }
-              onEdit={(category) => setEditorState({ mode: 'edit', category })}
-              onDelete={handleDelete}
-              deletingId={deletingId}
-              isDeleting={isDeleting}
-            />
+            <CategoryList title="지출" categories={categories.expense} />
+            <CategoryList title="수입" categories={categories.income} />
           </ScrollView>
         )}
 
@@ -93,12 +68,17 @@ export const CategoryManagementPage = () => {
       </SafeAreaView>
 
       <CategoryEditModal
-        visible={editorState.mode !== 'closed'}
-        category={editorCategory}
-        defaultType={editorDefaultType}
-        isSubmitting={isCreating || isUpdating}
-        onClose={() => setEditorState({ mode: 'closed' })}
-        onSubmit={handleSubmit}
+        visible={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        isLoading={isCreating}
+        onSubmit={(payload) =>
+          createCategory({
+            householdId: selectedHouseholdId ?? '',
+            name: payload.name,
+            budget: payload.budget,
+            type: payload.type,
+          })
+        }
       />
     </ThemedView>
   );

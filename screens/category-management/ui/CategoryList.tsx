@@ -1,41 +1,18 @@
 import type { Category } from '@/entities/category';
-import { Colors } from '@/shared/config';
-import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { CategoryCard } from './CategoryCard';
 
-type BudgetSectionProps = {
+type Props = {
   title: string;
   categories: Category[];
-  onAdd: () => void;
-  onEdit: (category: Category) => void;
-  onDelete: (category: Category) => void;
-  deletingId: number | null;
-  isDeleting: boolean;
 };
 
-export const CategoryList = ({
-  title,
-  categories,
-  onAdd,
-  onEdit,
-  onDelete,
-  deletingId,
-  isDeleting,
-}: BudgetSectionProps) => {
-  const colorScheme = useColorScheme() ?? 'light';
-  const colors = Colors[colorScheme];
-
+export const CategoryList = ({ title, categories }: Props) => {
   return (
     <View style={styles.section}>
       <View style={styles.sectionHeader}>
         <ThemedText type="subtitle">{title}</ThemedText>
-        <Pressable onPress={onAdd}>
-          <ThemedText style={[styles.addText, { color: colors.tint }]}>
-            + 추가
-          </ThemedText>
-        </Pressable>
       </View>
 
       {categories.length === 0 ? (
@@ -44,13 +21,7 @@ export const CategoryList = ({
         </ThemedText>
       ) : (
         categories.map((category) => (
-          <CategoryCard
-            key={category.id}
-            category={category}
-            onEdit={onEdit}
-            onDelete={onDelete}
-            isDeleting={isDeleting && deletingId === category.id}
-          />
+          <CategoryCard key={category.id} category={category} />
         ))
       )}
     </View>
