@@ -11,8 +11,8 @@ import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
 type CategorySelectorProps = {
   categories: Category[];
-  value: string;
-  onChange: (categoryId: string) => void;
+  value: number;
+  onChange: (categoryId: number) => void;
   isLoading?: boolean;
 };
 export const CategorySelector = ({
@@ -43,12 +43,8 @@ export const CategorySelector = ({
                 style={[
                   styles.chip,
                   {
-                    backgroundColor: isSelected
-                      ? (category.color ?? colors.tint)
-                      : colors.card,
-                    borderColor: isSelected
-                      ? (category.color ?? colors.tint)
-                      : colors.border,
+                    backgroundColor: isSelected ? colors.tint : colors.card,
+                    borderColor: isSelected ? colors.tint : colors.border,
                   },
                 ]}
               >
@@ -68,6 +64,7 @@ export const CategorySelector = ({
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     gap: 8,

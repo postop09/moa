@@ -2,14 +2,12 @@ import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
-  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import { useCategories } from '@/entities/category';
 import {
   type TransactionType,
   useCreateTransaction,
@@ -21,48 +19,56 @@ import {
   parseAmountInput,
 } from '@/shared/lib';
 import { FormField, ThemedText } from '@/shared/ui';
-import { toISODate } from '../lib/date';
 import { CategorySelector } from './CategorySelector';
 import { DateField } from './DateField';
 import { RecurringToggle } from './RecurringToggle';
 import { TransactionTypeSelector } from './TransactionTypeSelector';
+import { useGetCategories } from '@/screens/category-management/model/useGetCategories';
+import { useAuthStore, useHouseholdStore } from '@/shared/model';
+
 const INITIAL_DATE = new Date();
+
 export const AddTransactionForm = () => {
   const router = useRouter();
+  const { selectedHouseholdId } = useHouseholdStore();
+  const { profile } = useAuthStore();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
   const [type, setType] = useState<TransactionType>('expense');
-  const [categoryId, setCategoryId] = useState('');
+  const [categoryId, setCategoryId] = useState<number>();
   const [transactionDate, setTransactionDate] = useState(INITIAL_DATE);
   const [memo, setMemo] = useState('');
   const [isRecurring, setIsRecurring] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { data: categories = [], isLoading: categoriesLoading } =
-    useCategories(type);
+    useGetCategories(selectedHouseholdId ?? '', type);
   const { mutate, isPending } = useCreateTransaction();
+
   useEffect(() => {
     if (!categories.length) {
       return;
     }
     const hasSelectedCategory = categories.some(
-      (category: { id: string }) => category.id === categoryId,
+      (category: { id: number }) => category.id === categoryId,
     );
     if (!hasSelectedCategory) {
       setCategoryId(categories[0].id);
     }
   }, [categories, categoryId, type]);
+
   const resetForm = () => {
     setName('');
     setAmount('');
     setType('expense');
-    setCategoryId('');
+    setCategoryId(undefined);
     setTransactionDate(new Date());
     setMemo('');
     setIsRecurring(false);
     setErrors({});
   };
+
   const validate = () => {
     const nextErrors: Record<string, string> = {};
     const parsedAmount = parseAmountInput(amount);
@@ -78,34 +84,32 @@ export const AddTransactionForm = () => {
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
   };
+
   const handleSubmit = () => {
     if (!validate()) {
       return;
     }
     mutate(
       {
+        householdId: selectedHouseholdId ?? '',
         name: name.trim(),
         amount: parseAmountInput(amount),
         categoryId,
         type,
-        transactionDate: toISODate(transactionDate),
-        memo: memo.trim() || null,
+        transactionDt: transactionDate,
+        memo: memo,
         isRecurring,
+        createdBy: profile?.id ?? '',
       },
       {
         onSuccess: () => {
           resetForm();
           router.push('/');
         },
-        onError: (error) => {
-          Alert.alert(
-            '저장 실패',
-            error instanceof Error ? error.message : '다시 시도해주세요.',
-          );
-        },
       },
     );
   };
+
   return (
     <KeyboardAvoidingView
       style={styles.flex}
@@ -137,7 +141,7 @@ export const AddTransactionForm = () => {
 
         <CategorySelector
           categories={categories}
-          value={categoryId}
+          value={categoryId ?? 0}
           onChange={setCategoryId}
           isLoading={categoriesLoading}
         />
@@ -186,6 +190,7 @@ export const AddTransactionForm = () => {
     </KeyboardAvoidingView>
   );
 };
+
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
