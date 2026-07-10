@@ -2,24 +2,24 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
 import {
-  createTransaction,
-  type CreateTransactionReq,
+  updateTransaction,
+  type UpdateTransactionReq,
 } from '@/entities/transaction';
 
 import { invalidateTransactionQueries } from '../lib/invalidateTransactionQueries';
 
-export const useCreateTransaction = () => {
+export const useUpdateTransaction = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload: CreateTransactionReq) => createTransaction(payload),
+    mutationFn: (payload: UpdateTransactionReq) => updateTransaction(payload),
     onSuccess: () => {
       invalidateTransactionQueries(queryClient);
     },
     onError: (error) => {
       console.log(error);
       Alert.alert(
-        '생성 실패',
+        '수정 실패',
         error instanceof Error ? error.message : '다시 시도해주세요.',
       );
     },

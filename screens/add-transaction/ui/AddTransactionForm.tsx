@@ -1,5 +1,3 @@
-import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -8,105 +6,40 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import { type TransactionType } from '@/entities/transaction';
-import { useCreateTransaction } from '@/features/transaction';
-import { useGetCategories } from '@/features/category';
+
 import { Colors } from '@/shared/config';
-import {
-  useColorScheme,
-  formatAmountInput,
-  parseAmountInput,
-} from '@/shared/lib';
+import { useColorScheme, formatAmountInput } from '@/shared/lib';
 import { FormField, ThemedText } from '@/shared/ui';
+import { useCreateTransaction } from '../model/useCreateTransaction';
 import { CategorySelector } from './CategorySelector';
 import { DateField } from './DateField';
 import { RecurringToggle } from './RecurringToggle';
 import { TransactionTypeSelector } from './TransactionTypeSelector';
-import { useAuthStore, useHouseholdStore } from '@/shared/model';
-
-const INITIAL_DATE = new Date();
 
 export const AddTransactionForm = () => {
-  const router = useRouter();
-  const { selectedHouseholdId } = useHouseholdStore();
-  const { profile } = useAuthStore();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-  const [name, setName] = useState('');
-  const [amount, setAmount] = useState('');
-  const [type, setType] = useState<TransactionType>('expense');
-  const [categoryId, setCategoryId] = useState<number>();
-  const [transactionDate, setTransactionDate] = useState(INITIAL_DATE);
-  const [memo, setMemo] = useState('');
-  const [isRecurring, setIsRecurring] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const { data: categories = [], isLoading: categoriesLoading } =
-    useGetCategories(selectedHouseholdId ?? '', type);
-  const { mutate, isPending } = useCreateTransaction();
-
-  useEffect(() => {
-    if (!categories.length) {
-      return;
-    }
-    const hasSelectedCategory = categories.some(
-      (category: { id: number }) => category.id === categoryId,
-    );
-    if (!hasSelectedCategory) {
-      setCategoryId(categories[0].id);
-    }
-  }, [categories, categoryId, type]);
-
-  const resetForm = () => {
-    setName('');
-    setAmount('');
-    setType('expense');
-    setCategoryId(undefined);
-    setTransactionDate(new Date());
-    setMemo('');
-    setIsRecurring(false);
-    setErrors({});
-  };
-
-  const validate = () => {
-    const nextErrors: Record<string, string> = {};
-    const parsedAmount = parseAmountInput(amount);
-    if (!name.trim()) {
-      nextErrors.name = '이름을 입력해주세요.';
-    }
-    if (!parsedAmount) {
-      nextErrors.amount = '금액을 입력해주세요.';
-    }
-    if (!categoryId) {
-      nextErrors.categoryId = '카테고리를 선택해주세요.';
-    }
-    setErrors(nextErrors);
-    return Object.keys(nextErrors).length === 0;
-  };
-
-  const handleSubmit = () => {
-    if (!validate()) {
-      return;
-    }
-    mutate(
-      {
-        householdId: selectedHouseholdId ?? '',
-        name: name.trim(),
-        amount: parseAmountInput(amount),
-        categoryId,
-        type,
-        transactionDt: transactionDate,
-        memo: memo,
-        isRecurring,
-        createdBy: profile?.id ?? '',
-      },
-      {
-        onSuccess: () => {
-          resetForm();
-          router.push('/');
-        },
-      },
-    );
-  };
+  const {
+    name,
+    setName,
+    amount,
+    setAmount,
+    type,
+    setType,
+    categoryId,
+    setCategoryId,
+    transactionDate,
+    setTransactionDate,
+    memo,
+    setMemo,
+    isRecurring,
+    setIsRecurring,
+    errors,
+    categories,
+    categoriesLoading,
+    isPending,
+    handleSubmit,
+  } = useCreateTransaction();
 
   return (
     <KeyboardAvoidingView
