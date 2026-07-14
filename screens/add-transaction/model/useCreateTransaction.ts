@@ -3,14 +3,15 @@ import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
-import {
-  createTransaction,
-  type TransactionType,
-} from '@/entities/transaction';
+import { createTransaction } from '@/entities/transaction';
 import { useGetCategories } from '@/features/category';
 import { invalidateTransactionQueries } from '@/features/transaction';
 import { parseAmountInput } from '@/shared/lib';
-import { useAuthStore, useHouseholdStore } from '@/shared/model';
+import {
+  TransactionType,
+  useAuthStore,
+  useHouseholdStore,
+} from '@/shared/model';
 
 const INITIAL_DATE = new Date();
 

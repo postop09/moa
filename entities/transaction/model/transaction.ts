@@ -1,16 +1,16 @@
-import type { TransactionType } from './transactionType';
+import type { TransactionType } from '@/shared/model';
 
 export type Transaction = {
   id: string;
   householdId: string;
-  createdBy: string;
   categoryId?: number;
   name?: string;
   type?: TransactionType;
   amount?: number;
+  isRecurring?: boolean;
   memo?: string;
-  transactionDt?: Date;
+  createdBy: string;
   createdDt: Date;
   updatedDt: Date;
-  isRecurring?: boolean;
+  transactionDt?: Date;
 };

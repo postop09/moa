@@ -1,4 +1,4 @@
-import type { TransactionType } from './transactionType';
+import type { TransactionType } from '@/shared/model';
 
 export type CreateTransactionReq = {
   householdId: string;

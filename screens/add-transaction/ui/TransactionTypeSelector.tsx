@@ -1,12 +1,14 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-import type { TransactionType } from '@/entities/transaction';
+import { TransactionType } from '@/shared/model';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
-type TransactionTypeSelectorProps = {
+
+type Props = {
   value: TransactionType;
   onChange: (value: TransactionType) => void;
 };
+
 const OPTIONS: {
   label: string;
   value: TransactionType;
@@ -14,12 +16,11 @@ const OPTIONS: {
   { label: '지출', value: 'expense' },
   { label: '수입', value: 'income' },
 ];
-export const TransactionTypeSelector = ({
-  value,
-  onChange,
-}: TransactionTypeSelectorProps) => {
+
+export const TransactionTypeSelector = ({ value, onChange }: Props) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
+
   return (
     <View style={styles.container}>
       <ThemedText style={styles.label}>유형</ThemedText>

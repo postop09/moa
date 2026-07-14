@@ -1,33 +1,16 @@
 import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
-import { formatCurrency, getTransaction } from '@/entities/transaction';
+import { formatCurrency } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
 import { AmountView } from './AmountView';
 import { router } from 'expo-router';
-import { useQuery } from '@tanstack/react-query';
-import { useHouseholdStore } from '@/shared/model';
-import { useEffect } from 'react';
+import { useGetBalance } from '../model/useGetBalance';
 
 export const BalanceCard = () => {
-  const { selectedHouseholdId } = useHouseholdStore();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-  const balance = 0;
-  const income = 0;
-  const expense = 0;
-  const isLoading = false;
-
-  const { data } = useQuery({
-    queryKey: ['balance'],
-    queryFn: () => getTransaction(selectedHouseholdId ?? ''),
-  });
-
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
+  const { income, expense, balance, isLoading } = useGetBalance();
 
   return (
     <ThemedView
@@ -105,7 +88,7 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   balance: {
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: '700',
     lineHeight: 44,
   },

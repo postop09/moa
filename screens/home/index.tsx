@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedView } from '@/shared/ui';
 import { HeaderSection } from './ui/HeaderSection';
-import { BalanceCard } from '@/widgets/balance-card';
+import { BalanceCard } from '@/widgets/balanceCard';
 
 export const HomePage = () => {
   return (
