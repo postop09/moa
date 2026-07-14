@@ -1,17 +1,14 @@
-import { mapTransaction } from '../lib/mapTransaction';
-import type { Transaction } from '../model/transaction';
 import { supabase } from '@/shared/api';
 
-export const getTransaction = async (id: string): Promise<Transaction> => {
+export const getTransaction = async (id: string) => {
   const { data, error } = await supabase
     .from('transactions')
     .select('*')
-    .eq('id', id)
-    .single();
+    .eq('householdId', id);
 
   if (error) {
     throw error;
   }
 
-  return mapTransaction(data);
+  return data;
 };
