@@ -1,4 +1,4 @@
-import { getTransaction } from '@/entities/transaction';
+import { getTransactions } from '@/entities/transaction';
 import { useHouseholdStore } from '@/shared/model';
 import { useQuery } from '@tanstack/react-query';
 
@@ -10,7 +10,7 @@ export const useGetBalance = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['balance', selectedHouseholdId, yearMonth],
     queryFn: () =>
-      getTransaction({ householdId: selectedHouseholdId!, yearMonth }),
+      getTransactions({ householdId: selectedHouseholdId!, yearMonth }),
   });
 
   let income = 0;

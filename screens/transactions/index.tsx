@@ -13,10 +13,10 @@ import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
-import { useGetMonthlyTransactions } from './model/useGetMonthlyTransactions';
 import { MonthSelector } from './ui/MonthSelector';
 import { MonthSummary } from './ui/MonthSummary';
 import { TransactionList } from './ui/TransactionList';
+import { useGetMonthlyTransactions } from './model/useGetMonthlyTransactions';
 
 export const TransactionsPage = () => {
   const router = useRouter();
