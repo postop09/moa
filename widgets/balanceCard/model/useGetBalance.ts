@@ -18,10 +18,11 @@ export const useGetBalance = () => {
   let balance = 0;
 
   data?.forEach((transaction) => {
+    const amount = transaction.amount ?? 0;
     if (transaction.type === 'income') {
-      income += transaction?.amount ?? 0;
+      income += amount;
     } else {
-      expense += transaction?.amount ?? 0;
+      expense += amount;
     }
   });
 

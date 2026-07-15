@@ -1,7 +1,8 @@
 import { supabase } from '@/shared/api';
 import { getMonthRange } from '../lib/getMonthRange';
+import { mapTransaction } from '../lib/mapTransaction';
 import type { GetTransactionsReq } from '../model/getTransactionsReq';
-import { Transaction } from '../model/transaction';
+import type { Transaction } from '../model/transaction';
 
 export const getTransaction = async ({
   householdId,
@@ -16,7 +17,8 @@ export const getTransaction = async ({
       householdId,
       ...(type && { type }),
       ...(categoryId && { categoryId }),
-    });
+    })
+    .order('transactionDt', { ascending: false });
 
   if (yearMonth) {
     const { startDate, endDate } = getMonthRange(yearMonth);
@@ -29,5 +31,5 @@ export const getTransaction = async ({
     throw error;
   }
 
-  return data;
+  return (data ?? []).map(mapTransaction);
 };
