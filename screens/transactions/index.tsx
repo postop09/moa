@@ -13,7 +13,7 @@ import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
-import { useTransactions } from './model/useTransactions';
+import { useGetMonthlyTransactions } from './model/useGetMonthlyTransactions';
 import { MonthSelector } from './ui/MonthSelector';
 import { MonthSummary } from './ui/MonthSummary';
 import { TransactionList } from './ui/TransactionList';
@@ -31,7 +31,7 @@ export const TransactionsPage = () => {
     balance,
     isLoading,
     isRefetching,
-  } = useTransactions();
+  } = useGetMonthlyTransactions();
 
   return (
     <ThemedView style={styles.container}>

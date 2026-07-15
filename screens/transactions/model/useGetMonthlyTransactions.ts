@@ -1,15 +1,15 @@
 import { useMemo, useState } from 'react';
 
-import { useGetTransaction } from '@/features/transaction';
+import { useGetTransactions } from '@/features/transaction';
 import { useHouseholdStore } from '@/shared/model';
 
 import { toYearMonth } from '../lib/yearMonth';
 
-export const useTransactions = () => {
+export const useGetMonthlyTransactions = () => {
   const { selectedHouseholdId } = useHouseholdStore();
   const [yearMonth, setYearMonth] = useState(toYearMonth);
 
-  const { data, isLoading, isRefetching } = useGetTransaction(
+  const { data, isLoading, isRefetching } = useGetTransactions(
     selectedHouseholdId
       ? { householdId: selectedHouseholdId, yearMonth }
       : undefined,

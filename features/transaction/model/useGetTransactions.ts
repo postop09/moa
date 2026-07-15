@@ -1,16 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 
 import {
-  getTransaction,
+  getTransactions,
   type GetTransactionsReq,
 } from '@/entities/transaction';
 
 import { transactionQueryKeys } from '../config/queryKeys';
 
-export const useGetTransaction = (payload?: GetTransactionsReq) => {
+export const useGetTransactions = (payload?: GetTransactionsReq) => {
   return useQuery({
     queryKey: transactionQueryKeys.list(payload),
-    queryFn: () => getTransaction(payload!),
+    queryFn: () => getTransactions(payload!),
     enabled: !!payload?.householdId,
   });
 };

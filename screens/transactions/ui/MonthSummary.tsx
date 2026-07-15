@@ -3,9 +3,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { formatCurrency } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-import { ThemedText, ThemedView } from '@/shared/ui';
-
-import { AmountView } from '@/widgets/balanceCard/ui/AmountView';
+import { ThemedText, ThemedView, AmountView } from '@/shared/ui';
 
 type Props = {
   balance: number;

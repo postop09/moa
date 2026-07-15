@@ -4,7 +4,7 @@ import { mapTransaction } from '../lib/mapTransaction';
 import type { GetTransactionsReq } from '../model/getTransactionsReq';
 import type { Transaction } from '../model/transaction';
 
-export const getTransaction = async ({
+export const getTransactions = async ({
   householdId,
   type,
   categoryId,
