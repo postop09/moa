@@ -144,15 +144,15 @@ export const TransactionForm = ({
         contentContainerStyle={styles.content}
       >
         <TransactionTypeSelector value={type} onChange={setType} />
-
-        <FormField
-          label="이름"
-          value={name}
-          onChangeText={setName}
-          placeholder="예: 점심 식사"
-          error={errors.name}
+        <DateField value={transactionDate} onChange={setTransactionDate} />
+        <RecurringToggle value={isRecurring} onChange={setIsRecurring} />
+        <CategorySelector
+          categories={categories}
+          value={categoryId}
+          onChange={setCategoryId}
+          isLoading={categoriesLoading}
+          error={errors.categoryId}
         />
-
         <FormField
           label="금액"
           value={amount}
@@ -162,17 +162,13 @@ export const TransactionForm = ({
           error={errors.amount}
         />
 
-        <CategorySelector
-          categories={categories}
-          value={categoryId}
-          onChange={setCategoryId}
-          isLoading={categoriesLoading}
-          error={errors.categoryId}
+        <FormField
+          label="이름"
+          value={name}
+          onChangeText={setName}
+          placeholder="이름을 입력하세요 (선택)"
+          error={errors.name}
         />
-
-        <DateField value={transactionDate} onChange={setTransactionDate} />
-
-        <RecurringToggle value={isRecurring} onChange={setIsRecurring} />
 
         <FormField
           label="설명"

@@ -19,7 +19,6 @@ export const TransactionItem = ({ transaction }: Props) => {
   const colors = Colors[colorScheme];
   const typeColor =
     transaction.type === 'income' ? colors.income : colors.expense;
-  const typeLabel = transaction.type === 'income' ? '수입' : '지출';
   const { handleDelete, isPending: isDeleting } = useDeleteTransaction();
 
   return (
@@ -37,7 +36,7 @@ export const TransactionItem = ({ transaction }: Props) => {
                 ? formatMonthDate(transaction.transactionDt)
                 : '-'}
               {' · '}
-              {typeLabel}
+              {transaction.categoryName || '카테고리 없음'}
             </ThemedText>
           </View>
           <View style={styles.actions}>
@@ -81,7 +80,7 @@ export const TransactionItem = ({ transaction }: Props) => {
         </View>
         <View style={styles.content}>
           <ThemedText style={styles.name} numberOfLines={1}>
-            {transaction.name || '이름 없음'}
+            {transaction.name || transaction.categoryName || '이름 없음'}
           </ThemedText>
           <ThemedText style={[styles.amount, { color: typeColor }]}>
             {formatCurrency(transaction.amount ?? 0)}

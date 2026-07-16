@@ -5,7 +5,7 @@ import type { Transaction } from '../model/transaction';
 export const getTransaction = async (id: string): Promise<Transaction> => {
   const { data, error } = await supabase
     .from('transactions')
-    .select('*')
+    .select('*, categories(name)')
     .eq('id', id)
     .single();
 

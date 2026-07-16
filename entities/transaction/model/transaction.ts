@@ -4,6 +4,7 @@ export type Transaction = {
   id: string;
   householdId: string;
   categoryId?: number;
+  categoryName?: string;
   name?: string;
   type?: TransactionType;
   amount?: number;

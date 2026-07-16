@@ -12,7 +12,7 @@ export const getTransactions = async ({
 }: GetTransactionsReq): Promise<Transaction[]> => {
   let query = supabase
     .from('transactions')
-    .select('*')
+    .select('*, categories(name)')
     .match({
       householdId,
       ...(type && { type }),

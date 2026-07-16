@@ -15,6 +15,7 @@ type TransactionRow = {
   createdDt: string;
   updatedDt: string;
   isRecurring?: boolean | null;
+  categories?: { name: string } | null;
 };
 
 const toDate = (value?: string | null): Date | undefined => {
@@ -31,6 +32,7 @@ export const mapTransaction = (row: TransactionRow): Transaction => {
     householdId: row.householdId,
     createdBy: row.createdBy,
     categoryId: row.categoryId ?? undefined,
+    categoryName: row.categories?.name ?? undefined,
     name: row.name ?? undefined,
     type: (row.type as Transaction['type']) ?? undefined,
     amount: row.amount ?? undefined,
