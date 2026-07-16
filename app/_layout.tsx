@@ -63,6 +63,7 @@ const RootNavigator = () => {
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="category-management" />
           <Stack.Screen name="transactions" />
+          <Stack.Screen name="transaction-form" />
           <Stack.Screen
             name="modal"
             options={{ presentation: 'modal', title: 'Modal' }}

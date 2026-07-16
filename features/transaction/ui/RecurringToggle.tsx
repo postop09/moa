@@ -1,14 +1,18 @@
 import { StyleSheet, Switch, View } from 'react-native';
+
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
-type RecurringToggleProps = {
+
+type Props = {
   value: boolean;
   onChange: (value: boolean) => void;
 };
-export const RecurringToggle = ({ value, onChange }: RecurringToggleProps) => {
+
+export const RecurringToggle = ({ value, onChange }: Props) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
+
   return (
     <ThemedView
       style={[styles.container, { borderColor: colors.border }]}
@@ -30,6 +34,7 @@ export const RecurringToggle = ({ value, onChange }: RecurringToggleProps) => {
     </ThemedView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',

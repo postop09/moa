@@ -13,10 +13,10 @@ import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
+import { useGetMonthlyTransactions } from './model/useGetMonthlyTransactions';
 import { MonthSelector } from './ui/MonthSelector';
 import { MonthSummary } from './ui/MonthSummary';
 import { TransactionList } from './ui/TransactionList';
-import { useGetMonthlyTransactions } from './model/useGetMonthlyTransactions';
 
 export const TransactionsPage = () => {
   const router = useRouter();
@@ -43,6 +43,18 @@ export const TransactionsPage = () => {
           <ThemedText type="title" style={styles.title}>
             거래 내역
           </ThemedText>
+          <Pressable
+            onPress={() =>
+              router.push({
+                pathname: '/transaction-form',
+                params: { yearMonth },
+              })
+            }
+            style={styles.addButton}
+            accessibilityLabel="거래 추가"
+          >
+            <MaterialIcons name="add" size={24} color={colors.tint} />
+          </Pressable>
         </View>
 
         <ScrollView
@@ -92,6 +104,9 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 22,
   },
+  addButton: {
+    padding: 4,
+  },
   loader: {
     marginTop: 40,
   },
@@ -100,7 +115,6 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 20,
-
     paddingBottom: 32,
   },
 });

@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-import { TransactionType } from '@/shared/model';
+
+import type { TransactionType } from '@/shared/model';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
@@ -24,7 +25,7 @@ export const TransactionTypeSelector = ({ value, onChange }: Props) => {
   return (
     <View style={styles.container}>
       <ThemedText style={styles.label}>유형</ThemedText>
-      <View style={[styles.row, { borderColor: colors.border }]}>
+      <View style={styles.row}>
         {OPTIONS.map((option) => {
           const isSelected = value === option.value;
           const accentColor =
@@ -56,6 +57,7 @@ export const TransactionTypeSelector = ({ value, onChange }: Props) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     gap: 8,

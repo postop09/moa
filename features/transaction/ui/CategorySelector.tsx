@@ -5,29 +5,39 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+
 import type { Category } from '@/entities/category';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
-type CategorySelectorProps = {
+
+type Props = {
   categories: Category[];
-  value: number;
+  value?: number;
   onChange: (categoryId: number) => void;
   isLoading?: boolean;
+  error?: string;
 };
+
 export const CategorySelector = ({
   categories,
   value,
   onChange,
   isLoading,
-}: CategorySelectorProps) => {
+  error,
+}: Props) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
+
   return (
     <View style={styles.container}>
       <ThemedText style={styles.label}>카테고리</ThemedText>
       {isLoading ? (
         <ActivityIndicator color={colors.tint} />
+      ) : categories.length === 0 ? (
+        <ThemedText style={[styles.empty, { color: colors.icon }]}>
+          등록된 카테고리가 없습니다.
+        </ThemedText>
       ) : (
         <ScrollView
           horizontal
@@ -61,6 +71,11 @@ export const CategorySelector = ({
           })}
         </ScrollView>
       )}
+      {error ? (
+        <ThemedText style={[styles.error, { color: colors.expense }]}>
+          {error}
+        </ThemedText>
+      ) : null}
     </View>
   );
 };
@@ -72,6 +87,9 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
+  },
+  empty: {
+    fontSize: 13,
   },
   chips: {
     gap: 8,
@@ -86,5 +104,8 @@ const styles = StyleSheet.create({
   chipText: {
     fontSize: 14,
     fontWeight: '600',
+  },
+  error: {
+    fontSize: 13,
   },
 });

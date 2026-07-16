@@ -1,5 +1,6 @@
 export { createTransaction } from './api/createTransaction';
 export { deleteTransaction } from './api/deleteTransaction';
+export { getTransaction } from './api/getTransaction';
 export { getTransactions } from './api/getTransactions';
 export { updateTransaction } from './api/updateTransaction';
 
