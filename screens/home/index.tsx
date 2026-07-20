@@ -1,8 +1,9 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedView } from '@/shared/ui';
-import { HeaderSection } from './ui/HeaderSection';
 import { BalanceCard } from '@/widgets/balanceCard';
+import { HeaderSection } from './ui/HeaderSection';
+import { QuickTransactionSection } from './ui/QuickTransactionSection';
 
 export const HomePage = () => {
   return (
@@ -11,9 +12,11 @@ export const HomePage = () => {
         <ScrollView
           contentContainerStyle={styles.content}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
         >
           <HeaderSection />
           <BalanceCard />
+          <QuickTransactionSection />
         </ScrollView>
       </SafeAreaView>
     </ThemedView>
