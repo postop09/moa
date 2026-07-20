@@ -10,15 +10,15 @@ export const deleteHousehold = async (id: string): Promise<void> => {
   }
 
   const { error: memberError } = await supabase
-    .from('household_member')
+    .from('household-members')
     .delete()
-    .eq('household_id', id);
+    .eq('householdId', id);
 
   if (memberError) {
     throw memberError;
   }
 
-  const { error } = await supabase.from('household').delete().eq('id', id);
+  const { error } = await supabase.from('households').delete().eq('id', id);
 
   if (error) {
     throw error;

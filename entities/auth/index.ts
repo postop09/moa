@@ -1,5 +1,6 @@
 export { createProfile } from './api/createProfile';
 export { getProfile } from './api/getProfile';
+export { getProfileByEmail } from './api/getProfileByEmail';
 export { signOut } from './api/signOut';
 export { getSession } from './api/getSession';
 export { getSessionChange } from './api/getSessionChange';

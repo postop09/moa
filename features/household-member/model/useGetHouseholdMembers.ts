@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchHouseholdMembers } from '@/entities/household-member';
+import { getHouseholdMembers } from '@/entities/household-member';
 
 import { householdMemberQueryKeys } from '../config/queryKeys';
 
-export const useHouseholdMembers = (householdId?: string) => {
+export const useGetHouseholdMembers = (householdId?: string) => {
   return useQuery({
     queryKey: householdMemberQueryKeys.list(householdId),
-    queryFn: () => fetchHouseholdMembers(householdId!),
+    queryFn: () => getHouseholdMembers(householdId!),
     enabled: !!householdId,
   });
 };

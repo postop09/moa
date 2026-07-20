@@ -20,7 +20,7 @@ export const QuickActionMenu = () => {
 
   const handleAddMember = () => {
     setIsOpen(false);
-    // TODO: 멤버 추가 페이지로 이동
+    router.push('/member-management');
   };
 
   return (
