@@ -1,26 +1,24 @@
-import { ThemedView } from '@/shared/ui';
+import { ThemedView, PrimaryButton } from '@/shared/ui';
 import { Platform, StyleSheet, KeyboardAvoidingView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeroSection } from './ui/HeroSection';
 import { HouseholdFormSection } from './ui/HouseholdFormSection';
-import { StartButton } from './ui/StartButton';
-import { useState } from 'react';
-import { useCreateHousehold } from '@/features/household';
+import {
+  useCreateHousehold,
+  useHouseholdNameForm,
+} from '@/features/household';
 
 export const SetupHouseholdPage = () => {
-  const [householdName, setHouseholdName] = useState('');
-  const [error, setError] = useState('');
+  const { householdName, setHouseholdName, error, clearError, validate } =
+    useHouseholdNameForm();
   const { mutate, isPending } = useCreateHousehold();
 
   const handleSubmit = () => {
-    const trimmedName = householdName.trim();
-
-    if (!trimmedName) {
-      setError('가계부 이름을 입력해주세요.');
+    const name = validate();
+    if (!name) {
       return;
     }
-
-    mutate({ name: trimmedName });
+    mutate({ name });
   };
 
   return (
@@ -37,11 +35,15 @@ export const SetupHouseholdPage = () => {
             error={error}
             isPending={isPending}
             onChange={setHouseholdName}
-            onClearError={() => setError('')}
+            onClearError={clearError}
           />
 
           <View style={styles.actions}>
-            <StartButton onSubmit={handleSubmit} isPending={isPending} />
+            <PrimaryButton
+              label="시작하기"
+              onPress={handleSubmit}
+              isPending={isPending}
+            />
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>

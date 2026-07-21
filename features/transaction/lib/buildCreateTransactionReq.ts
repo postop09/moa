@@ -1,5 +1,7 @@
-import type { CreateTransactionReq } from '@/entities/transaction';
-import type { TransactionType } from '@/shared/model';
+import type {
+  CreateTransactionReq,
+  TransactionType,
+} from '@/entities/transaction';
 
 export type CreateTransactionInput = {
   name?: string;

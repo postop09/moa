@@ -1,4 +1,3 @@
-import { mapTransaction, toTransactionUpdateRow } from '../lib/mapTransaction';
 import type { Transaction } from '../model/transaction';
 import type { UpdateTransactionReq } from '../model/updateTransactionReq';
 import { supabase } from '@/shared/api';
@@ -10,7 +9,7 @@ export const updateTransaction = async (
 
   const { data, error } = await supabase
     .from('transactions')
-    .update(toTransactionUpdateRow(fields))
+    .update(fields)
     .eq('id', id)
     .select('*')
     .single();
@@ -19,5 +18,5 @@ export const updateTransaction = async (
     throw error;
   }
 
-  return mapTransaction(data);
+  return data;
 };

@@ -1,5 +1,6 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -8,12 +9,13 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { useCreateCategory, useGetCategories } from '@/features/category';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { useHouseholdStore } from '@/shared/model';
 import { ThemedText, ThemedView } from '@/shared/ui';
-import { useGetCategories } from '@/features/category';
-import { useCreateCategory } from './model/useCreateCategory';
+
 import { CategoryEditModal } from './ui/CategoryEdit.modal';
 import { CategoryList } from './ui/CategoryList';
 
@@ -22,15 +24,11 @@ export const CategoryManagementPage = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const { selectedHouseholdId } = useHouseholdStore();
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
   const { categories, isLoading, isRefetching } = useGetCategories(
     selectedHouseholdId ?? '',
   );
-  const {
-    mutate: createCategory,
-    isPending: isCreating,
-    isEditOpen,
-    setIsEditOpen,
-  } = useCreateCategory();
+  const { mutate: createCategory, isPending: isCreating } = useCreateCategory();
 
   return (
     <ThemedView style={styles.container}>
@@ -43,7 +41,7 @@ export const CategoryManagementPage = () => {
             카테고리 관리
           </ThemedText>
           <Pressable
-            onPress={() => setIsEditOpen(true)}
+            onPress={() => setIsCreateOpen(true)}
             style={styles.addButton}
           >
             <MaterialIcons name="add" size={24} color={colors.tint} />
@@ -68,16 +66,21 @@ export const CategoryManagementPage = () => {
       </SafeAreaView>
 
       <CategoryEditModal
-        visible={isEditOpen}
-        onClose={() => setIsEditOpen(false)}
+        visible={isCreateOpen}
+        onClose={() => setIsCreateOpen(false)}
         isLoading={isCreating}
         onSubmit={(payload) =>
-          createCategory({
-            householdId: selectedHouseholdId ?? '',
-            name: payload.name,
-            budget: payload.budget,
-            type: payload.type,
-          })
+          createCategory(
+            {
+              householdId: selectedHouseholdId ?? '',
+              name: payload.name,
+              budget: payload.budget,
+              type: payload.type,
+            },
+            {
+              onSuccess: () => setIsCreateOpen(false),
+            },
+          )
         }
       />
     </ThemedView>

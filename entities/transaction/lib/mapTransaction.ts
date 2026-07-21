@@ -1,6 +1,5 @@
-import type { CreateTransactionReq } from '../model/createTransactionReq';
 import type { Transaction } from '../model/transaction';
-import type { UpdateTransactionReq } from '../model/updateTransactionReq';
+import { isTransactionType } from '../model/transactionType';
 
 type TransactionRow = {
   id: string;
@@ -34,40 +33,12 @@ export const mapTransaction = (row: TransactionRow): Transaction => {
     categoryId: row.categoryId ?? undefined,
     categoryName: row.categories?.name ?? undefined,
     name: row.name ?? undefined,
-    type: (row.type as Transaction['type']) ?? undefined,
+    type: isTransactionType(row.type) ? row.type : undefined,
     amount: row.amount ?? undefined,
     memo: row.memo ?? undefined,
     transactionDt: toDate(row.transactionDt),
     createdDt: new Date(row.createdDt),
     updatedDt: new Date(row.updatedDt),
     isRecurring: row.isRecurring ?? undefined,
-  };
-};
-
-export const toTransactionInsertRow = (payload: CreateTransactionReq) => {
-  return {
-    householdId: payload.householdId,
-    createdBy: payload.createdBy,
-    categoryId: payload.categoryId,
-    name: payload.name,
-    type: payload.type,
-    amount: payload.amount,
-    memo: payload.memo,
-    transactionDt: payload.transactionDt?.toISOString(),
-    isRecurring: payload.isRecurring,
-  };
-};
-
-export const toTransactionUpdateRow = (
-  payload: Omit<UpdateTransactionReq, 'id'>,
-) => {
-  return {
-    categoryId: payload.categoryId,
-    name: payload.name,
-    type: payload.type,
-    amount: payload.amount,
-    memo: payload.memo,
-    transactionDt: payload.transactionDt?.toISOString(),
-    isRecurring: payload.isRecurring,
   };
 };

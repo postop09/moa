@@ -2,10 +2,10 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import type { GetHouseholdMembersRes } from '@/entities/household-member';
+import { useRemoveHouseholdMember } from '@/features/household-member';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
-import { useRemoveHouseholdMember } from '../model/useRemoveHouseholdMember';
 
 type Member = GetHouseholdMembersRes[number];
 

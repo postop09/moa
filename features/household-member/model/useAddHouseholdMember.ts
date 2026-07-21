@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
 import { Alert } from 'react-native';
 
 import { getProfileByEmail } from '@/entities/auth';
 import { addHouseholdMember } from '@/entities/household-member';
-import { householdMemberQueryKeys } from '@/features/household-member';
 import { isSupabaseConfigured } from '@/shared/config';
+
+import { householdMemberQueryKeys } from '../config/queryKeys';
 
 type AddMemberPayload = {
   householdId: string;
@@ -13,10 +13,9 @@ type AddMemberPayload = {
 };
 
 export const useAddHouseholdMember = () => {
-  const [isAddOpen, setIsAddOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  const mutate = useMutation({
+  return useMutation({
     mutationFn: async ({ householdId, email }: AddMemberPayload) => {
       if (!isSupabaseConfigured) {
         return addHouseholdMember({
@@ -39,7 +38,6 @@ export const useAddHouseholdMember = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: householdMemberQueryKeys.all });
-      setIsAddOpen(false);
     },
     onError: (error) => {
       Alert.alert(
@@ -48,10 +46,4 @@ export const useAddHouseholdMember = () => {
       );
     },
   });
-
-  return {
-    ...mutate,
-    isAddOpen,
-    setIsAddOpen,
-  };
 };

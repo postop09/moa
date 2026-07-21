@@ -1,5 +1,3 @@
-import { Colors } from '@/shared/config';
-import { ThemedText } from '@/shared/ui';
 import {
   ActivityIndicator,
   Pressable,
@@ -7,31 +5,43 @@ import {
   useColorScheme,
 } from 'react-native';
 
+import { Colors } from '@/shared/config';
+
+import { ThemedText } from './ThemedText';
+
 type Props = {
-  onSubmit: () => void;
-  isPending: boolean;
+  label: string;
+  onPress: () => void;
+  isPending?: boolean;
+  disabled?: boolean;
 };
 
-export const StartButton = ({ onSubmit, isPending }: Props) => {
+export const PrimaryButton = ({
+  label,
+  onPress,
+  isPending = false,
+  disabled = false,
+}: Props) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
+  const isDisabled = disabled || isPending;
 
   return (
     <Pressable
-      onPress={onSubmit}
-      disabled={isPending}
+      onPress={onPress}
+      disabled={isDisabled}
       style={({ pressed }) => [
         styles.submitButton,
         {
           backgroundColor: colors.tint,
-          opacity: pressed || isPending ? 0.85 : 1,
+          opacity: pressed || isDisabled ? 0.85 : 1,
         },
       ]}
     >
       {isPending ? (
         <ActivityIndicator color="#fff" />
       ) : (
-        <ThemedText style={styles.submitText}>시작하기</ThemedText>
+        <ThemedText style={styles.submitText}>{label}</ThemedText>
       )}
     </Pressable>
   );

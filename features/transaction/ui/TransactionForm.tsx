@@ -10,7 +10,7 @@ import {
 
 import type { Category } from '@/entities/category';
 import type { Transaction } from '@/entities/transaction';
-import type { TransactionType } from '@/shared/model';
+import type { TransactionType } from '@/entities/transaction';
 import {
   formatAmountInput,
   parseAmountInput,
@@ -67,7 +67,11 @@ export const TransactionForm = ({
   );
   const [memo, setMemo] = useState('');
   const [isRecurring, setIsRecurring] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<{
+    amount?: string;
+    name?: string;
+    categoryId?: string;
+  }>({});
   const [initialized, setInitialized] = useState(false);
 
   const filteredCategories = useMemo(
@@ -110,7 +114,11 @@ export const TransactionForm = ({
   }, [filteredCategories, isEditing]);
 
   const handleSubmit = () => {
-    const nextErrors: Record<string, string> = {};
+    const nextErrors: {
+      amount?: string;
+      name?: string;
+      categoryId?: string;
+    } = {};
     const parsedAmount = parseAmountInput(amount);
 
     if (!categoryId) {

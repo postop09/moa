@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import type { TransactionType } from '@/shared/model';
+import type { TransactionType } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';

@@ -56,10 +56,6 @@ const RootNavigator = () => {
           <Stack.Screen name="member-management" />
           <Stack.Screen name="transactions" />
           <Stack.Screen name="transaction-form" />
-          <Stack.Screen
-            name="modal"
-            options={{ presentation: 'modal', title: 'Modal' }}
-          />
         </Stack.Protected>
         <Stack.Screen name="auth/callback" options={{ headerShown: false }} />
       </Stack>

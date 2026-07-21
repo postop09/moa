@@ -6,8 +6,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import type { Category } from '@/entities/category';
-import type { TransactionType } from '@/shared/model';
+import type { Category, CategoryType } from '@/entities/category';
 import {
   formatAmountInput,
   parseAmountInput,
@@ -20,7 +19,7 @@ type SubmitPayload = {
   id?: number;
   name: string;
   budget?: number;
-  type: TransactionType;
+  type: CategoryType;
 };
 
 type Props = {
@@ -43,7 +42,7 @@ export const CategoryEditModal = ({
   const isEditing = !!category;
   const [name, setName] = useState('');
   const [budget, setBudget] = useState('');
-  const [type, setType] = useState<TransactionType>('expense');
+  const [type, setType] = useState<CategoryType>('expense');
   const [error, setError] = useState('');
 
   useEffect(() => {

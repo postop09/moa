@@ -1,16 +1,17 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
-import { deleteCategory } from '@/entities/category';
-import { categoryQueryKeys } from '@/features/category';
+import { removeHouseholdMember } from '@/entities/household-member';
 
-export const useDeleteCategory = () => {
+import { householdMemberQueryKeys } from '../config/queryKeys';
+
+export const useRemoveHouseholdMember = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (id: number) => deleteCategory(id),
+    mutationFn: (id: number) => removeHouseholdMember(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: categoryQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: householdMemberQueryKeys.all });
     },
     onError: (error) => {
       Alert.alert(
@@ -20,19 +21,19 @@ export const useDeleteCategory = () => {
     },
   });
 
-  const handleDelete = (categoryId: number, categoryName: string) => {
-    Alert.alert('카테고리 삭제', `'${categoryName}' 항목을 삭제할까요?`, [
+  const handleRemove = (memberId: number, nickname: string) => {
+    Alert.alert('멤버 삭제', `'${nickname}' 님을 삭제할까요?`, [
       { text: '취소', style: 'cancel' },
       {
         text: '삭제하기',
         style: 'destructive',
-        onPress: () => mutation.mutate(categoryId),
+        onPress: () => mutation.mutate(memberId),
       },
     ]);
   };
 
   return {
     ...mutation,
-    handleDelete,
+    handleRemove,
   };
 };
