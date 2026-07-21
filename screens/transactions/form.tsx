@@ -3,17 +3,18 @@ import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
+import { useGetCategories } from '@/features/category';
 import {
   dateFromYearMonth,
   TransactionForm,
   type TransactionFormPayload,
-  useCreateTransaction,
+  useCreateTransactionSubmit,
   useGetTransaction,
   useUpdateTransaction,
 } from '@/features/transaction';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-import { useAuthStore, useHouseholdStore } from '@/shared/model';
+import { useHouseholdStore } from '@/shared/model';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
 export const TransactionFormPage = () => {
@@ -21,7 +22,6 @@ export const TransactionFormPage = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const { selectedHouseholdId } = useHouseholdStore();
-  const { profile } = useAuthStore();
   const params = useLocalSearchParams<{ id?: string; yearMonth?: string }>();
   const id = typeof params.id === 'string' ? params.id : undefined;
   const yearMonth =
@@ -30,7 +30,10 @@ export const TransactionFormPage = () => {
 
   const { data: transaction, isLoading: isLoadingTransaction } =
     useGetTransaction(id);
-  const { mutate: create, isPending: isCreating } = useCreateTransaction();
+  const { data: categories = [], isLoading: categoriesLoading } =
+    useGetCategories(selectedHouseholdId ?? '');
+  const { submit: create, isPending: isCreating } =
+    useCreateTransactionSubmit();
   const { mutate: update, isPending: isUpdating } = useUpdateTransaction();
 
   const handleSubmit = (payload: TransactionFormPayload) => {
@@ -53,22 +56,9 @@ export const TransactionFormPage = () => {
       return;
     }
 
-    create(
-      {
-        householdId: selectedHouseholdId ?? '',
-        createdBy: profile?.id ?? '',
-        name: payload.name,
-        amount: payload.amount,
-        type: payload.type,
-        categoryId: payload.categoryId,
-        transactionDt: payload.transactionDt,
-        memo: payload.memo,
-        isRecurring: payload.isRecurring,
-      },
-      {
-        onSuccess: () => router.back(),
-      },
-    );
+    create(payload, {
+      onSuccess: () => router.back(),
+    });
   };
 
   return (
@@ -89,6 +79,8 @@ export const TransactionFormPage = () => {
           <View style={styles.form}>
             <TransactionForm
               key={transaction?.id ?? yearMonth ?? 'create'}
+              categories={categories}
+              categoriesLoading={categoriesLoading}
               transaction={transaction}
               initialDate={yearMonth ? dateFromYearMonth(yearMonth) : undefined}
               isLoading={isCreating || isUpdating}

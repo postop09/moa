@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/shared/model';
+import { useAuthStore } from '@/entities/auth';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { FormField, ThemedText } from '@/shared/ui';

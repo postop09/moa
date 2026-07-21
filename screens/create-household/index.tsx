@@ -1,8 +1,6 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
 import {
-  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -11,12 +9,12 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { HOUSEHOLD_NAME_MAX_LENGTH } from '@/entities/household';
-import { useCreateHousehold } from '@/features/household';
+import { HOUSEHOLD_NAME_MAX_LENGTH } from '@/entities/households';
+import { useCreateHousehold, useHouseholdNameForm } from '@/features/household';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { useHouseholdStore } from '@/shared/model';
-import { FormField, ThemedText, ThemedView } from '@/shared/ui';
+import { FormField, PrimaryButton, ThemedText, ThemedView } from '@/shared/ui';
 
 export const CreateHouseholdPage = () => {
   const router = useRouter();
@@ -24,19 +22,17 @@ export const CreateHouseholdPage = () => {
   const colors = Colors[colorScheme];
   const { setSelectedHouseholdId } = useHouseholdStore();
   const { mutate, isPending } = useCreateHousehold();
-  const [householdName, setHouseholdName] = useState('');
-  const [error, setError] = useState('');
+  const { householdName, setHouseholdName, error, clearError, validate } =
+    useHouseholdNameForm();
 
   const handleSubmit = () => {
-    const trimmedName = householdName.trim();
-
-    if (!trimmedName) {
-      setError('가계부 이름을 입력해주세요.');
+    const name = validate();
+    if (!name) {
       return;
     }
 
     mutate(
-      { name: trimmedName },
+      { name },
       {
         onSuccess: (household) => {
           setSelectedHouseholdId(household.id);
@@ -67,7 +63,7 @@ export const CreateHouseholdPage = () => {
             value={householdName}
             onChangeText={(value) => {
               setHouseholdName(value);
-              setError('');
+              clearError();
             }}
             placeholder="가계부 이름을 입력하세요"
             autoCapitalize="none"
@@ -77,23 +73,11 @@ export const CreateHouseholdPage = () => {
             editable={!isPending}
           />
 
-          <Pressable
+          <PrimaryButton
+            label="생성하기"
             onPress={handleSubmit}
-            disabled={isPending}
-            style={({ pressed }) => [
-              styles.submitButton,
-              {
-                backgroundColor: colors.tint,
-                opacity: pressed || isPending ? 0.85 : 1,
-              },
-            ]}
-          >
-            {isPending ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <ThemedText style={styles.submitText}>생성하기</ThemedText>
-            )}
-          </Pressable>
+            isPending={isPending}
+          />
         </KeyboardAvoidingView>
       </SafeAreaView>
     </ThemedView>
@@ -127,17 +111,5 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     justifyContent: 'space-between',
     paddingBottom: 32,
-  },
-  submitButton: {
-    borderRadius: 14,
-    paddingVertical: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 52,
-  },
-  submitText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
   },
 });

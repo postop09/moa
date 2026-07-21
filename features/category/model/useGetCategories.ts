@@ -1,15 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
-import { getCategories } from '@/entities/category';
-import type { TransactionType } from '@/shared/model';
+import { getCategories } from '@/entities/categories';
+import type { CategoryType } from '@/entities/categories';
 
 import { categoryQueryKeys } from '../config/queryKeys';
 
-export const useGetCategories = (
-  householdId: string,
-  type?: TransactionType,
-) => {
+export const useGetCategories = (householdId: string, type?: CategoryType) => {
   const query = useQuery({
     queryKey: categoryQueryKeys.list(householdId, type),
     queryFn: () => getCategories({ householdId, type }),

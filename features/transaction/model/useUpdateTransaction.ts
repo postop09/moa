@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import {
   updateTransaction,
   type UpdateTransactionReq,
-} from '@/entities/transaction';
+} from '@/entities/transactions';
 
 import { invalidateTransactionQueries } from '../lib/invalidateTransactionQueries';
 
@@ -17,7 +17,6 @@ export const useUpdateTransaction = () => {
       invalidateTransactionQueries(queryClient);
     },
     onError: (error) => {
-      console.log(error);
       Alert.alert(
         '수정 실패',
         error instanceof Error ? error.message : '다시 시도해주세요.',

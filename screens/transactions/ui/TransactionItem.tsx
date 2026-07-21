@@ -2,10 +2,10 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { formatCurrency, type Transaction } from '@/entities/transaction';
+import type { Transaction } from '@/entities/transactions';
 import { formatMonthDate } from '@/features/transaction';
 import { Colors } from '@/shared/config';
-import { useColorScheme } from '@/shared/lib';
+import { formatCurrency, useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
 import { useDeleteTransaction } from '../model/useDeleteTransaction';

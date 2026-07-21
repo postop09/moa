@@ -2,13 +2,15 @@ import { StyleSheet, View } from 'react-native';
 
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-import { useAuthStore } from '@/shared/model';
+import { useAuthStore } from '@/entities/auth';
+import { useProfileStore } from '@/entities/profiles';
 import { ThemedText } from '@/shared/ui';
 
 export const AccountSection = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-  const { session, profile } = useAuthStore();
+  const { session } = useAuthStore();
+  const { profile } = useProfileStore();
 
   const nickname = profile?.nickname ?? '-';
   const email = profile?.email ?? session?.user.email ?? '-';

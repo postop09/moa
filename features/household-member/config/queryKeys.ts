@@ -1,4 +1,1 @@
-export const householdMemberQueryKeys = {
-  all: ['household-members'],
-  list: (householdId?: string) => ['household-members', householdId],
-};
+export { householdMemberQueryKeys } from '@/entities/household-members';

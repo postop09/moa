@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getHouseholdMembers } from '@/entities/household-member';
+import { getHouseholdMembers } from '@/entities/household-members';
 
 import { householdMemberQueryKeys } from '../config/queryKeys';
 

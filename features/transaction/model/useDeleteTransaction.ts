@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
-import { deleteTransaction } from '@/entities/transaction';
+import { deleteTransaction } from '@/entities/transactions';
 
 import { invalidateTransactionQueries } from '../lib/invalidateTransactionQueries';
 
@@ -14,7 +14,6 @@ export const useDeleteTransaction = () => {
       invalidateTransactionQueries(queryClient);
     },
     onError: (error) => {
-      console.log(error);
       Alert.alert(
         '삭제 실패',
         error instanceof Error ? error.message : '다시 시도해주세요.',

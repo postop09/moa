@@ -1,5 +1,5 @@
-import { formatCurrency } from '@/entities/transaction';
-import { ThemedText } from '@/shared/ui';
+import { formatCurrency } from '@/shared/lib';
+import { ThemedText } from './ThemedText';
 import { StyleSheet, View } from 'react-native';
 
 type Props = {

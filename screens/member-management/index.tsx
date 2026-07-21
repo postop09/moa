@@ -1,5 +1,6 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -9,13 +10,18 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useGetHouseholdMembers } from '@/features/household-member';
+import { useAuthStore } from '@/entities/auth';
+import type { HouseholdMemberRole } from '@/entities/household-members';
+import {
+  useAddHouseholdMember,
+  useGetHouseholdMembers,
+  useUpdateHouseholdMemberRole,
+} from '@/features/household-member';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-import { useAuthStore, useHouseholdStore } from '@/shared/model';
+import { useHouseholdStore } from '@/shared/model';
 import { ThemedText, ThemedView } from '@/shared/ui';
-import { useAddHouseholdMember } from './model/useAddHouseholdMember';
-import { useUpdateHouseholdMemberRole } from './model/useUpdateHouseholdMemberRole';
+
 import { MemberAddModal } from './ui/MemberAdd.modal';
 import { MemberList } from './ui/MemberList';
 import { MemberRoleModal } from './ui/MemberRole.modal';
@@ -26,25 +32,18 @@ export const MemberManagementPage = () => {
   const colors = Colors[colorScheme];
   const { session } = useAuthStore();
   const { selectedHouseholdId } = useHouseholdStore();
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [isRoleOpen, setIsRoleOpen] = useState(false);
+  const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
+
   const {
     data: members = [],
     isLoading,
     isRefetching,
   } = useGetHouseholdMembers(selectedHouseholdId ?? '');
-  const {
-    mutate: addMember,
-    isPending: isAdding,
-    isAddOpen,
-    setIsAddOpen,
-  } = useAddHouseholdMember();
-  const {
-    isPending: isUpdatingRole,
-    isRoleOpen,
-    selectedMemberId,
-    openRoleModal,
-    closeRoleModal,
-    submitRole,
-  } = useUpdateHouseholdMemberRole();
+  const { mutate: addMember, isPending: isAdding } = useAddHouseholdMember();
+  const { mutate: updateRole, isPending: isUpdatingRole } =
+    useUpdateHouseholdMemberRole();
 
   const currentUserId = session?.user.id ?? '';
   const currentMember = members.find(
@@ -54,6 +53,23 @@ export const MemberManagementPage = () => {
   const selectedMember = members.find(
     (member) => member.id === selectedMemberId,
   );
+
+  const openRoleModal = (memberId: number) => {
+    setSelectedMemberId(memberId);
+    setIsRoleOpen(true);
+  };
+
+  const closeRoleModal = () => {
+    setIsRoleOpen(false);
+    setSelectedMemberId(null);
+  };
+
+  const submitRole = (role: HouseholdMemberRole) => {
+    if (selectedMemberId == null) {
+      return;
+    }
+    updateRole({ id: selectedMemberId, role }, { onSuccess: closeRoleModal });
+  };
 
   return (
     <ThemedView style={styles.container}>
@@ -102,10 +118,15 @@ export const MemberManagementPage = () => {
         isLoading={isAdding}
         onClose={() => setIsAddOpen(false)}
         onSubmit={(email) =>
-          addMember({
-            householdId: selectedHouseholdId ?? '',
-            email,
-          })
+          addMember(
+            {
+              householdId: selectedHouseholdId ?? '',
+              email,
+            },
+            {
+              onSuccess: () => setIsAddOpen(false),
+            },
+          )
         }
       />
 

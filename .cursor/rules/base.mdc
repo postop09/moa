@@ -87,10 +87,10 @@ app → screens → widgets → features → entities → shared
 
 ```ts
 // ✅ Good
-import { Collapsible } from '@/features/collapsible';
+import { useGetCategories } from '@/features/category';
 
 // ❌ Bad
-import { Collapsible } from '@/features/collapsible/ui/collapsible';
+import { useGetCategories } from '@/features/category/model/useGetCategories';
 ```
 
 ### `app/` 레이어 역할 분리

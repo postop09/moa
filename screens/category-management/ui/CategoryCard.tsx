@@ -1,12 +1,13 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import type { Category } from '@/entities/category';
-import { formatCurrency } from '@/entities/transaction';
+
+import type { Category } from '@/entities/categories';
+import { useDeleteCategory, useUpdateCategory } from '@/features/category';
 import { Colors } from '@/shared/config';
-import { useColorScheme } from '@/shared/lib';
+import { formatCurrency, useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
-import { useDeleteCategory } from '../model/useDeleteCategory';
-import { useUpdateCategory } from '../model/useUpdateCategory';
+
 import { CategoryEditModal } from './CategoryEdit.modal';
 
 type Props = {
@@ -18,13 +19,9 @@ export const CategoryCard = ({ category }: Props) => {
   const colors = Colors[colorScheme];
   const typeColor =
     category.type === 'expense' ? colors.expense : colors.income;
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const { handleDelete, isPending: isDeleting } = useDeleteCategory();
-  const {
-    mutate: handleUpdate,
-    isPending: isUpdating,
-    isEditOpen,
-    setIsEditOpen,
-  } = useUpdateCategory();
+  const { mutate: handleUpdate, isPending: isUpdating } = useUpdateCategory();
 
   return (
     <>
@@ -82,15 +79,22 @@ export const CategoryCard = ({ category }: Props) => {
         category={category}
         isLoading={isUpdating}
         onClose={() => setIsEditOpen(false)}
-        onSubmit={(payload) =>
-          payload.id &&
-          handleUpdate({
-            id: payload.id,
-            name: payload.name,
-            type: payload.type,
-            budget: payload.budget,
-          })
-        }
+        onSubmit={(payload) => {
+          if (!payload.id) {
+            return;
+          }
+          handleUpdate(
+            {
+              id: payload.id,
+              name: payload.name,
+              type: payload.type,
+              budget: payload.budget,
+            },
+            {
+              onSuccess: () => setIsEditOpen(false),
+            },
+          );
+        }}
       />
     </>
   );
@@ -113,11 +117,6 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
     borderRadius: 12,
-  },
-  typeText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: '700',
   },
   name: {
     fontSize: 17,

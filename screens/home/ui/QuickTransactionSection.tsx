@@ -5,7 +5,7 @@ import { useGetCategories } from '@/features/category';
 import {
   CategorySelector,
   TransactionTypeSelector,
-  useCreateTransaction,
+  useCreateTransactionSubmit,
 } from '@/features/transaction';
 import { Colors } from '@/shared/config';
 import {
@@ -13,19 +13,15 @@ import {
   parseAmountInput,
   useColorScheme,
 } from '@/shared/lib';
-import {
-  TransactionType,
-  useAuthStore,
-  useHouseholdStore,
-} from '@/shared/model';
+import type { TransactionType } from '@/entities/transactions';
+import { useHouseholdStore } from '@/shared/model';
 import { FormField, ThemedText, ThemedView } from '@/shared/ui';
 
 export const QuickTransactionSection = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const { selectedHouseholdId } = useHouseholdStore();
-  const { profile } = useAuthStore();
-  const { mutate: create, isPending } = useCreateTransaction();
+  const { submit, isPending } = useCreateTransactionSubmit();
 
   const [type, setType] = useState<TransactionType>('expense');
   const [categoryId, setCategoryId] = useState<number>();
@@ -66,16 +62,10 @@ export const QuickTransactionSection = () => {
       setError('카테고리를 선택해주세요.');
       return;
     }
-    if (!selectedHouseholdId || !profile?.id) {
-      setError('가구 또는 계정 정보가 없습니다.');
-      return;
-    }
 
     setError('');
-    create(
+    const created = submit(
       {
-        householdId: selectedHouseholdId,
-        createdBy: profile.id,
         amount: parsedAmount,
         type,
         categoryId,
@@ -85,6 +75,10 @@ export const QuickTransactionSection = () => {
         onSuccess: resetForm,
       },
     );
+
+    if (!created) {
+      setError('가구 또는 계정 정보가 없습니다.');
+    }
   };
 
   return (

@@ -1,10 +1,11 @@
-import { createProfile } from '@/entities/auth';
-import { useAuthStore } from '@/shared/model';
+import { useAuthStore } from '@/entities/auth';
+import { createProfile, useProfileStore } from '@/entities/profiles';
 import { useMutation } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
 export const useCreateProfile = () => {
-  const { session, setProfile } = useAuthStore();
+  const { session } = useAuthStore();
+  const { setProfile } = useProfileStore();
 
   return useMutation({
     mutationFn: (nickname: string) =>

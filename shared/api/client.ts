@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 
 import { env } from '@/shared/config';
 
-import { authStorage } from './auth-storage';
+import { authStorage } from './authStorage';
 
 export const supabase = createClient(env.supabaseUrl, env.supabaseAnonKey, {
   auth: {

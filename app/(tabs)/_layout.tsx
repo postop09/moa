@@ -1,11 +1,9 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
-import { AddTransactionTabButton } from '@/features/add-transaction-tab';
-import { HapticTab } from '@/features/haptic-tab';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-import { IconSymbol } from '@/shared/ui';
+import { IconSymbol, AddTransactionNavButton, HapticTab } from '@/shared/ui';
 const TabLayout = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme ?? 'light'];
@@ -48,7 +46,7 @@ const TabLayout = () => {
         name="add"
         options={{
           title: '',
-          tabBarButton: AddTransactionTabButton,
+          tabBarButton: AddTransactionNavButton,
           tabBarIcon: () => null,
         }}
       />

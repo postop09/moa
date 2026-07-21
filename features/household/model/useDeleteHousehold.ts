@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
-import { deleteHousehold } from '@/entities/household';
+import { deleteHousehold } from '@/entities/households';
+import { householdMemberQueryKeys } from '@/entities/household-members';
 import { useHouseholdStore } from '@/shared/model';
 
 import { householdQueryKeys } from '../config/queryKeys';
@@ -17,7 +18,9 @@ export const useDeleteHousehold = () => {
         clear();
       }
       queryClient.invalidateQueries({ queryKey: householdQueryKeys.all });
-      queryClient.invalidateQueries({ queryKey: ['household-members'] });
+      queryClient.invalidateQueries({
+        queryKey: householdMemberQueryKeys.all,
+      });
     },
     onError: (error) => {
       Alert.alert(

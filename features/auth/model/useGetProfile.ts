@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getProfile } from '@/entities/auth';
+import { getProfile } from '@/entities/profiles';
 
 import { authQueryKeys } from '../config/queryKeys';
 

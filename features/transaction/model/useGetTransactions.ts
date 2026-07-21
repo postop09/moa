@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import {
   getTransactions,
   type GetTransactionsReq,
-} from '@/entities/transaction';
+} from '@/entities/transactions';
 
 import { transactionQueryKeys } from '../config/queryKeys';
 

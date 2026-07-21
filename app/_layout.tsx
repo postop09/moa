@@ -7,13 +7,12 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import 'react-native-reanimated';
-import { getSession, getSessionChange } from '@/entities/auth';
-import { AppProviders, useColorScheme } from '@/shared/lib';
-import { ThemedView } from '@/shared/ui';
-import { useEffect } from 'react';
-import { useGetProfile } from '@/features/auth';
+import { QueryClientProvider } from '@tanstack/react-query';
+
+import { useAuthGate, useSessionBootstrap } from '@/features/auth';
 import { useGetHouseholds } from '@/features/household';
-import { useAuthStore } from '@/shared/model';
+import { queryClient, useColorScheme } from '@/shared/lib';
+import { ThemedView } from '@/shared/ui';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -21,20 +20,11 @@ export const unstable_settings = {
 
 const RootNavigator = () => {
   const colorScheme = useColorScheme();
-  const { session, isLoading, profile, setProfile } = useAuthStore();
-  const userId = session?.user.id ?? '';
-  const { data } = useGetProfile(userId);
+  const { session, isLoading, userId, hasProfile, needsProfileSetup } =
+    useAuthGate();
   const { data: households } = useGetHouseholds(userId);
-  const hasProfile = !!profile;
   const hasHousehold = !!households && households.length > 0;
-  const needsProfileSetup = !!session && !profile;
   const needsHouseholdSetup = !!session && !hasHousehold;
-
-  useEffect(() => {
-    if (profile) return;
-    if (!data) return;
-    setProfile(data);
-  }, [data]);
 
   if (isLoading) {
     return (
@@ -66,10 +56,6 @@ const RootNavigator = () => {
           <Stack.Screen name="member-management" />
           <Stack.Screen name="transactions" />
           <Stack.Screen name="transaction-form" />
-          <Stack.Screen
-            name="modal"
-            options={{ presentation: 'modal', title: 'Modal' }}
-          />
         </Stack.Protected>
         <Stack.Screen name="auth/callback" options={{ headerShown: false }} />
       </Stack>
@@ -79,30 +65,12 @@ const RootNavigator = () => {
 };
 
 const RootLayout = () => {
-  const { setSession, setIsLoading } = useAuthStore();
-
-  const sessionInit = async () => {
-    const { session } = await getSession();
-    setSession(session);
-    setIsLoading(false);
-    const subscription = getSessionChange((event, session) => {
-      console.log('session event: ', event);
-      setSession(session);
-      setIsLoading(false);
-    });
-    return () => {
-      subscription.unsubscribe();
-    };
-  };
-
-  useEffect(() => {
-    sessionInit();
-  }, []);
+  useSessionBootstrap();
 
   return (
-    <AppProviders>
+    <QueryClientProvider client={queryClient}>
       <RootNavigator />
-    </AppProviders>
+    </QueryClientProvider>
   );
 };
 

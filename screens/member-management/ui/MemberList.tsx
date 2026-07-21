@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
-import type { GetHouseholdMembersRes } from '@/entities/household-member';
+import type { GetHouseholdMembersRes } from '@/entities/household-members';
 import { ThemedText } from '@/shared/ui';
 import { MemberCard } from './MemberCard';
 

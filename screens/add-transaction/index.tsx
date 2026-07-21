@@ -2,37 +2,26 @@ import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 
+import { useGetCategories } from '@/features/category';
 import {
   TransactionForm,
   type TransactionFormPayload,
-  useCreateTransaction,
+  useCreateTransactionSubmit,
 } from '@/features/transaction';
-import { useAuthStore, useHouseholdStore } from '@/shared/model';
+import { useHouseholdStore } from '@/shared/model';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
 export const AddTransactionPage = () => {
   const router = useRouter();
   const { selectedHouseholdId } = useHouseholdStore();
-  const { profile } = useAuthStore();
-  const { mutate: create, isPending } = useCreateTransaction();
+  const { submit, isPending } = useCreateTransactionSubmit();
+  const { data: categories = [], isLoading: categoriesLoading } =
+    useGetCategories(selectedHouseholdId ?? '');
 
   const handleSubmit = (payload: TransactionFormPayload) => {
-    create(
-      {
-        householdId: selectedHouseholdId ?? '',
-        createdBy: profile?.id ?? '',
-        name: payload.name,
-        amount: payload.amount,
-        type: payload.type,
-        categoryId: payload.categoryId,
-        transactionDt: payload.transactionDt,
-        memo: payload.memo,
-        isRecurring: payload.isRecurring,
-      },
-      {
-        onSuccess: () => router.push('/'),
-      },
-    );
+    submit(payload, {
+      onSuccess: () => router.push('/'),
+    });
   };
 
   return (
@@ -42,6 +31,8 @@ export const AddTransactionPage = () => {
           거래 입력
         </ThemedText>
         <TransactionForm
+          categories={categories}
+          categoriesLoading={categoriesLoading}
           isLoading={isPending}
           getSubmitLabel={(type) =>
             type === 'expense' ? '지출 저장' : '수입 저장'
