@@ -5,7 +5,7 @@ import { HeroSection } from './ui/HeroSection';
 import { HouseholdFormSection } from './ui/HouseholdFormSection';
 import { StartButton } from './ui/StartButton';
 import { useState } from 'react';
-import { useCreateHousehold } from './model/useCreateHousehold';
+import { useCreateHousehold } from '@/features/household';
 
 export const SetupHouseholdPage = () => {
   const [householdName, setHouseholdName] = useState('');

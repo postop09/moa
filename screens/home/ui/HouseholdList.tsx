@@ -1,4 +1,5 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
   ActivityIndicator,
@@ -15,6 +16,7 @@ import { ThemedText } from '@/shared/ui';
 import { useHouseholdSelector } from '../model/useHouseholdSelector';
 
 export const HouseholdList = () => {
+  const router = useRouter();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const [isOpen, setIsOpen] = useState(false);
@@ -33,8 +35,7 @@ export const HouseholdList = () => {
 
   const handleCreateHousehold = () => {
     setIsOpen(false);
-    // TODO: 새 가계부 생성 페이지로 이동
-    // router.push('/create-household');
+    router.push('/create-household');
   };
 
   if (isLoading) {

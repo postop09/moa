@@ -61,6 +61,7 @@ const RootNavigator = () => {
 
         <Stack.Protected guard={!!session && hasProfile && hasHousehold}>
           <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="create-household" />
           <Stack.Screen name="category-management" />
           <Stack.Screen name="member-management" />
           <Stack.Screen name="transactions" />

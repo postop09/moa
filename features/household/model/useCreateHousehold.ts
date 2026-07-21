@@ -3,9 +3,9 @@ import { Alert } from 'react-native';
 
 import { createHousehold, type CreateHouseholdReq } from '@/entities/household';
 import { addHouseholdMember } from '@/entities/household-member';
-import { householdQueryKeys } from '@/features/household';
-import { householdMemberQueryKeys } from '@/features/household-member';
 import { useAuthStore } from '@/shared/model';
+
+import { householdQueryKeys } from '../config/queryKeys';
 
 type CreateHouseholdPayload = Pick<CreateHouseholdReq, 'name'>;
 
@@ -26,10 +26,13 @@ export const useCreateHousehold = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: householdQueryKeys.all });
-      queryClient.invalidateQueries({ queryKey: householdMemberQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: ['household-members'] });
     },
     onError: (error) => {
-      Alert.alert('Error', error.message);
+      Alert.alert(
+        '가계부 생성 실패',
+        error instanceof Error ? error.message : '다시 시도해주세요.',
+      );
     },
   });
 };

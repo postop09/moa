@@ -1,7 +1,7 @@
-import { useAuthStore } from '@/shared/model';
-import { HOUSEHOLD_NAME_MAX_LENGTH } from '../config/householdName';
+import { HOUSEHOLD_NAME_MAX_LENGTH } from '@/entities/household';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
+import { useAuthStore } from '@/shared/model';
 import { FormField, ThemedText } from '@/shared/ui';
 import { StyleSheet, View } from 'react-native';
 

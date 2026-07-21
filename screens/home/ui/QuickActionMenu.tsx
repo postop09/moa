@@ -3,15 +3,35 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Modal, Pressable, StyleSheet, View } from 'react-native';
 
+import { useDeleteHousehold } from '@/features/household';
+import {
+  useGetHouseholdMembers,
+  useLeaveHousehold,
+} from '@/features/household-member';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
+import { useAuthStore } from '@/shared/model';
 import { ThemedText } from '@/shared/ui';
+
+import { useHouseholdSelector } from '../model/useHouseholdSelector';
 
 export const QuickActionMenu = () => {
   const router = useRouter();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const [isOpen, setIsOpen] = useState(false);
+  const { session } = useAuthStore();
+  const { selectedHousehold, selectedHouseholdId } = useHouseholdSelector();
+  const { data: members } = useGetHouseholdMembers(
+    selectedHouseholdId ?? undefined,
+  );
+  const { handleDelete } = useDeleteHousehold();
+  const { handleLeave } = useLeaveHousehold();
+
+  const currentMember = members?.find(
+    (member) => member.userId === session?.user.id,
+  );
+  const isOwner = currentMember?.role === 'owner';
 
   const handleAddCategory = () => {
     setIsOpen(false);
@@ -21,6 +41,21 @@ export const QuickActionMenu = () => {
   const handleAddMember = () => {
     setIsOpen(false);
     router.push('/member-management');
+  };
+
+  const handleDeleteOrLeave = () => {
+    if (!selectedHouseholdId || !selectedHousehold) {
+      return;
+    }
+
+    setIsOpen(false);
+
+    if (isOwner) {
+      handleDelete(selectedHouseholdId, selectedHousehold.name);
+      return;
+    }
+
+    handleLeave(selectedHouseholdId, selectedHousehold.name);
   };
 
   return (
@@ -77,6 +112,33 @@ export const QuickActionMenu = () => {
               <MaterialIcons name="person" size={20} color={colors.text} />
               <ThemedText style={styles.menuItemText}>멤버 관리</ThemedText>
             </Pressable>
+
+            {selectedHousehold && currentMember ? (
+              <>
+                <View
+                  style={[styles.divider, { backgroundColor: colors.border }]}
+                />
+
+                <Pressable
+                  onPress={handleDeleteOrLeave}
+                  style={({ pressed }) => [
+                    styles.menuItem,
+                    pressed && { opacity: 0.7 },
+                  ]}
+                >
+                  <MaterialIcons
+                    name={isOwner ? 'delete' : 'logout'}
+                    size={20}
+                    color={colors.expense}
+                  />
+                  <ThemedText
+                    style={[styles.menuItemText, { color: colors.expense }]}
+                  >
+                    {isOwner ? '가계부 삭제' : '가계부 나가기'}
+                  </ThemedText>
+                </Pressable>
+              </>
+            ) : null}
           </Pressable>
         </Pressable>
       </Modal>
