@@ -12,6 +12,17 @@ export const SetupHouseholdPage = () => {
   const [error, setError] = useState('');
   const { mutate, isPending } = useCreateHousehold();
 
+  const handleSubmit = () => {
+    const trimmedName = householdName.trim();
+
+    if (!trimmedName) {
+      setError('가계부 이름을 입력해주세요.');
+      return;
+    }
+
+    mutate({ name: trimmedName });
+  };
+
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
@@ -30,10 +41,7 @@ export const SetupHouseholdPage = () => {
           />
 
           <View style={styles.actions}>
-            <StartButton
-              onSubmit={() => mutate({ name: householdName })}
-              isPending={isPending}
-            />
+            <StartButton onSubmit={handleSubmit} isPending={isPending} />
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
