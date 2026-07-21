@@ -1,11 +1,13 @@
-import type { TransactionType } from './transactionType';
+import type { TransactionType } from '@/shared/model';
 
 export type CreateTransactionReq = {
-  name: string;
-  amount: number;
-  categoryId: string;
-  type: TransactionType;
-  transactionDate: string;
-  memo: string | null;
-  isRecurring: boolean;
+  householdId: string;
+  name?: string;
+  amount?: number;
+  categoryId?: number;
+  type?: TransactionType;
+  transactionDt?: Date;
+  memo?: string;
+  isRecurring?: boolean;
+  createdBy: string;
 };

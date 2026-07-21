@@ -2,9 +2,6 @@ import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText, ThemedView } from '@/shared/ui';
 import { AccountSection } from './ui/AccountSection';
-import { ConnectionSection } from './ui/ConnectionSection';
-import { HouseholdSection } from './ui/HouseholdSection';
-import { ManagementSection } from './ui/ManagementSection';
 import { SignOutButton } from './ui/SignOutButton';
 
 export const SettingsPage = () => {
@@ -16,9 +13,6 @@ export const SettingsPage = () => {
         </ThemedText>
 
         <AccountSection />
-        <HouseholdSection />
-        <ManagementSection />
-        <ConnectionSection />
         <SignOutButton />
       </SafeAreaView>
     </ThemedView>

@@ -1,1 +1,5 @@
-export const REDIRECT_URL = 'exp://192.168.10.153:8081/auth/callback';
+import { makeRedirectUri } from 'expo-auth-session';
+
+export const REDIRECT_URL = makeRedirectUri({
+  path: 'auth/callback',
+});

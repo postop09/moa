@@ -9,6 +9,10 @@ export const getGoogleLoginUrl = async (): Promise<string> => {
     provider: 'google',
     options: {
       redirectTo: REDIRECT_URL,
+      skipBrowserRedirect: true,
+      queryParams: {
+        prompt: 'select_account',
+      },
     },
   });
 

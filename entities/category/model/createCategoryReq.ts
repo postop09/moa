@@ -1,7 +1,8 @@
-import type { CategoryType } from './categoryType';
+import { TransactionType } from '@/shared/model';
 
 export type CreateCategoryReq = {
+  householdId: string;
   name: string;
-  type: CategoryType;
+  type: TransactionType;
   budget?: number | null;
 };

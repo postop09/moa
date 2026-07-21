@@ -12,22 +12,25 @@ export const FormField = ({ label, error, style, ...props }: Props) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const textColor = useThemeColor({}, 'text');
+
   return (
-    <View style={styles.container}>
-      <ThemedText style={styles.label}>{label}</ThemedText>
-      <TextInput
-        placeholderTextColor={colors.icon}
-        style={[
-          styles.input,
-          {
-            color: textColor,
-            borderColor: error ? colors.expense : colors.border,
-            backgroundColor: colors.card,
-          },
-          style,
-        ]}
-        {...props}
-      />
+    <View>
+      <View style={styles.container}>
+        <ThemedText style={styles.label}>{label}</ThemedText>
+        <TextInput
+          placeholderTextColor={colors.icon}
+          style={[
+            styles.input,
+            {
+              color: textColor,
+              borderColor: error ? colors.expense : colors.border,
+              backgroundColor: colors.card,
+            },
+            style,
+          ]}
+          {...props}
+        />
+      </View>
       {error ? (
         <ThemedText style={[styles.error, { color: colors.expense }]}>
           {error}
@@ -36,6 +39,7 @@ export const FormField = ({ label, error, style, ...props }: Props) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     gap: 8,

@@ -1,9 +1,7 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText, ThemedView } from '@/shared/ui';
-import { CategoryExpenseSection } from './ui/CategoryExpenseSection';
-import { SummarySection } from './ui/SummarySection';
-import { TrendSection } from './ui/TrendSection';
+
 export const StatisticsPage = () => {
   return (
     <ThemedView style={styles.container}>
@@ -15,14 +13,12 @@ export const StatisticsPage = () => {
           <ThemedText type="title" style={styles.title}>
             통계
           </ThemedText>
-          <SummarySection />
-          <CategoryExpenseSection />
-          <TrendSection />
         </ScrollView>
       </SafeAreaView>
     </ThemedView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
