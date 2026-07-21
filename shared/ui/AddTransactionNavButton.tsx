@@ -6,10 +6,12 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-export const AddTransactionTabButton = (props: BottomTabBarButtonProps) => {
+
+export const AddTransactionNavButton = (props: BottomTabBarButtonProps) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const [pressed, setPressed] = useState(false);
+
   return (
     <View style={styles.wrapper}>
       <PlatformPressable
@@ -36,6 +38,7 @@ export const AddTransactionTabButton = (props: BottomTabBarButtonProps) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,

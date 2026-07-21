@@ -1,5 +1,5 @@
-export { useColorScheme } from './hooks/use-color-scheme';
-export { useThemeColor } from './hooks/use-theme-color';
-export { formatAmountInput, parseAmountInput } from './format-amount';
+export { useColorScheme } from 'react-native';
+export { useThemeColor } from './useThemeColor';
+export { formatAmountInput, parseAmountInput } from './formatAmount';
 export { formatCurrency } from './formatCurrency';
-export { queryClient } from './query-client';
+export { queryClient } from './queryClient';

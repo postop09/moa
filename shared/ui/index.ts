@@ -4,3 +4,5 @@ export { PrimaryButton } from './PrimaryButton';
 export { ThemedText } from './ThemedText';
 export { ThemedView } from './ThemedView';
 export { AmountView } from './AmountView';
+export { AddTransactionNavButton } from './AddTransactionNavButton';
+export { HapticTab } from './HapticTab';
