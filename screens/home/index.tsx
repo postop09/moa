@@ -1,11 +1,22 @@
-import { ScrollView, StyleSheet } from 'react-native';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  useColorScheme,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ThemedView } from '@/shared/ui';
-import { BalanceCard } from '@/widgets/balanceCard';
+import { ThemedText, ThemedView, BalanceSummary } from '@/shared/ui';
 import { HeaderSection } from './ui/HeaderSection';
 import { QuickTransactionSection } from './ui/QuickTransactionSection';
+import { router } from 'expo-router';
+import { useGetBalance } from '@/screens/home/model/useGetBalance';
+import { Colors } from '@/shared/config';
 
 export const HomePage = () => {
+  const { income, expense, balance, isLoading } = useGetBalance();
+  const colorScheme = useColorScheme() ?? 'light';
+  const colors = Colors[colorScheme];
+
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -15,7 +26,26 @@ export const HomePage = () => {
           keyboardShouldPersistTaps="handled"
         >
           <HeaderSection />
-          <BalanceCard />
+          <BalanceSummary
+            label="이번 달 잔액"
+            balance={balance}
+            income={income}
+            expense={expense}
+            isLoading={isLoading}
+            headerRight={
+              <Pressable
+                onPress={() => router.push('/transactions')}
+                style={({ pressed }) => pressed && { opacity: 0.7 }}
+              >
+                <ThemedText
+                  lightColor={colors.accent}
+                  darkColor={colors.accent}
+                >
+                  자세히 보기
+                </ThemedText>
+              </Pressable>
+            }
+          />
           <QuickTransactionSection />
         </ScrollView>
       </SafeAreaView>

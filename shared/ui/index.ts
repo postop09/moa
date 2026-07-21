@@ -6,3 +6,4 @@ export { ThemedView } from './ThemedView';
 export { AmountView } from './AmountView';
 export { AddTransactionNavButton } from './AddTransactionNavButton';
 export { HapticTab } from './HapticTab';
+export { BalanceSummary } from './BalanceSummary';

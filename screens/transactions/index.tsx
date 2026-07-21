@@ -11,11 +11,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-import { ThemedText, ThemedView } from '@/shared/ui';
+import { BalanceSummary, ThemedText, ThemedView } from '@/shared/ui';
 
 import { useGetMonthlyTransactions } from './model/useGetMonthlyTransactions';
 import { MonthSelector } from './ui/MonthSelector';
-import { MonthSummary } from './ui/MonthSummary';
 import { TransactionList } from './ui/TransactionList';
 
 export const TransactionsPage = () => {
@@ -62,11 +61,12 @@ export const TransactionsPage = () => {
           showsVerticalScrollIndicator={false}
         >
           <MonthSelector yearMonth={yearMonth} onChange={setYearMonth} />
-          <MonthSummary
+          <BalanceSummary
             balance={balance}
             income={income}
             expense={expense}
             isLoading={isLoading}
+            bordered={false}
           />
           {isLoading ? (
             <ActivityIndicator style={styles.loader} color={colors.tint} />
