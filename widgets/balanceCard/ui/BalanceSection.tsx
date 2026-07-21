@@ -8,7 +8,7 @@ import { ThemedText } from '@/shared/ui';
 import { useGetBalance } from '../model/useGetBalance';
 import { BalanceSummary } from './BalanceSummary';
 
-export const BalanceCard = () => {
+export const BalanceSection = () => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const { income, expense, balance, isLoading } = useGetBalance();
