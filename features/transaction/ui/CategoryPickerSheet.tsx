@@ -1,7 +1,7 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { FlatList, Modal, Pressable, StyleSheet, View } from 'react-native';
 
-import type { Category } from '@/entities/category';
+import type { Category } from '@/entities/categories';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';

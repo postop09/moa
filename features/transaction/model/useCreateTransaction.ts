@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import {
   createTransaction,
   type CreateTransactionReq,
-} from '@/entities/transaction';
+} from '@/entities/transactions';
 
 import { invalidateTransactionQueries } from '../lib/invalidateTransactionQueries';
 

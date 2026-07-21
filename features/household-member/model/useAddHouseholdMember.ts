@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
-import { getProfileByEmail } from '@/entities/auth';
-import { addHouseholdMember } from '@/entities/household-member';
+import { getProfileByEmail } from '@/entities/profiles';
+import { addHouseholdMember } from '@/entities/household-members';
 import { isSupabaseConfigured } from '@/shared/config';
 
 import { householdMemberQueryKeys } from '../config/queryKeys';

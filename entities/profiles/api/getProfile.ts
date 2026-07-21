@@ -1,5 +1,6 @@
 import { supabase } from '@/shared/api';
-import { Profile } from '../model/profile';
+
+import type { Profile } from '../model/profile';
 
 export const getProfile = async (userId: string): Promise<Profile | null> => {
   const { data, error } = await supabase

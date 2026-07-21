@@ -2,7 +2,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import type { Transaction } from '@/entities/transaction';
+import type { Transaction } from '@/entities/transactions';
 import { formatMonthDate } from '@/features/transaction';
 import { Colors } from '@/shared/config';
 import { formatCurrency, useColorScheme } from '@/shared/lib';

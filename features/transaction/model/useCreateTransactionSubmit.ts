@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/entities/auth';
+import { useProfileStore } from '@/entities/profiles';
 import { useHouseholdStore } from '@/shared/model';
 
 import {
@@ -13,7 +13,7 @@ type SubmitOptions = {
 
 export const useCreateTransactionSubmit = () => {
   const { selectedHouseholdId } = useHouseholdStore();
-  const { profile } = useAuthStore();
+  const { profile } = useProfileStore();
   const mutation = useCreateTransaction();
 
   const submit = (payload: CreateTransactionInput, options?: SubmitOptions) => {

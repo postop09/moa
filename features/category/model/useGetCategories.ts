@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
-import { getCategories } from '@/entities/category';
-import type { CategoryType } from '@/entities/category';
+import { getCategories } from '@/entities/categories';
+import type { CategoryType } from '@/entities/categories';
 
 import { categoryQueryKeys } from '../config/queryKeys';
 

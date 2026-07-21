@@ -1,2 +1,2 @@
-export { BalanceCard } from './ui/balanceCard';
+export { BalanceCard } from './ui/BalanceCard';
 export { BalanceSummary } from './ui/BalanceSummary';

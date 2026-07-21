@@ -1,13 +1,25 @@
 import { useEffect } from 'react';
 
 import { getSession, getSessionChange, useAuthStore } from '@/entities/auth';
+import { useProfileStore } from '@/entities/profiles';
 
 export const useSessionBootstrap = () => {
   const { setSession, setIsLoading } = useAuthStore();
+  const { clear: clearProfile } = useProfileStore();
 
   useEffect(() => {
     let cancelled = false;
     let subscription: { unsubscribe: () => void } | undefined;
+
+    const syncSession = (
+      session: Awaited<ReturnType<typeof getSession>>['session'],
+    ) => {
+      setSession(session);
+      setIsLoading(false);
+      if (!session) {
+        clearProfile();
+      }
+    };
 
     const init = async () => {
       const { session } = await getSession();
@@ -15,12 +27,10 @@ export const useSessionBootstrap = () => {
         return;
       }
 
-      setSession(session);
-      setIsLoading(false);
+      syncSession(session);
 
       subscription = getSessionChange((_event, nextSession) => {
-        setSession(nextSession);
-        setIsLoading(false);
+        syncSession(nextSession);
       });
 
       if (cancelled) {
@@ -34,5 +44,5 @@ export const useSessionBootstrap = () => {
       cancelled = true;
       subscription?.unsubscribe();
     };
-  }, [setSession, setIsLoading]);
+  }, [setSession, setIsLoading, clearProfile]);
 };

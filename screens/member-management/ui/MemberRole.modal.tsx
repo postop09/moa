@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 
-import type { HouseholdMemberRole } from '@/entities/household-member';
+import type { HouseholdMemberRole } from '@/entities/household-members';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';

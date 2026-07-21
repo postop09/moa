@@ -1,4 +1,4 @@
-import type { Category } from '@/entities/category';
+import type { Category } from '@/entities/categories';
 import { ThemedText } from '@/shared/ui';
 import { StyleSheet, View } from 'react-native';
 import { CategoryCard } from './CategoryCard';

@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import type { Category, CategoryType } from '@/entities/category';
+import type { Category, CategoryType } from '@/entities/categories';
 import {
   formatAmountInput,
   parseAmountInput,

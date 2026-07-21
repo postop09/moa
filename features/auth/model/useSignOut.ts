@@ -1,18 +1,20 @@
 import { useMutation } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
-import { signOut } from '@/entities/auth';
-import { useAuthStore } from '@/entities/auth';
+import { signOut, useAuthStore } from '@/entities/auth';
+import { useProfileStore } from '@/entities/profiles';
 import { useHouseholdStore } from '@/shared/model';
 
 export const useSignOut = () => {
   const { clear } = useAuthStore();
+  const { clear: clearProfile } = useProfileStore();
   const { clear: clearHousehold } = useHouseholdStore();
 
   return useMutation({
     mutationFn: () => signOut(),
     onSuccess: () => {
       clear();
+      clearProfile();
       clearHousehold();
     },
     onError: (error) => {

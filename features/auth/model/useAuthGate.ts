@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 
 import { useAuthStore } from '@/entities/auth';
+import { useProfileStore } from '@/entities/profiles';
 
 import { useGetProfile } from './useGetProfile';
 
 export const useAuthGate = () => {
-  const { session, isLoading, profile, setProfile } = useAuthStore();
+  const { session, isLoading } = useAuthStore();
+  const { profile, setProfile } = useProfileStore();
   const userId = session?.user.id ?? '';
   const { data: profileData } = useGetProfile(userId);
 

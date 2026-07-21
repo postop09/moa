@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
-import { removeHouseholdMember } from '@/entities/household-member';
+import { removeHouseholdMember } from '@/entities/household-members';
 
 import { householdMemberQueryKeys } from '../config/queryKeys';
 

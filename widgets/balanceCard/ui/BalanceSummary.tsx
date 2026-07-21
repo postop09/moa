@@ -47,9 +47,7 @@ export const BalanceSummary = ({
     >
       <View style={styles.header}>
         <View style={styles.balanceBlock}>
-          {label ? (
-            <ThemedText style={styles.label}>{label}</ThemedText>
-          ) : null}
+          {label ? <ThemedText style={styles.label}>{label}</ThemedText> : null}
           {isLoading ? (
             <ActivityIndicator color={colors.tint} style={styles.loader} />
           ) : (

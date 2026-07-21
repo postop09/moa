@@ -1,4 +1,4 @@
-import type { GetTransactionsReq } from '@/entities/transaction';
+import type { GetTransactionsReq } from '@/entities/transactions';
 
 export const transactionQueryKeys = {
   all: ['transactions'] as const,

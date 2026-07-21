@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getTransaction } from '@/entities/transaction';
+import { getTransaction } from '@/entities/transactions';
 
 import { transactionQueryKeys } from '../config/queryKeys';
 

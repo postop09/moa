@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
-import { deleteTransaction } from '@/entities/transaction';
+import { deleteTransaction } from '@/entities/transactions';
 
 import { invalidateTransactionQueries } from '../lib/invalidateTransactionQueries';
 

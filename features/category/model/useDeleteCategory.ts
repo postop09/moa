@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
-import { deleteCategory } from '@/entities/category';
+import { deleteCategory } from '@/entities/categories';
 
 import { categoryQueryKeys } from '../config/queryKeys';
 

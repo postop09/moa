@@ -1,4 +1,4 @@
-export { householdMemberQueryKeys } from '@/entities/household-member';
+export { householdMemberQueryKeys } from '@/entities/household-members';
 export { useAddHouseholdMember } from './model/useAddHouseholdMember';
 export { useGetHouseholdMembers } from './model/useGetHouseholdMembers';
 export { useLeaveHousehold } from './model/useLeaveHousehold';

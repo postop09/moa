@@ -1,7 +1,7 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import type { GetHouseholdMembersRes } from '@/entities/household-member';
+import type { GetHouseholdMembersRes } from '@/entities/household-members';
 import { useRemoveHouseholdMember } from '@/features/household-member';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';

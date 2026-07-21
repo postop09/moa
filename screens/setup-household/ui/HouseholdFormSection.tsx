@@ -1,7 +1,7 @@
-import { HOUSEHOLD_NAME_MAX_LENGTH } from '@/entities/household';
+import { HOUSEHOLD_NAME_MAX_LENGTH } from '@/entities/households';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-import { useAuthStore } from '@/entities/auth';
+import { useProfileStore } from '@/entities/profiles';
 import { FormField, ThemedText } from '@/shared/ui';
 import { StyleSheet, View } from 'react-native';
 
@@ -22,7 +22,7 @@ export const HouseholdFormSection = ({
 }: Props) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-  const { profile } = useAuthStore();
+  const { profile } = useProfileStore();
 
   return (
     <View style={styles.form}>

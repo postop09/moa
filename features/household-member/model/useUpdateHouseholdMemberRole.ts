@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import {
   type UpdateHouseholdMemberRoleReq,
   updateHouseholdMemberRole,
-} from '@/entities/household-member';
+} from '@/entities/household-members';
 
 import { householdMemberQueryKeys } from '../config/queryKeys';
 

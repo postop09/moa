@@ -1,1 +1,1 @@
-export { householdMemberQueryKeys } from '@/entities/household-member';
+export { householdMemberQueryKeys } from '@/entities/household-members';

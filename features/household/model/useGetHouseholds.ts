@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getHouseholds } from '@/entities/household';
+import { getHouseholds } from '@/entities/households';
 
 import { householdQueryKeys } from '../config/queryKeys';
 

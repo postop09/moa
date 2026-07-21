@@ -8,9 +8,8 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import type { Category } from '@/entities/category';
-import type { Transaction } from '@/entities/transaction';
-import type { TransactionType } from '@/entities/transaction';
+import type { Category } from '@/entities/categories';
+import type { Transaction, TransactionType } from '@/entities/transactions';
 import {
   formatAmountInput,
   parseAmountInput,

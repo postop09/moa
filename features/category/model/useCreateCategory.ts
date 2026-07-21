@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
-import { createCategory, type CreateCategoryReq } from '@/entities/category';
+import { createCategory, type CreateCategoryReq } from '@/entities/categories';
 
 import { categoryQueryKeys } from '../config/queryKeys';
 

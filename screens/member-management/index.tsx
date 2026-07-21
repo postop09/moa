@@ -11,7 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useAuthStore } from '@/entities/auth';
-import type { HouseholdMemberRole } from '@/entities/household-member';
+import type { HouseholdMemberRole } from '@/entities/household-members';
 import {
   useAddHouseholdMember,
   useGetHouseholdMembers,

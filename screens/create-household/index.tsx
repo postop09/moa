@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { HOUSEHOLD_NAME_MAX_LENGTH } from '@/entities/household';
+import { HOUSEHOLD_NAME_MAX_LENGTH } from '@/entities/households';
 import { useCreateHousehold, useHouseholdNameForm } from '@/features/household';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';

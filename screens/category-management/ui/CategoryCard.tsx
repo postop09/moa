@@ -2,7 +2,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import type { Category } from '@/entities/category';
+import type { Category } from '@/entities/categories';
 import { useDeleteCategory, useUpdateCategory } from '@/features/category';
 import { Colors } from '@/shared/config';
 import { formatCurrency, useColorScheme } from '@/shared/lib';

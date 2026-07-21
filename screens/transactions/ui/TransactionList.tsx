@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
-import type { Transaction } from '@/entities/transaction';
+import type { Transaction } from '@/entities/transactions';
 import { ThemedText } from '@/shared/ui';
 
 import { TransactionItem } from './TransactionItem';

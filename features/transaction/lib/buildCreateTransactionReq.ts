@@ -1,7 +1,7 @@
 import type {
   CreateTransactionReq,
   TransactionType,
-} from '@/entities/transaction';
+} from '@/entities/transactions';
 
 export type CreateTransactionInput = {
   name?: string;

@@ -13,7 +13,7 @@ import {
   parseAmountInput,
   useColorScheme,
 } from '@/shared/lib';
-import type { TransactionType } from '@/entities/transaction';
+import type { TransactionType } from '@/entities/transactions';
 import { useHouseholdStore } from '@/shared/model';
 import { FormField, ThemedText, ThemedView } from '@/shared/ui';
 
