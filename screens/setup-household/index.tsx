@@ -3,10 +3,7 @@ import { Platform, StyleSheet, KeyboardAvoidingView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeroSection } from './ui/HeroSection';
 import { HouseholdFormSection } from './ui/HouseholdFormSection';
-import {
-  useCreateHousehold,
-  useHouseholdNameForm,
-} from '@/features/household';
+import { useCreateHousehold, useHouseholdNameForm } from '@/features/household';
 
 export const SetupHouseholdPage = () => {
   const { householdName, setHouseholdName, error, clearError, validate } =
