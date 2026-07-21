@@ -1,4 +1,4 @@
-export { useColorScheme, useThemeColor } from './hooks';
+export { useColorScheme } from './hooks/use-color-scheme';
+export { useThemeColor } from './hooks/use-theme-color';
 export { formatAmountInput, parseAmountInput } from './format-amount';
-export { queryClient } from './query';
-export { AppProviders } from './providers';
+export { queryClient } from './query-client';

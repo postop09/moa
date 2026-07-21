@@ -8,12 +8,13 @@ import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import 'react-native-reanimated';
 import { getSession, getSessionChange } from '@/entities/auth';
-import { AppProviders, useColorScheme } from '@/shared/lib';
+import { queryClient, useColorScheme } from '@/shared/lib';
 import { ThemedView } from '@/shared/ui';
 import { useEffect } from 'react';
 import { useGetProfile } from '@/features/auth';
 import { useGetHouseholds } from '@/features/household';
 import { useAuthStore } from '@/shared/model';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -100,9 +101,9 @@ const RootLayout = () => {
   }, []);
 
   return (
-    <AppProviders>
+    <QueryClientProvider client={queryClient}>
       <RootNavigator />
-    </AppProviders>
+    </QueryClientProvider>
   );
 };
 
