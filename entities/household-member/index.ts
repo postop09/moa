@@ -4,6 +4,8 @@ export { removeHouseholdMember } from './api/removeHouseholdMember';
 export { updateHouseholdMemberRole } from './api/updateHouseholdMemberRole';
 export { leaveHousehold } from './api/leaveHousehold';
 
+export { householdMemberQueryKeys } from './config/queryKeys';
+
 export type {
   HouseholdMember,
   HouseholdMemberRole,

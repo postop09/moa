@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -8,10 +8,9 @@ import {
   StyleSheet,
 } from 'react-native';
 
+import type { Category } from '@/entities/category';
 import type { Transaction } from '@/entities/transaction';
-import { useGetCategories } from '@/features/category';
 import type { TransactionType } from '@/shared/model';
-import { useHouseholdStore } from '@/shared/model';
 import {
   formatAmountInput,
   parseAmountInput,
@@ -37,6 +36,8 @@ export type TransactionFormPayload = {
 };
 
 type Props = {
+  categories: Category[];
+  categoriesLoading?: boolean;
   transaction?: Transaction | null;
   initialDate?: Date;
   isLoading?: boolean;
@@ -45,6 +46,8 @@ type Props = {
 };
 
 export const TransactionForm = ({
+  categories,
+  categoriesLoading,
   transaction,
   initialDate,
   isLoading,
@@ -53,7 +56,6 @@ export const TransactionForm = ({
 }: Props) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
-  const { selectedHouseholdId } = useHouseholdStore();
   const isEditing = !!transaction;
 
   const [name, setName] = useState('');
@@ -68,8 +70,10 @@ export const TransactionForm = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [initialized, setInitialized] = useState(false);
 
-  const { data: categories = [], isLoading: categoriesLoading } =
-    useGetCategories(selectedHouseholdId ?? '', type);
+  const filteredCategories = useMemo(
+    () => categories.filter((category) => category.type === type),
+    [categories, type],
+  );
 
   useEffect(() => {
     if (initialized) {
@@ -97,13 +101,13 @@ export const TransactionForm = ({
   }, [transaction, initialDate, initialized]);
 
   useEffect(() => {
-    if (!categories.length) {
+    if (!filteredCategories.length) {
       return;
     }
     if (!isEditing) {
-      setCategoryId(categories[0].id);
+      setCategoryId(filteredCategories[0].id);
     }
-  }, [categories, isEditing]);
+  }, [filteredCategories, isEditing]);
 
   const handleSubmit = () => {
     const nextErrors: Record<string, string> = {};
@@ -147,7 +151,7 @@ export const TransactionForm = ({
         <DateField value={transactionDate} onChange={setTransactionDate} />
         <RecurringToggle value={isRecurring} onChange={setIsRecurring} />
         <CategorySelector
-          categories={categories}
+          categories={filteredCategories}
           value={categoryId}
           onChange={setCategoryId}
           isLoading={categoriesLoading}

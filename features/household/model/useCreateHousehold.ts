@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
+import { useAuthStore } from '@/entities/auth';
 import { createHousehold, type CreateHouseholdReq } from '@/entities/household';
-import { useAuthStore } from '@/shared/model';
+import { householdMemberQueryKeys } from '@/entities/household-member';
 
 import { householdQueryKeys } from '../config/queryKeys';
-import { householdMemberQueryKeys } from '@/features/household-member/config/queryKeys';
 
 type CreateHouseholdPayload = Pick<CreateHouseholdReq, 'name'>;
 

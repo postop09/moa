@@ -1,8 +1,7 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-import { formatCurrency } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
-import { useColorScheme } from '@/shared/lib';
+import { formatCurrency, useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView, AmountView } from '@/shared/ui';
 
 type Props = {

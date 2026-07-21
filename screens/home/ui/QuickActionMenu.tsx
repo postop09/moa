@@ -10,7 +10,7 @@ import {
 } from '@/features/household-member';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-import { useAuthStore } from '@/shared/model';
+import { useAuthStore } from '@/entities/auth';
 import { ThemedText } from '@/shared/ui';
 
 import { useHouseholdSelector } from '../model/useHouseholdSelector';

@@ -7,5 +7,7 @@ export { getSessionChange } from './api/getSessionChange';
 export { createSession } from './api/createSession';
 export { getGoogleLoginUrl } from './api/getGoogleLoginUrl';
 
+export { useAuthStore } from './model/authStore';
+
 export type { CreateProfileReq } from './model/createProfileReq';
 export type { Profile } from './model/profile';

@@ -1,9 +1,8 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Pressable, StyleSheet, View } from 'react-native';
 import type { Category } from '@/entities/category';
-import { formatCurrency } from '@/entities/transaction';
 import { Colors } from '@/shared/config';
-import { useColorScheme } from '@/shared/lib';
+import { formatCurrency, useColorScheme } from '@/shared/lib';
 import { ThemedText, ThemedView } from '@/shared/ui';
 import { useDeleteCategory } from '../model/useDeleteCategory';
 import { useUpdateCategory } from '../model/useUpdateCategory';

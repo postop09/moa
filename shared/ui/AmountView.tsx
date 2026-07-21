@@ -1,4 +1,4 @@
-import { formatCurrency } from '@/entities/transaction';
+import { formatCurrency } from '@/shared/lib';
 import { ThemedText } from '@/shared/ui';
 import { StyleSheet, View } from 'react-native';
 

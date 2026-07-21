@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert } from 'react-native';
 
 import { leaveHousehold } from '@/entities/household-member';
-import { useAuthStore, useHouseholdStore } from '@/shared/model';
+import { useAuthStore } from '@/entities/auth';
+import { useHouseholdStore } from '@/shared/model';
 
 import { householdMemberQueryKeys } from '../config/queryKeys';
 

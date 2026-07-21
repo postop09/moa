@@ -6,6 +6,12 @@ export const formatMonthDate = (date: Date): string => {
   return `${date.getMonth() + 1}월 ${date.getDate()}일`;
 };
 
+export const toYearMonth = (date = new Date()) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  return `${year}-${month}`;
+};
+
 export const dateFromYearMonth = (yearMonth: string) => {
   const match = /^(\d{4})-(\d{2})$/.exec(yearMonth);
   if (!match) {

@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-import { useAuthStore } from '@/shared/model';
+import { useAuthStore } from '@/entities/auth';
 import { ThemedText } from '@/shared/ui';
 
 export const AccountSection = () => {
