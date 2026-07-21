@@ -76,7 +76,11 @@ export const MemberCard = ({ member, canManage, onEditRole }: Props) => {
                 pressed && { opacity: 0.7 },
               ]}
             >
-              <MaterialIcons name="admin-panel-settings" size={20} color={colors.text} />
+              <MaterialIcons
+                name="admin-panel-settings"
+                size={20}
+                color={colors.text}
+              />
             </Pressable>
             <Pressable
               onPress={() => handleRemove(member.id, member.nickname)}
