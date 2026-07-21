@@ -26,9 +26,9 @@ const RootNavigator = () => {
   const { data } = useGetProfile(userId);
   const { data: households } = useGetHouseholds(userId);
   const hasProfile = !!profile;
-  const hasHousehold = !!households;
+  const hasHousehold = !!households && households.length > 0;
   const needsProfileSetup = !!session && !profile;
-  const needsHouseholdSetup = !!session && !households;
+  const needsHouseholdSetup = !!session && !hasHousehold;
 
   useEffect(() => {
     if (profile) return;

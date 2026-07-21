@@ -1,5 +1,4 @@
 import { supabase } from '@/shared/api';
-import { mapHouseholdMember } from '../lib/mapHouseholdMember';
 import type { GetHouseholdMembersRes } from '../model/getHouseholdMembersRes';
 
 export const getHouseholdMembers = async (
@@ -15,7 +14,7 @@ export const getHouseholdMembers = async (
     throw error;
   }
 
-  const members = (data ?? []).map(mapHouseholdMember);
+  const members = data ?? [];
   const userIds = members.map((member) => member.userId);
 
   if (userIds.length === 0) {

@@ -31,8 +31,6 @@ export const MemberManagementPage = () => {
     isLoading,
     isRefetching,
   } = useGetHouseholdMembers(selectedHouseholdId ?? '');
-  console.log('members: ', members);
-
   const {
     mutate: addMember,
     isPending: isAdding,
