@@ -108,7 +108,11 @@ export const MemberAddModal = ({
               {isLoading ? (
                 <ActivityIndicator color="#fff" />
               ) : (
-                <ThemedText style={styles.primaryText}>추가</ThemedText>
+                <ThemedText
+                  style={{ color: colors.tintText, fontWeight: '600' }}
+                >
+                  추가
+                </ThemedText>
               )}
             </Pressable>
           </View>

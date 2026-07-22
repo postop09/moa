@@ -160,7 +160,9 @@ export const CategoryEditModal = ({
               {isLoading ? (
                 <ActivityIndicator color="#fff" />
               ) : (
-                <ThemedText style={styles.primaryText}>
+                <ThemedText
+                  style={{ color: colors.tintText, fontWeight: '600' }}
+                >
                   {isEditing ? '저장' : '추가'}
                 </ThemedText>
               )}
@@ -220,9 +222,5 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     borderWidth: 0,
-  },
-  primaryText: {
-    color: '#fff',
-    fontWeight: '600',
   },
 });

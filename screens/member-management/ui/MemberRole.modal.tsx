@@ -68,7 +68,7 @@ export const MemberRoleModal = ({
                 >
                   <ThemedText
                     style={{
-                      color: isSelected ? '#fff' : colors.text,
+                      color: isSelected ? colors.tintText : colors.text,
                       fontWeight: '600',
                     }}
                   >
