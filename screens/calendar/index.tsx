@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText, ThemedView } from '@/shared/ui';
 import { PlaceholderSection } from './ui/PlaceholderSection';
+
 export const CalendarPage = () => {
   return (
     <ThemedView style={styles.container}>
@@ -14,6 +15,7 @@ export const CalendarPage = () => {
     </ThemedView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
