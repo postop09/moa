@@ -19,7 +19,7 @@ import {
 } from '@/features/household-member';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-import { useHouseholdStore } from '@/shared/model';
+import { useHouseholdStore } from '@/entities/households';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
 import { MemberAddModal } from './ui/MemberAdd.modal';

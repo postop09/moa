@@ -4,7 +4,7 @@ import {
   summarizeTransactions,
   useGetTransactions,
 } from '@/features/transaction';
-import { useHouseholdStore } from '@/shared/model';
+import { useHouseholdStore } from '@/entities/households';
 
 import { toYearMonth } from '../lib/yearMonth';
 

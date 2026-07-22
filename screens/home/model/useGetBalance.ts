@@ -5,7 +5,7 @@ import {
   toYearMonth,
   useGetTransactions,
 } from '@/features/transaction';
-import { useHouseholdStore } from '@/shared/model';
+import { useHouseholdStore } from '@/entities/households';
 
 export const useGetBalance = () => {
   const { selectedHouseholdId } = useHouseholdStore();

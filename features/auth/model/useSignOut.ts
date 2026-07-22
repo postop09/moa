@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import { signOut, useAuthStore } from '@/entities/auth';
 import { useProfileStore } from '@/entities/profiles';
-import { useHouseholdStore } from '@/shared/model';
+import { useHouseholdStore } from '@/entities/households';
 
 export const useSignOut = () => {
   const { clear } = useAuthStore();

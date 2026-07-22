@@ -1,1 +1,0 @@
-export { useHouseholdStore } from './householdStore';

@@ -1,5 +1,5 @@
 import { useProfileStore } from '@/entities/profiles';
-import { useHouseholdStore } from '@/shared/model';
+import { useHouseholdStore } from '@/entities/households';
 
 import {
   buildCreateTransactionReq,

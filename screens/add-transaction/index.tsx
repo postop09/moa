@@ -8,7 +8,7 @@ import {
   type TransactionFormPayload,
   useCreateTransactionSubmit,
 } from '@/features/transaction';
-import { useHouseholdStore } from '@/shared/model';
+import { useHouseholdStore } from '@/entities/households';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
 export const AddTransactionPage = () => {

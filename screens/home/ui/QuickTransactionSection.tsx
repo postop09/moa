@@ -14,7 +14,7 @@ import {
   useColorScheme,
 } from '@/shared/lib';
 import type { TransactionType } from '@/entities/transactions';
-import { useHouseholdStore } from '@/shared/model';
+import { useHouseholdStore } from '@/entities/households';
 import { FormField, ThemedText, ThemedView } from '@/shared/ui';
 
 export const QuickTransactionSection = () => {

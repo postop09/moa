@@ -6,3 +6,5 @@ export { HOUSEHOLD_NAME_MAX_LENGTH } from './config/householdName';
 
 export type { CreateHouseholdReq } from './model/createHouseholdReq';
 export type { Household } from './model/household';
+
+export { useHouseholdStore } from './model/householdStore';

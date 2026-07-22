@@ -9,11 +9,13 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { HOUSEHOLD_NAME_MAX_LENGTH } from '@/entities/households';
+import {
+  HOUSEHOLD_NAME_MAX_LENGTH,
+  useHouseholdStore,
+} from '@/entities/households';
 import { useCreateHousehold, useHouseholdNameForm } from '@/features/household';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-import { useHouseholdStore } from '@/shared/model';
 import { FormField, PrimaryButton, ThemedText, ThemedView } from '@/shared/ui';
 
 export const CreateHouseholdPage = () => {

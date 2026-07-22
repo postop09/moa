@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import { leaveHousehold } from '@/entities/household-members';
 import { useAuthStore } from '@/entities/auth';
-import { useHouseholdStore } from '@/shared/model';
+import { useHouseholdStore } from '@/entities/households';
 
 import { householdMemberQueryKeys } from '../config/queryKeys';
 

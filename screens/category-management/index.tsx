@@ -13,7 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useCreateCategory, useGetCategories } from '@/features/category';
 import { Colors } from '@/shared/config';
 import { useColorScheme } from '@/shared/lib';
-import { useHouseholdStore } from '@/shared/model';
+import { useHouseholdStore } from '@/entities/households';
 import { ThemedText, ThemedView } from '@/shared/ui';
 
 import { CategoryEditModal } from './ui/CategoryEdit.modal';
