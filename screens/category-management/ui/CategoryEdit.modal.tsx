@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  Keyboard,
   Modal,
   Pressable,
   StyleSheet,
@@ -79,10 +80,16 @@ export const CategoryEditModal = ({
       animationType="fade"
       onRequestClose={onClose}
     >
-      <Pressable style={styles.overlay} onPress={onClose}>
+      <Pressable
+        style={styles.overlay}
+        onPress={() => {
+          Keyboard.dismiss();
+          onClose();
+        }}
+      >
         <Pressable
           style={[styles.sheet, { backgroundColor: colors.background }]}
-          onPress={(event) => event.stopPropagation()}
+          onPress={Keyboard.dismiss}
         >
           <ThemedText type="subtitle" style={styles.title}>
             {isEditing ? '카테고리 수정' : '카테고리 추가'}
@@ -153,7 +160,9 @@ export const CategoryEditModal = ({
               {isLoading ? (
                 <ActivityIndicator color="#fff" />
               ) : (
-                <ThemedText style={styles.primaryText}>
+                <ThemedText
+                  style={{ color: colors.tintText, fontWeight: '600' }}
+                >
                   {isEditing ? '저장' : '추가'}
                 </ThemedText>
               )}
@@ -213,9 +222,5 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     borderWidth: 0,
-  },
-  primaryText: {
-    color: '#fff',
-    fontWeight: '600',
   },
 });

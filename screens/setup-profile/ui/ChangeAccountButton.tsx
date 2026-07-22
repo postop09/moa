@@ -1,14 +1,16 @@
 import { Colors } from '@/shared/config';
 import { useSignOut } from '@/features/auth';
 import { ThemedText } from '@/shared/ui';
-import { Pressable, StyleSheet, useColorScheme } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
+
+import { useColorScheme } from '@/shared/lib';
 
 type Props = {
   disabled?: boolean;
 };
 
 export const ChangeAccountButton = ({ disabled }: Props) => {
-  const colorScheme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme();
   const colors = Colors[colorScheme];
   const { mutate, isPending } = useSignOut();
   const isDisabled = disabled || isPending;

@@ -57,7 +57,10 @@ export const MemberCard = ({ member, canManage, onEditRole }: Props) => {
             <ThemedText
               style={[
                 styles.roleText,
-                { color: member.role === 'owner' ? '#fff' : colors.text },
+                {
+                  color:
+                    member.role === 'owner' ? colors.tintText : colors.text,
+                },
               ]}
             >
               {roleLabel(member.role)}

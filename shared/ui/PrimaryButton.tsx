@@ -41,7 +41,9 @@ export const PrimaryButton = ({
       {isPending ? (
         <ActivityIndicator color="#fff" />
       ) : (
-        <ThemedText style={styles.submitText}>{label}</ThemedText>
+        <ThemedText style={[styles.submitText, { color: colors.tintText }]}>
+          {label}
+        </ThemedText>
       )}
     </Pressable>
   );
@@ -56,7 +58,6 @@ const styles = StyleSheet.create({
     minHeight: 52,
   },
   submitText: {
-    color: '#fff',
     fontSize: 16,
     fontWeight: '600',
   },

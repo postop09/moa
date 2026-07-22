@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText, ThemedView } from '@/shared/ui';
 import { AccountSection } from './ui/AccountSection';
 import { SignOutButton } from './ui/SignOutButton';
+import { ThemeSection } from './ui/ThemeSection';
 
 export const SettingsPage = () => {
   return (
@@ -13,6 +14,7 @@ export const SettingsPage = () => {
         </ThemedText>
 
         <AccountSection />
+        <ThemeSection />
         <SignOutButton />
       </SafeAreaView>
     </ThemedView>
