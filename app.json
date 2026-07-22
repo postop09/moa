@@ -15,7 +15,7 @@
     "android": {
       "package": "com.postop.moa",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#0a7ea4",
         "foregroundImage": "./shared/assets/icons/android-icon-foreground.png",
         "backgroundImage": "./shared/assets/icons/android-icon-background.png",
         "monochromeImage": "./shared/assets/icons/android-icon-monochrome.png"
@@ -35,9 +35,9 @@
           "image": "./shared/assets/images/splash.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
+          "backgroundColor": "#0a7ea4",
           "dark": {
-            "backgroundColor": "#000000"
+            "backgroundColor": "#0a7ea4"
           }
         }
       ],
