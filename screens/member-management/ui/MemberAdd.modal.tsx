@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  Keyboard,
   Modal,
   Pressable,
   StyleSheet,
@@ -57,10 +58,16 @@ export const MemberAddModal = ({
       animationType="fade"
       onRequestClose={onClose}
     >
-      <Pressable style={styles.overlay} onPress={onClose}>
+      <Pressable
+        style={styles.overlay}
+        onPress={() => {
+          Keyboard.dismiss();
+          onClose();
+        }}
+      >
         <Pressable
           style={[styles.sheet, { backgroundColor: colors.background }]}
-          onPress={(event) => event.stopPropagation()}
+          onPress={Keyboard.dismiss}
         >
           <ThemedText type="subtitle" style={styles.title}>
             멤버 추가
