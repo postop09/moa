@@ -7,6 +7,7 @@ import { ThemedText, ThemedView } from '@/shared/ui';
 import { CategoryBudgetChart } from '@/widgets/categoryBudgetChart';
 import { CategorySpendingDonut } from '@/widgets/categorySpendingDonut';
 import { DailyExpenseChart } from '@/widgets/dailyExpenseChart';
+import { YearlyIncomeExpenseChart } from '@/widgets/yearlyIncomeExpenseChart';
 
 import { useGetMonthlyStatistics } from './model/useGetMonthlyStatistics';
 import { MonthSelector } from './ui/MonthSelector';
@@ -16,8 +17,10 @@ export const StatisticsPage = () => {
   const colors = Colors[colorScheme];
   const {
     yearMonth,
+    year,
     setYearMonth,
     transactions,
+    yearlyTransactions,
     categories,
     isLoading,
     hasHousehold,
@@ -46,6 +49,10 @@ export const StatisticsPage = () => {
                 <ActivityIndicator color={colors.tint} style={styles.loader} />
               ) : (
                 <>
+                  <YearlyIncomeExpenseChart
+                    transactions={yearlyTransactions}
+                    year={year}
+                  />
                   <CategorySpendingDonut transactions={transactions} />
                   <DailyExpenseChart
                     transactions={transactions}

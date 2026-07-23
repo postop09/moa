@@ -6,7 +6,6 @@ import {
   View,
   type LayoutChangeEvent,
 } from 'react-native';
-import Svg, { Circle, Line, Polyline } from 'react-native-svg';
 
 import type { Transaction } from '@/entities/transactions';
 import { Colors } from '@/shared/config';
@@ -21,12 +20,8 @@ type Props = {
   isLoading?: boolean;
 };
 
-const CHART_HEIGHT = 160;
-const PADDING_TOP = 12;
-const PADDING_BOTTOM = 8;
-const PADDING_X = 8;
+const CHART_HEIGHT = 140;
 const TOOLTIP_WIDTH = 120;
-const HIT_RADIUS = 14;
 
 export const DailyExpenseChart = ({
   transactions,
@@ -54,37 +49,21 @@ export const DailyExpenseChart = ({
   );
 
   const hasExpense = total > 0;
-  const plotHeight = CHART_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
   const month = Number(yearMonth.split('-')[1]);
 
   useEffect(() => {
     setSelectedDay(null);
   }, [yearMonth, transactions]);
 
-  const points = useMemo(() => {
-    if (chartWidth <= 0 || items.length === 0) {
-      return [];
-    }
-
-    const plotWidth = chartWidth - PADDING_X * 2;
-    const stepX = items.length > 1 ? plotWidth / (items.length - 1) : 0;
-
-    return items.map((item, index) => {
-      const x = PADDING_X + stepX * index;
-      const ratio = maxValue > 0 ? item.amount / maxValue : 0;
-      const y = PADDING_TOP + plotHeight * (1 - ratio);
-      return { x, y, day: item.day, label: item.label, amount: item.amount };
-    });
-  }, [chartWidth, items, maxValue, plotHeight]);
-
-  const polylinePoints = points
-    .map((point) => `${point.x},${point.y}`)
-    .join(' ');
-
-  const selectedPoint =
+  const selectedItem =
     selectedDay === null
       ? null
-      : (points.find((point) => point.day === selectedDay) ?? null);
+      : (items.find((item) => item.day === selectedDay) ?? null);
+
+  const selectedIndex =
+    selectedDay === null
+      ? -1
+      : items.findIndex((item) => item.day === selectedDay);
 
   const handleLayout = (event: LayoutChangeEvent) => {
     const nextWidth = Math.floor(event.nativeEvent.layout.width);
@@ -93,18 +72,30 @@ export const DailyExpenseChart = ({
     }
   };
 
-  const handleSelectDay = (day: number) => {
+  const handleSelectDay = (day: number, amount: number) => {
+    if (amount <= 0) {
+      return;
+    }
     setSelectedDay((prev) => (prev === day ? null : day));
   };
 
-  const tooltipLeft = selectedPoint
-    ? Math.min(
-        Math.max(selectedPoint.x - TOOLTIP_WIDTH / 2, 0),
-        Math.max(chartWidth - TOOLTIP_WIDTH, 0),
-      )
-    : 0;
+  const columnWidth = items.length > 0 ? chartWidth / items.length : 0;
+  const tooltipLeft =
+    selectedIndex >= 0
+      ? Math.min(
+          Math.max(
+            columnWidth * selectedIndex + columnWidth / 2 - TOOLTIP_WIDTH / 2,
+            0,
+          ),
+          Math.max(chartWidth - TOOLTIP_WIDTH, 0),
+        )
+      : 0;
 
-  const tooltipTop = selectedPoint ? Math.max(selectedPoint.y - 52, 0) : 0;
+  const selectedBarHeight =
+    selectedItem && maxValue > 0
+      ? (selectedItem.amount / maxValue) * CHART_HEIGHT
+      : 0;
+  const tooltipTop = Math.max(CHART_HEIGHT - selectedBarHeight - 48, 0);
 
   return (
     <ThemedView
@@ -117,9 +108,6 @@ export const DailyExpenseChart = ({
     >
       <View style={styles.header}>
         <ThemedText style={styles.title}>일별 지출</ThemedText>
-        {!isLoading && hasExpense ? (
-          <ThemedText style={styles.total}>{formatCurrency(total)}</ThemedText>
-        ) : null}
       </View>
 
       {isLoading ? (
@@ -128,123 +116,95 @@ export const DailyExpenseChart = ({
         <ThemedText style={styles.empty}>이번 달 지출이 없어요</ThemedText>
       ) : (
         <View style={styles.chart} onLayout={handleLayout}>
-          {chartWidth > 0 ? (
-            <>
-              <View>
-                <Svg width={chartWidth} height={CHART_HEIGHT}>
-                  {[0.25, 0.5, 0.75, 1].map((ratio) => {
-                    const y = PADDING_TOP + plotHeight * (1 - ratio);
-                    return (
-                      <Line
-                        key={ratio}
-                        x1={PADDING_X}
-                        y1={y}
-                        x2={chartWidth - PADDING_X}
-                        y2={y}
-                        stroke={colors.border}
-                        strokeWidth={1}
-                      />
-                    );
-                  })}
+          <View style={styles.bars}>
+            {[0.25, 0.5, 0.75, 1].map((ratio) => (
+              <View
+                key={ratio}
+                pointerEvents="none"
+                style={[
+                  styles.guideLine,
+                  {
+                    bottom: CHART_HEIGHT * ratio,
+                    backgroundColor: colors.border,
+                  },
+                ]}
+              />
+            ))}
+            <View
+              pointerEvents="none"
+              style={[
+                styles.guideLine,
+                styles.baseline,
+                { backgroundColor: colors.border },
+              ]}
+            />
 
-                  <Line
-                    x1={PADDING_X}
-                    y1={PADDING_TOP + plotHeight}
-                    x2={chartWidth - PADDING_X}
-                    y2={PADDING_TOP + plotHeight}
-                    stroke={colors.border}
-                    strokeWidth={1}
-                  />
+            {items.map((item) => {
+              const heightRatio = maxValue > 0 ? item.amount / maxValue : 0;
+              const barHeight = Math.max(heightRatio * CHART_HEIGHT, 0);
+              const isSelected = selectedDay === item.day;
+              const canPress = item.amount > 0;
 
-                  <Polyline
-                    points={polylinePoints}
-                    fill="none"
-                    stroke={colors.expense}
-                    strokeWidth={2.5}
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                  />
-
-                  {points.map((point) => {
-                    if (point.amount <= 0) {
-                      return null;
-                    }
-
-                    const isSelected = selectedDay === point.day;
-
-                    return (
-                      <Circle
-                        key={`point-${point.day}`}
-                        cx={point.x}
-                        cy={point.y}
-                        r={isSelected ? 5 : 3.5}
-                        fill={colors.expense}
-                      />
-                    );
-                  })}
-                </Svg>
-
-                {points.map((point) => {
-                  if (point.amount <= 0) {
-                    return null;
+              return (
+                <Pressable
+                  key={item.day}
+                  disabled={!canPress}
+                  accessibilityRole={canPress ? 'button' : undefined}
+                  accessibilityLabel={
+                    canPress ? `${month}월 ${item.day}일 지출` : undefined
                   }
-
-                  return (
-                    <Pressable
-                      key={`hit-${point.day}`}
-                      accessibilityRole="button"
-                      accessibilityLabel={`${month}월 ${point.day}일 지출`}
-                      onPress={() => handleSelectDay(point.day)}
-                      hitSlop={4}
+                  onPress={() => handleSelectDay(item.day, item.amount)}
+                  style={styles.barColumn}
+                >
+                  <View style={styles.barTrack}>
+                    <View
                       style={[
-                        styles.hitArea,
+                        styles.barFill,
                         {
-                          left: point.x - HIT_RADIUS,
-                          top: point.y - HIT_RADIUS,
-                          width: HIT_RADIUS * 2,
-                          height: HIT_RADIUS * 2,
-                          borderRadius: HIT_RADIUS,
+                          height: barHeight,
+                          backgroundColor: colors.expense,
+                          opacity: isSelected ? 1 : canPress ? 0.85 : 0.25,
                         },
                       ]}
                     />
-                  );
-                })}
-
-                {selectedPoint ? (
-                  <View
-                    style={[
-                      styles.tooltip,
-                      {
-                        left: tooltipLeft,
-                        top: tooltipTop,
-                        backgroundColor: colors.background,
-                        borderColor: colors.border,
-                      },
-                    ]}
-                    pointerEvents="none"
-                  >
-                    <ThemedText style={styles.tooltipDate}>
-                      {month}월 {selectedPoint.day}일
-                    </ThemedText>
-                    <ThemedText
-                      style={[styles.tooltipAmount, { color: colors.expense }]}
-                    >
-                      {formatCurrency(selectedPoint.amount)}
-                    </ThemedText>
                   </View>
-                ) : null}
-              </View>
+                </Pressable>
+              );
+            })}
 
-              <View style={styles.labels}>
-                <ThemedText style={styles.dayLabel}>
-                  {items[0]?.label}
+            {selectedItem && chartWidth > 0 ? (
+              <View
+                style={[
+                  styles.tooltip,
+                  {
+                    left: tooltipLeft,
+                    top: tooltipTop,
+                    backgroundColor: colors.background,
+                    borderColor: colors.border,
+                  },
+                ]}
+                pointerEvents="none"
+              >
+                <ThemedText style={styles.tooltipDate}>
+                  {month}월 {selectedItem.day}일
                 </ThemedText>
-                <ThemedText style={styles.dayLabel}>
-                  {items[items.length - 1]?.label}
+                <ThemedText
+                  style={[styles.tooltipAmount, { color: colors.expense }]}
+                >
+                  {formatCurrency(selectedItem.amount)}
                 </ThemedText>
               </View>
-            </>
-          ) : null}
+            ) : null}
+          </View>
+
+          <View style={styles.labels}>
+            <ThemedText style={styles.dayLabel} numberOfLines={1}>
+              {items[0]?.label}
+            </ThemedText>
+            <ThemedText style={styles.dayLabel} numberOfLines={1}>
+              {items[items.length - 1]?.label}
+            </ThemedText>
+          </View>
         </View>
       )}
     </ThemedView>
@@ -284,10 +244,51 @@ const styles = StyleSheet.create({
   },
   chart: {
     width: '100%',
-    minHeight: CHART_HEIGHT + 20,
   },
-  hitArea: {
+  bars: {
+    height: CHART_HEIGHT,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    position: 'relative',
+  },
+  guideLine: {
     position: 'absolute',
+    left: 0,
+    right: 0,
+    height: 1,
+    zIndex: 0,
+  },
+  baseline: {
+    bottom: 0,
+  },
+  barColumn: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    zIndex: 1,
+  },
+  barTrack: {
+    width: '100%',
+    height: CHART_HEIGHT,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  barFill: {
+    width: '70%',
+    minWidth: 3,
+    maxWidth: 12,
+    borderTopLeftRadius: 3,
+    borderTopRightRadius: 3,
+  },
+  labels: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 4,
+  },
+  dayLabel: {
+    fontSize: 10,
+    opacity: 0.55,
+    lineHeight: 14,
   },
   tooltip: {
     position: 'absolute',
@@ -298,6 +299,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: 2,
     alignItems: 'center',
+    zIndex: 2,
   },
   tooltipDate: {
     fontSize: 12,
@@ -306,16 +308,5 @@ const styles = StyleSheet.create({
   tooltipAmount: {
     fontSize: 13,
     fontWeight: '700',
-  },
-  labels: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 4,
-    paddingHorizontal: PADDING_X,
-  },
-  dayLabel: {
-    fontSize: 10,
-    opacity: 0.55,
-    lineHeight: 14,
   },
 });
