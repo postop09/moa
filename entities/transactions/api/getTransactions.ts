@@ -1,5 +1,6 @@
 import { supabase } from '@/shared/api';
 import { getMonthRange } from '../lib/getMonthRange';
+import { getYearRange } from '../lib/getYearRange';
 import { mapTransaction } from '../lib/mapTransaction';
 import type { GetTransactionsReq } from '../model/getTransactionsReq';
 import type { Transaction } from '../model/transaction';
@@ -9,6 +10,7 @@ export const getTransactions = async ({
   type,
   categoryId,
   yearMonth,
+  year,
 }: GetTransactionsReq): Promise<Transaction[]> => {
   let query = supabase
     .from('transactions')
@@ -22,6 +24,9 @@ export const getTransactions = async ({
 
   if (yearMonth) {
     const { startDate, endDate } = getMonthRange(yearMonth);
+    query = query.gte('transactionDt', startDate).lt('transactionDt', endDate);
+  } else if (year !== undefined) {
+    const { startDate, endDate } = getYearRange(year);
     query = query.gte('transactionDt', startDate).lt('transactionDt', endDate);
   }
 
