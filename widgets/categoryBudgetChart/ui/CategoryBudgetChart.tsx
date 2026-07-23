@@ -33,7 +33,7 @@ export const CategoryBudgetChart = ({
 
   return (
     <View style={styles.section}>
-      <ThemedText style={styles.title}>카테고리 예산 대비 지출</ThemedText>
+      <ThemedText style={styles.title}>예산 대비 지출</ThemedText>
 
       {isLoading ? (
         <ThemedView

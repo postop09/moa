@@ -30,13 +30,10 @@ export const buildCategoryBudgetItems = (
     );
   });
 
-  return categories
-    .map((category) => ({
-      categoryId: category.id,
-      categoryName: category.name,
-      budget: category.budget ?? 0,
-      spent: spentByCategory.get(category.id) ?? 0,
-    }))
-    .filter((item) => item.budget > 0 || item.spent > 0)
-    .sort((a, b) => b.spent - a.spent);
+  return categories.map((category) => ({
+    categoryId: category.id,
+    categoryName: category.name,
+    budget: category.budget ?? 0,
+    spent: spentByCategory.get(category.id) ?? 0,
+  }));
 };

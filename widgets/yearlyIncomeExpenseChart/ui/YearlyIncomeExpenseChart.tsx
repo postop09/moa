@@ -167,32 +167,8 @@ export const YearlyIncomeExpenseChart = ({
       darkColor={colors.card}
     >
       <View style={styles.header}>
-        <ThemedText style={styles.title}>{year}년 월별 수입·지출</ThemedText>
+        <ThemedText style={styles.title}>{year}년 수입·지출</ThemedText>
       </View>
-
-      <View style={styles.legend}>
-        <View style={styles.legendItem}>
-          <View style={[styles.swatch, { backgroundColor: colors.income }]} />
-          <ThemedText style={styles.legendText}>수입</ThemedText>
-          {!isLoading && hasData ? (
-            <ThemedText style={[styles.legendAmount, { color: colors.income }]}>
-              {formatCurrency(totals.income)}
-            </ThemedText>
-          ) : null}
-        </View>
-        <View style={styles.legendItem}>
-          <View style={[styles.swatch, { backgroundColor: colors.expense }]} />
-          <ThemedText style={styles.legendText}>지출</ThemedText>
-          {!isLoading && hasData ? (
-            <ThemedText
-              style={[styles.legendAmount, { color: colors.expense }]}
-            >
-              {formatCurrency(totals.expense)}
-            </ThemedText>
-          ) : null}
-        </View>
-      </View>
-
       {isLoading ? (
         <ActivityIndicator color={colors.tint} style={styles.loader} />
       ) : !hasData ? (
