@@ -12,6 +12,7 @@ type Member = GetHouseholdMembersRes[number];
 type Props = {
   member: Member;
   canManage: boolean;
+  isSelf: boolean;
   onEditRole: () => void;
 };
 
@@ -31,10 +32,16 @@ const roleLabel = (role: Member['role']) => {
   return role === 'owner' ? '소유자' : '멤버';
 };
 
-export const MemberCard = ({ member, canManage, onEditRole }: Props) => {
+export const MemberCard = ({
+  member,
+  canManage,
+  isSelf,
+  onEditRole,
+}: Props) => {
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
   const { handleRemove, isPending: isRemoving } = useRemoveHouseholdMember();
+  const canManageMember = canManage && !isSelf;
 
   return (
     <ThemedView
@@ -67,7 +74,7 @@ export const MemberCard = ({ member, canManage, onEditRole }: Props) => {
             </ThemedText>
           </View>
         </View>
-        {canManage ? (
+        {canManageMember ? (
           <View style={styles.actions}>
             <Pressable
               onPress={onEditRole}

@@ -55,6 +55,10 @@ export const MemberManagementPage = () => {
   );
 
   const openRoleModal = (memberId: number) => {
+    const target = members.find((member) => member.id === memberId);
+    if (!target || target.userId === currentUserId) {
+      return;
+    }
     setSelectedMemberId(memberId);
     setIsRoleOpen(true);
   };
@@ -66,6 +70,9 @@ export const MemberManagementPage = () => {
 
   const submitRole = (role: HouseholdMemberRole) => {
     if (selectedMemberId == null) {
+      return;
+    }
+    if (selectedMember?.userId === currentUserId) {
       return;
     }
     updateRole({ id: selectedMemberId, role }, { onSuccess: closeRoleModal });
@@ -103,6 +110,7 @@ export const MemberManagementPage = () => {
             <MemberList
               members={members}
               canManage={canManage}
+              currentUserId={currentUserId}
               onEditRole={openRoleModal}
             />
           </ScrollView>

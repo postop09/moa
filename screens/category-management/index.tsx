@@ -42,9 +42,10 @@ export const CategoryManagementPage = () => {
           </ThemedText>
           <Pressable
             onPress={() => setIsCreateOpen(true)}
+            accessibilityLabel="카테고리 추가"
             style={styles.addButton}
           >
-            <MaterialIcons name="add" size={24} color={colors.tint} />
+            <MaterialIcons name="library-add" size={24} color={colors.tint} />
           </Pressable>
         </View>
 
@@ -110,6 +111,10 @@ const styles = StyleSheet.create({
   },
   addButton: {
     padding: 4,
+    width: 32,
+    height: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   loader: {
     marginTop: 40,
